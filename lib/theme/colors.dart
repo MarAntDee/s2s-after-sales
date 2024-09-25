@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 
 class ColorLibrary {
 
-  static const int _purple = 0xFF41317D, _teal = 0xFF29B198;
+  static const int _spanishViolet = 0xFF41317D, _mountainMeadow = 0xFF29B198;
+  static const Color background = Color(0xFFF6F6F6), surface = Color(0xFFFFFFFF), darkText = Color(0xFF1B1B1B);
 
-  static MaterialColor purple = const MaterialColor(
-    _purple,
+  static MaterialColor spanishViolet = const MaterialColor(
+    _spanishViolet,
     <int, Color>{
       50: Color(0xFFe9e9f3),
       100: Color(0xFFc9c9e3),
@@ -15,17 +16,17 @@ class ColorLibrary {
       500: Color(0xFF584c9f),
       600: Color(0xFF524595),
       700: Color(0xFF493b89),
-      800: Color(_purple),
+      800: Color(_spanishViolet),
       900: Color(0xFF342067),
     },
-  ), teal = const MaterialColor(
-    _teal,
+  ), mountainMeadow = const MaterialColor(
+    _mountainMeadow,
     <int, Color>{
       50: Color(0xFFe1f4f1),
       100: Color(0xFFb4e3da),
       200: Color(0xFF83d2c2),
       300: Color(0xFF51c0aa),
-      400: Color(_teal),
+      400: Color(_mountainMeadow),
       500: Color(0xFF00a287),
       600: Color(0xFF00957a),
       700: Color(0xFF00846a),
