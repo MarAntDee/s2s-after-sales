@@ -14,6 +14,9 @@ class AppTheme {
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: _elevatedButtonStyle,
     ),
+    textButtonTheme: TextButtonThemeData(
+      style: _textButtonStyle,
+    ),
   );
 
   static final ColorScheme _scheme = ColorScheme.light(
@@ -35,9 +38,12 @@ class AppTheme {
   );
 
   static final ButtonStyle _elevatedButtonStyle = ElevatedButton.styleFrom(
-    backgroundColor: ColorLibrary.mountainMeadow,
-    foregroundColor: Colors.white,
-  );
+        backgroundColor: ColorLibrary.mountainMeadow,
+        foregroundColor: Colors.white,
+      ),
+      _textButtonStyle = TextButton.styleFrom(
+        foregroundColor: ColorLibrary.mountainMeadow,
+      );
 
   static final TextSelectionThemeData _textSelectionThemeData =
       TextSelectionThemeData(

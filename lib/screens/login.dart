@@ -26,6 +26,7 @@ class _LoginPageState extends State<LoginPage> {
           onResend: _auth.checkAccount,
           onSubmit: (code) async {},
           mobile: _auth.maskedMobileNumber,
+          onCancel: () => setState(() => selectedIndex = 0),
         ),
       ];
 
@@ -57,7 +58,7 @@ class _LoginPageState extends State<LoginPage> {
                   padding: const EdgeInsets.all(16),
                   child: ConstrainedBox(
                     constraints:
-                        const BoxConstraints(maxWidth: 360, maxHeight: 480),
+                        const BoxConstraints(maxWidth: 360, maxHeight: 520),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [

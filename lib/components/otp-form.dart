@@ -14,6 +14,7 @@ import '../utils/formatters.dart';
 class OTPForm extends StatefulWidget {
   final Future Function(String) onSubmit;
   final Future Function()? onResend;
+  final VoidCallback? onCancel;
   final String? initialData, mobile;
   final bool enableResend;
 
@@ -22,6 +23,7 @@ class OTPForm extends StatefulWidget {
   const OTPForm({
     super.key,
     required this.onSubmit,
+    this.onCancel,
     this.initialData,
     this.mobile,
     this.onResend,
@@ -232,6 +234,12 @@ class _OTPFormState extends State<OTPForm> with TickerProviderStateMixin {
                     ),
                   ),
                   if (widget.enableResend) _ResendButton(pinController),
+                  const Spacer(),
+                  if (widget.onCancel != null)
+                    TextButton(
+                      onPressed: widget.onCancel,
+                      child: const Text("Back"),
+                    ),
                 ],
                 if (!_enabled)
                   Center(
