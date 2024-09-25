@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'S2S After Sales',
       theme: AppTheme.data,
-      home: const LoginPage(),
+      home: LoginPage(),
     );
   }
 }

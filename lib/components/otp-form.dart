@@ -111,7 +111,10 @@ class _OTPFormState extends State<OTPForm> with TickerProviderStateMixin {
                 Center(
                   child: Text(
                     widget.mobile ?? "",
-                    style: _theme.textTheme.titleMedium,
+                    style: _theme.textTheme.labelLarge!.copyWith(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w200,
+                    ),
                   ),
                 ),
                 const SizedBox(height: 8.0),
