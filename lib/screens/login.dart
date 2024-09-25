@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:s2s_after_sales/components/otp-form.dart';
 import 'package:s2s_after_sales/theme/app.dart';
 
 import '../blocs/auth.dart';
@@ -86,57 +87,60 @@ class _LoginPageState extends State<LoginPage> {
                                   )
                                 : Padding(
                                     padding: const EdgeInsets.all(30),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.stretch,
-                                      children: [
-                                        const FlutterLogo(size: 80),
-                                        const Spacer(),
-                                        _LoginFormfield(
-                                          label: accountNumber.isEmpty
-                                              ? "Account ID"
-                                              : accountNumber,
-                                          hintText: "63877•••••••",
-                                          icon: Icons.person_2_rounded,
-                                          inputFormatters: [
-                                            LengthLimitingTextInputFormatter(
-                                                12),
-                                            FilteringTextInputFormatter
-                                                .digitsOnly,
-                                          ],
-                                          onChanged: (an) => setState(
-                                            () => accountNumber = an,
-                                          ),
-                                        ),
-                                        const Spacer(),
-                                        ElevatedButton(
-                                          onPressed: _onFieldSubmit,
-                                          child: const SizedBox(
-                                            height: 40,
-                                            child: Center(
-                                              child: Text(
-                                                "Check Account",
-                                                style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 12,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        Expanded(
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(8),
-                                            child: Text(
-                                              errorText,
-                                              style: TextStyle(
-                                                  color: Colors.red[200],
-                                                  fontSize: 10),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
+                                    child: OTPForm(
+                                      onSubmit: (code) async {},
                                     ),
+                                    // Column(
+                                    //   crossAxisAlignment:
+                                    //       CrossAxisAlignment.stretch,
+                                    //   children: [
+                                    //     const FlutterLogo(size: 80),
+                                    //     const Spacer(),
+                                    //     _LoginFormfield(
+                                    //       label: accountNumber.isEmpty
+                                    //           ? "Account ID"
+                                    //           : accountNumber,
+                                    //       hintText: "63877•••••••",
+                                    //       icon: Icons.person_2_rounded,
+                                    //       inputFormatters: [
+                                    //         LengthLimitingTextInputFormatter(
+                                    //             12),
+                                    //         FilteringTextInputFormatter
+                                    //             .digitsOnly,
+                                    //       ],
+                                    //       onChanged: (an) => setState(
+                                    //         () => accountNumber = an,
+                                    //       ),
+                                    //     ),
+                                    //     const Spacer(),
+                                    //     ElevatedButton(
+                                    //       onPressed: _onFieldSubmit,
+                                    //       child: const SizedBox(
+                                    //         height: 40,
+                                    //         child: Center(
+                                    //           child: Text(
+                                    //             "Check Account",
+                                    //             style: TextStyle(
+                                    //               color: Colors.white,
+                                    //               fontSize: 12,
+                                    //             ),
+                                    //           ),
+                                    //         ),
+                                    //       ),
+                                    //     ),
+                                    //     Expanded(
+                                    //       child: Padding(
+                                    //         padding: const EdgeInsets.all(8),
+                                    //         child: Text(
+                                    //           errorText,
+                                    //           style: TextStyle(
+                                    //               color: Colors.red[200],
+                                    //               fontSize: 10),
+                                    //         ),
+                                    //       ),
+                                    //     ),
+                                    //   ],
+                                    // ),
                                   ),
                           ),
                         ),

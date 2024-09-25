@@ -22,6 +22,9 @@ class AuthBloc implements BlocBase {
     }
   }
 
+  //OTP
+  List<String> expiredOtps = [];
+
   @override
   void dispose() {}
 

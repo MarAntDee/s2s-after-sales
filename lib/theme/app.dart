@@ -36,6 +36,7 @@ class AppTheme {
 
   static final ButtonStyle _elevatedButtonStyle = ElevatedButton.styleFrom(
     backgroundColor: ColorLibrary.mountainMeadow,
+    foregroundColor: Colors.white,
   );
 
   static final TextSelectionThemeData _textSelectionThemeData =
@@ -52,4 +53,6 @@ extension AppColorScheme on ColorScheme {
   MaterialColor get secondarySwatch => ColorLibrary.mountainMeadow;
   Color get secondaryColorLight => secondarySwatch[50]!;
   Color get secondaryColorDark => secondarySwatch[900]!;
+
+  Color get highContrast => ColorLibrary.yellow;
 }

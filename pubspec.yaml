@@ -12,6 +12,7 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.2
+  pin_input_text_field: '4.5.1'
   pretty_http_logger: ^1.0.4
   rxdart: ^0.27.7
 

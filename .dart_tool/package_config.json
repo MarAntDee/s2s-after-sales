@@ -104,6 +104,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "pin_input_text_field",
+      "rootUri": "file:///Users/dee/.pub-cache/hosted/pub.dev/pin_input_text_field-4.5.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.13"
+    },
+    {
       "name": "pretty_http_logger",
       "rootUri": "file:///Users/dee/.pub-cache/hosted/pub.dev/pretty_http_logger-1.0.4",
       "packageUri": "lib/",
@@ -182,7 +188,7 @@
       "languageVersion": "3.2"
     }
   ],
-  "generated": "2024-09-25T12:52:33.181897Z",
+  "generated": "2024-09-25T14:23:02.082187Z",
   "generator": "pub",
   "generatorVersion": "3.2.0"
 }
