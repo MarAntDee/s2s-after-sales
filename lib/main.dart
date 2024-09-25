@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:s2s_after_sales/theme/app.dart';
 import 'package:s2s_after_sales/theme/colors.dart';
+import 'package:s2s_after_sales/utils/api.dart';
 
 void main() {
   runApp(const MyApp());
@@ -32,9 +33,7 @@ class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
 
   void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
+    ProdApi().checkAccount("638773749294");
   }
 
   @override
