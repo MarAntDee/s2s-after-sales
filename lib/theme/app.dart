@@ -5,10 +5,15 @@ import 'colors.dart';
 class AppTheme {
   static ThemeData data = ThemeData(
     primaryColor: ColorLibrary.spanishViolet,
+    primaryColorLight: ColorLibrary.spanishViolet[50]!,
+    primaryColorDark: ColorLibrary.spanishViolet[900]!,
     colorScheme: _scheme,
     useMaterial3: true,
     fontFamily: "Poppins",
     appBarTheme: _appBarTheme,
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: _elevatedButtonStyle,
+    ),
   );
 
   static final ColorScheme _scheme = ColorScheme.light(
@@ -28,4 +33,23 @@ class AppTheme {
     color: ColorLibrary.spanishViolet,
     foregroundColor: Colors.white,
   );
+
+  static final ButtonStyle _elevatedButtonStyle = ElevatedButton.styleFrom(
+    backgroundColor: ColorLibrary.mountainMeadow,
+  );
+
+  static final TextSelectionThemeData _textSelectionThemeData =
+      TextSelectionThemeData(
+    cursorColor: ColorLibrary.mountainMeadow[900]!,
+  );
+}
+
+extension AppColorScheme on ColorScheme {
+  MaterialColor get primarySwatch => ColorLibrary.spanishViolet;
+  Color get primaryColorLight => primarySwatch[50]!;
+  Color get primaryColorDark => primarySwatch[900]!;
+
+  MaterialColor get secondarySwatch => ColorLibrary.mountainMeadow;
+  Color get secondaryColorLight => secondarySwatch[50]!;
+  Color get secondaryColorDark => secondarySwatch[900]!;
 }
