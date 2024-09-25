@@ -9,17 +9,16 @@ class AuthBloc implements BlocBase {
 
   Future checkAccount(String accountNumber) async {
     try {
-      Map<String, dynamic> _payload =
+      Map<String, dynamic> payload =
           await ProdApi().checkAccount(accountNumber);
-      this.maskedMobileNumber = _payload["mobileNumber"];
-      this.autolink = _payload.putIfAbsent(
+      maskedMobileNumber = payload["mobileNumber"];
+      autolink = payload.putIfAbsent(
         "autolink",
-        () => _payload["status"] != "NOT_VERIFIED",
+        () => payload["status"] != "NOT_VERIFIED",
       );
-      this.pendingReferenceNumber = _payload["referenceNumber"];
     } catch (e) {
       print("AUTHBLOC CHECK ACCOUNT ERROR: ${e.toString()}");
-      throw e;
+      rethrow;
     }
   }
 
