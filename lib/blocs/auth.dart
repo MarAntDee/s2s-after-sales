@@ -17,9 +17,19 @@ class AuthBloc implements BlocBase {
         "autolink",
         () => payload["status"] != "NOT_VERIFIED",
       );
+      pendingReferenceNumber = payload["referenceNumber"];
       pincode = payload['pincode'];
     } catch (e) {
       print("AUTHBLOC CHECK ACCOUNT ERROR: ${e.toString()}");
+      rethrow;
+    }
+  }
+
+  Future verifyAccount(String code) async {
+    try {
+      await ProdApi().verifyAccount(code, pendingReferenceNumber!);
+    } catch (e) {
+      print("AUTHBLOC VERIFY ACCOUNT ERROR: ${e.toString()}");
       rethrow;
     }
   }

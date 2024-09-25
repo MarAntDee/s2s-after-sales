@@ -24,7 +24,7 @@ class _LoginPageState extends State<LoginPage> {
         OTPForm(
           initialData: _auth.pincode,
           onResend: _auth.checkAccount,
-          onSubmit: (code) async {},
+          onSubmit: _auth.verifyAccount,
           mobile: _auth.maskedMobileNumber,
           onCancel: () => setState(() => selectedIndex = 0),
         ),
