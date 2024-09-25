@@ -16,13 +16,14 @@ abstract class PCApi {
   Future getAccount(String referenceNumber);
 
   static HttpWithMiddleware http(String method) => HttpWithMiddleware.build(
-    requestTimeout: const Duration(seconds: 30),
-    middlewares: [
-      CustomHttpLogger(method: method),
-    ],
-  );
+        requestTimeout: const Duration(seconds: 30),
+        middlewares: [
+          CustomHttpLogger(method: method),
+        ],
+      );
 
-  static _logError(String method, dynamic e) => print("$method ERROR: ${e.toString()}");
+  static _logError(String method, dynamic e) =>
+      print("$method ERROR: ${e.toString()}");
 }
 
 class ProdApi implements PCApi {
@@ -30,8 +31,7 @@ class ProdApi implements PCApi {
   static HttpWithMiddleware _http(String method) => PCApi.http(method);
 
   @override
-  String server =
-      "https://superapp.s2s.ph/crms/api";
+  String server = "https://superapp.s2s.ph/crms/api";
 
   @override
   Uri url({String path = "", Map<String, String>? query}) {
@@ -44,16 +44,15 @@ class ProdApi implements PCApi {
   @override
   Map<String, String> header() {
     return {
-      "Authorization": "3600bf62a3f79fa53f9e811bb76eaddf1073f691abd445cce221430092b75bd0",
+      "Authorization":
+          "3600bf62a3f79fa53f9e811bb76eaddf1073f691abd445cce221430092b75bd0",
     };
   }
 
   @override
   Future checkAccount(String accountNumber) async {
     try {
-
-      Map res = await _http("CHECKING ACCOUNT NUMBER")
-          .post(
+      Map res = await _http("CHECKING ACCOUNT").post(
         url(path: "/check-account"),
         headers: header(),
         body: {"accountNumber": accountNumber},
@@ -69,7 +68,7 @@ class ProdApi implements PCApi {
 
       return;
     } catch (e) {
-      PCApi._logError("CHECKING ACCOUNT NUMBER", e);
+      PCApi._logError("CHECKING ACCOUNT", e);
       if (e is String) rethrow;
       if (e is SocketException) throw ("No internet");
       if (e is Map) rethrow;
@@ -80,13 +79,12 @@ class ProdApi implements PCApi {
   @override
   Future verifyAccount(String pincode, String referenceNumber) async {
     try {
-      Map res = await _http("VERIFYING ACCOUNT")
-          .post(
+      Map res = await _http("VERIFYING ACCOUNT").post(
         url(path: "/verify-otp"),
         headers: header(),
         body: {
-          "referenceNumber" : referenceNumber,
-          "pincode" : pincode,
+          "referenceNumber": referenceNumber,
+          "pincode": pincode,
         },
       ).then((res) => jsonDecode(res.body));
 
@@ -100,7 +98,7 @@ class ProdApi implements PCApi {
 
       return;
     } catch (e) {
-      PCApi._logError("CHECKING ACCOUNT NUMBER", e);
+      PCApi._logError("VERIFYING ACCOUNT", e);
       if (e is String) rethrow;
       if (e is SocketException) throw ("No internet");
       if (e is Map) rethrow;
@@ -113,11 +111,12 @@ class ProdApi implements PCApi {
     try {
       Map res = await _http("GETTING ACCOUNT INFO")
           .get(
-        url(path: "/account", query: {
-          'referenceNumber': referenceNumber,
-        }),
-        headers: header(),
-      ).then((res) => jsonDecode(res.body));
+            url(path: "/account", query: {
+              'referenceNumber': referenceNumber,
+            }),
+            headers: header(),
+          )
+          .then((res) => jsonDecode(res.body));
 
       if (!(res['status'] ?? false) || (res['code'] ?? 200) != 200) {
         throw res.putIfAbsent('message', () => 'Unknown error');
@@ -218,7 +217,7 @@ class CustomHttpLogger extends MiddlewareContract {
     if (v is Map<String, dynamic>) {
       logPrint(_bordered("$pre{"));
       Map<String, dynamic>.from(v).forEach(
-            (k, v) => _printKV(k, v, layer: layer + 1),
+        (k, v) => _printKV(k, v, layer: layer + 1),
       );
       logPrint(_bordered("╟────┤${"  " * layer} }"));
     } else if (v is List<dynamic>) {
