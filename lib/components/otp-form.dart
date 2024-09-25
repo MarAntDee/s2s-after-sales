@@ -10,6 +10,7 @@ import 'package:s2s_after_sales/utils/extensions.dart';
 import '../blocs/auth.dart';
 import '../blocs/otp-controller.dart';
 import '../utils/formatters.dart';
+import 'dialogs.dart';
 
 class OTPForm extends StatefulWidget {
   final Future Function(String) onSubmit;
@@ -199,29 +200,26 @@ class _OTPFormState extends State<OTPForm> with TickerProviderStateMixin {
                   ElevatedButton(
                     onPressed: _code.length == widget.digits
                         ? () async {
-                            if (_code.isNotEmpty) {
-                              try {
-                                setState(() => _enabled = false);
-                                if (_auth.expiredOtps.contains(_code)) {
-                                  throw "You have entered an expired OTP";
-                                }
-                                if (otpController.beOtp?.toString() != null &&
-                                    otpController.beOtp.toString() != _code) {
-                                  throw "You have entered an invalid OTP";
-                                }
-                                _auth.expiredOtps.clear();
-                                await widget.onSubmit(_code);
-                              } catch (e) {
-                                setState(() => _enabled = true);
-                                // await Popup.showError(e);
-                              } finally {
-                                setState(() => _enabled = true);
-                                pinController.clear();
-                                _code = "";
+                            try {
+                              if (_code.isEmpty) throw "OTP is required";
+                              setState(() => _enabled = false);
+                              if (_auth.expiredOtps.contains(_code)) {
+                                throw "You have entered an expired OTP";
                               }
-                            } // else
-                            // PopUp(context)
-                            //     .errorDialog(ErrorMessage().otpRequired);
+                              if (otpController.beOtp?.toString() != null &&
+                                  otpController.beOtp.toString() != _code) {
+                                throw "You have entered an invalid OTP";
+                              }
+                              _auth.expiredOtps.clear();
+                              await widget.onSubmit(_code);
+                            } catch (e) {
+                              setState(() => _enabled = true);
+                              await Popup.showError(e);
+                            } finally {
+                              setState(() => _enabled = true);
+                              pinController.clear();
+                              _code = "";
+                            }
                           }
                         : null,
                     child: const SizedBox(

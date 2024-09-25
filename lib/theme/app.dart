@@ -11,6 +11,7 @@ class AppTheme {
     useMaterial3: true,
     fontFamily: "Poppins",
     appBarTheme: _appBarTheme,
+    dialogTheme: _dialogTheme,
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: _elevatedButtonStyle,
     ),
@@ -44,6 +45,12 @@ class AppTheme {
       _textButtonStyle = TextButton.styleFrom(
         foregroundColor: ColorLibrary.mountainMeadow,
       );
+
+  static final DialogTheme _dialogTheme = DialogTheme(
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(8),
+    ),
+  );
 
   static final TextSelectionThemeData _textSelectionThemeData =
       TextSelectionThemeData(

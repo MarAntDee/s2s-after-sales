@@ -20,7 +20,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'S2S After Sales',
       theme: AppTheme.data,
+      navigatorKey: navigatorKey,
       home: LoginPage(),
     );
   }
 }
+
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
