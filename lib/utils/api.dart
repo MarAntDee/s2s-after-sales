@@ -11,7 +11,7 @@ abstract class PCApi {
   Map<String, String> header();
 
   //CHECK ACCOUNT
-  Future checkAccount(String accountNumber);
+  Future<Map<String, dynamic>> checkAccount(String accountNumber);
   Future verifyAccount(String pincode, String referenceNumber);
   Future getAccount(String referenceNumber);
 
@@ -27,7 +27,6 @@ abstract class PCApi {
 }
 
 class ProdApi implements PCApi {
-  // AuthBloc _auth() => AuthBloc.instance(navigatorKey.currentContext!)!;
   static HttpWithMiddleware _http(String method) => PCApi.http(method);
 
   @override
@@ -50,7 +49,7 @@ class ProdApi implements PCApi {
   }
 
   @override
-  Future checkAccount(String accountNumber) async {
+  Future<Map<String, dynamic>> checkAccount(String accountNumber) async {
     try {
       Map res = await _http("CHECKING ACCOUNT").post(
         url(path: "/check-account"),
@@ -66,7 +65,7 @@ class ProdApi implements PCApi {
         throw "Invalid response body structure";
       }
 
-      return;
+      return Map<String, dynamic>.from(res['data']);
     } catch (e) {
       PCApi._logError("CHECKING ACCOUNT", e);
       if (e is String) rethrow;

@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:s2s_after_sales/theme/app.dart';
-import 'package:s2s_after_sales/theme/colors.dart';
-import 'package:s2s_after_sales/utils/api.dart';
+
+import 'blocs/auth.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    AuthBloc.build(
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -30,10 +34,11 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  AuthBloc get _auth => AuthBloc.instance(context)!;
   int _counter = 0;
 
   void _incrementCounter() {
-    ProdApi().checkAccount("638773749294");
+    _auth.checkAccount("638773749294");
   }
 
   @override
@@ -51,9 +56,10 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             Text(
               '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium!.copyWith(
-                fontStyle: FontStyle.italic
-              ),
+              style: Theme.of(context)
+                  .textTheme
+                  .headlineMedium!
+                  .copyWith(fontStyle: FontStyle.italic),
             ),
           ],
         ),
