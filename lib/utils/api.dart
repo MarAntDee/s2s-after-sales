@@ -12,7 +12,7 @@ abstract class PCApi {
 
   //CHECK ACCOUNT
   Future<Map<String, dynamic>> checkAccount(String accountNumber);
-  Future verifyAccount(String pincode, String referenceNumber);
+  Future<bool> verifyAccount(String pincode, String referenceNumber);
   Future getAccount(String referenceNumber);
 
   static HttpWithMiddleware http(String method) => HttpWithMiddleware.build(
@@ -76,7 +76,7 @@ class ProdApi implements PCApi {
   }
 
   @override
-  Future verifyAccount(String pincode, String referenceNumber) async {
+  Future<bool> verifyAccount(String pincode, String referenceNumber) async {
     try {
       Map res = await _http("VERIFYING ACCOUNT").post(
         url(path: "/verify-otp"),
@@ -90,12 +90,7 @@ class ProdApi implements PCApi {
       if (!(res['status'] ?? false) || (res['code'] ?? 200) != 200) {
         throw res.putIfAbsent('message', () => 'Unknown error');
       }
-      if (res['data'] == null) throw "Missing response body";
-      if (res['data'] is! Map<String, dynamic>) {
-        throw "Invalid response body structure";
-      }
-
-      return;
+      return res['message'].toString() == "Successfully verified OTP";
     } catch (e) {
       PCApi._logError("VERIFYING ACCOUNT", e);
       if (e is String) rethrow;

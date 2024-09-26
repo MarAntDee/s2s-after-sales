@@ -11,8 +11,12 @@ class AppTheme {
     useMaterial3: true,
     fontFamily: "Poppins",
     appBarTheme: _appBarTheme,
+    dialogTheme: _dialogTheme,
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: _elevatedButtonStyle,
+    ),
+    textButtonTheme: TextButtonThemeData(
+      style: _textButtonStyle,
     ),
   );
 
@@ -35,7 +39,17 @@ class AppTheme {
   );
 
   static final ButtonStyle _elevatedButtonStyle = ElevatedButton.styleFrom(
-    backgroundColor: ColorLibrary.mountainMeadow,
+        backgroundColor: ColorLibrary.mountainMeadow,
+        foregroundColor: Colors.white,
+      ),
+      _textButtonStyle = TextButton.styleFrom(
+        foregroundColor: ColorLibrary.mountainMeadow,
+      );
+
+  static final DialogTheme _dialogTheme = DialogTheme(
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(8),
+    ),
   );
 
   static final TextSelectionThemeData _textSelectionThemeData =
@@ -52,4 +66,6 @@ extension AppColorScheme on ColorScheme {
   MaterialColor get secondarySwatch => ColorLibrary.mountainMeadow;
   Color get secondaryColorLight => secondarySwatch[50]!;
   Color get secondaryColorDark => secondarySwatch[900]!;
+
+  Color get highContrast => ColorLibrary.yellow;
 }
