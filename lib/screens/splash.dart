@@ -1,9 +1,9 @@
 import 'dart:async';
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:s2s_after_sales/blocs/auth.dart';
+import 'package:s2s_after_sales/components/background.dart';
 
 import '../utils/navigator.dart';
 
@@ -45,36 +45,21 @@ class _LoadingScreenState extends State<LoadingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.black,
-      body: Container(
-        color: Colors.white,
-        child: Container(
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage("assets/images/login-bg.png"),
-              fit: BoxFit.cover,
-            ),
+    return Background(
+      child: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Colors.transparent, Colors.black12],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
           ),
-          child: BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 25, sigmaY: 25),
-            child: Container(
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [Colors.transparent, Colors.black12],
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                ),
-              ),
-              child: Center(
-                child: SizedBox.square(
-                  dimension: 120,
-                  child: CircularProgressIndicator(
-                    color: _theme.colorScheme.secondary,
-                    strokeWidth: 6,
-                  ),
-                ),
-              ),
+        ),
+        child: Center(
+          child: SizedBox.square(
+            dimension: 120,
+            child: CircularProgressIndicator(
+              color: _theme.colorScheme.secondary,
+              strokeWidth: 6,
             ),
           ),
         ),
