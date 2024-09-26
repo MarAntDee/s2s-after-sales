@@ -53,6 +53,8 @@ class AuthBloc implements BlocBase {
     }
   }
 
+  bool get isLoggedIn => cache.containsKey(_refCacheKey);
+
   Future getAccountInfo() async {
     try {
       String? refNumber = referenceNumber ?? pendingReferenceNumber;
