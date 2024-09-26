@@ -27,5 +27,5 @@ class Account with MappedModel {
 
   @override
   String toString() =>
-      "ACCOUNT\nNAME: $name\nACCOUNT NUMBER: $accountNumber\nMASKED MOBILE NUMBER: $maskedMobileNumber\nSERIAL NUMBER: $serialNumber";
+      "ACCOUNT\nNAME:${"\t" * 4}$name\nACCOUNT NUMBER:${"\t" * 4}$accountNumber\nMASKED MOBILE NUMBER:${"\t" * 4}$maskedMobileNumber\nSERIAL NUMBER:${"\t" * 4}$serialNumber";
 }

@@ -47,10 +47,11 @@ class AuthBloc implements BlocBase {
   static const String _refCacheKey = "referenceNumber";
   String? get referenceNumber => cache.getString(_refCacheKey);
   set referenceNumber(String? newValue) {
-    print("SETTING REFERENCE NUMBER TO $newValue");
     if (newValue == null) {
+      print("DELETING REFERENCE NUMBER FROM CACHE");
       cache.remove(_refCacheKey);
     } else {
+      print("SETTING REFERENCE NUMBER TO $newValue");
       cache.setString(_refCacheKey, newValue);
     }
   }
@@ -60,8 +61,17 @@ class AuthBloc implements BlocBase {
   //ACCOUNT INFO
   Account? _account;
   set currentAccount(Account? newValue) {
-    if (newValue != null) DevTools.printModel<Account>(newValue, withNew: true);
+    if (newValue != null) {
+      DevTools.printModel<Account>(newValue, withNew: true);
+    } else {
+      print("DELETING ACCOUNT");
+    }
     _account = newValue;
+  }
+
+  void logout() {
+    currentAccount = null;
+    referenceNumber = null;
   }
 
   Account? get currentAccount => _account;

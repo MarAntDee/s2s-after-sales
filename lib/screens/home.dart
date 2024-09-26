@@ -60,7 +60,10 @@ class HomePage extends StatelessWidget {
                           height: 32,
                         ),
                         ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            _auth.logout();
+                            Navigator.of(context).popUntilLogin();
+                          },
                           child: const Text("Log out"),
                         ),
                         const Spacer(),

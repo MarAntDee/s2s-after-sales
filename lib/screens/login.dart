@@ -34,7 +34,10 @@ class _LoginPageState extends State<LoginPage> {
         OTPForm(
           initialData: _auth.pincode,
           onResend: _auth.checkAccount,
-          onSubmit: _auth.verifyAccount,
+          onSubmit: (code) async {
+            await _auth.verifyAccount(code);
+            Navigator.of(context).popUntilHome();
+          },
           mobile: _auth.maskedMobileNumber,
           onCancel: () => setState(() => selectedIndex = 0),
         ),

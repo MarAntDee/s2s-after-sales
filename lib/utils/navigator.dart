@@ -12,7 +12,7 @@ extension NavHandler on NavigatorState {
         Routers.homeScreen,
       );
 
-  Future popUntilLogin({int? initialPage}) async => pushReplacementNamed(
+  Future popUntilLogin() async => pushReplacementNamed(
         Routers.loginScreen,
       );
 }
