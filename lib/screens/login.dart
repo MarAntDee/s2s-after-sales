@@ -5,11 +5,21 @@ import 'package:s2s_after_sales/blocs/auth.dart';
 import 'package:s2s_after_sales/components/account-form.dart';
 import 'package:s2s_after_sales/components/otp-form.dart';
 
+import '../utils/navigator.dart';
+
 class LoginPage extends StatefulWidget {
-  LoginPage({Key? key}) : super(key: key);
+  const LoginPage({Key? key}) : super(key: key);
 
   @override
   State<LoginPage> createState() => _LoginPageState();
+
+  static route(RouteSettings settings) {
+    return BlurredRouter(
+      builder: (context) {
+        return LoginPage();
+      },
+    );
+  }
 }
 
 class _LoginPageState extends State<LoginPage> {
@@ -24,7 +34,10 @@ class _LoginPageState extends State<LoginPage> {
         OTPForm(
           initialData: _auth.pincode,
           onResend: _auth.checkAccount,
-          onSubmit: _auth.verifyAccount,
+          onSubmit: (code) async {
+            await _auth.verifyAccount(code);
+            Navigator.of(context).popUntilHome();
+          },
           mobile: _auth.maskedMobileNumber,
           onCancel: () => setState(() => selectedIndex = 0),
         ),

@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:s2s_after_sales/screens/login.dart';
 import 'package:s2s_after_sales/theme/app.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'blocs/auth.dart';
+import 'utils/navigator.dart';
 
-void main() {
+void main() async {
+  final SharedPreferences cache = await SharedPreferences.getInstance();
   runApp(
     AuthBloc.build(
+      cache: cache,
       child: const MyApp(),
     ),
   );
@@ -21,7 +24,8 @@ class MyApp extends StatelessWidget {
       title: 'S2S After Sales',
       theme: AppTheme.data,
       navigatorKey: navigatorKey,
-      home: LoginPage(),
+      initialRoute: Routers.splash,
+      onGenerateRoute: Routers.onGenerateRouted,
     );
   }
 }
