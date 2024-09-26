@@ -14,7 +14,7 @@ import 'dialogs.dart';
 
 class OTPForm extends StatefulWidget {
   final Future Function(String) onSubmit;
-  final Future Function()? onResend;
+  final Future<String?> Function()? onResend;
   final VoidCallback? onCancel;
   final String? initialData, mobile;
   final bool enableResend;
@@ -590,7 +590,7 @@ class _ResendButtonState extends State<_ResendButton> {
   _resendOTP() async {
     widget.pinController.clear();
     await _otpController.api?.call().then((pincode) {
-      _otpController.pincode = pincode;
+      if (pincode != null) _otpController.pincode = pincode;
       _start = 300;
       _initTimer();
     });

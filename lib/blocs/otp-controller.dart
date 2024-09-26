@@ -4,7 +4,7 @@ import 'package:rxdart/rxdart.dart';
 import 'base.dart';
 
 class OtpBloc implements BlocBase {
-  final Future Function()? api;
+  final Future<String?> Function()? api;
   String? beOtp;
 
   final BehaviorSubject<String> _pincodeController = BehaviorSubject<String>();
@@ -21,7 +21,7 @@ class OtpBloc implements BlocBase {
   }
 
   static Widget build({
-    Future Function()? api,
+    Future<String?> Function()? api,
     String? initialData,
     Widget? child,
   }) =>

@@ -8,7 +8,7 @@ class AuthBloc implements BlocBase {
   String pendingAccountNumber = "";
   bool? autolink;
 
-  Future checkAccount() async {
+  Future<String?> checkAccount() async {
     try {
       Map<String, dynamic> payload =
           await ProdApi().checkAccount(pendingAccountNumber);
@@ -19,6 +19,7 @@ class AuthBloc implements BlocBase {
       );
       pendingReferenceNumber = payload["referenceNumber"];
       pincode = payload['pincode'];
+      return pincode;
     } catch (e) {
       print("AUTHBLOC CHECK ACCOUNT ERROR: ${e.toString()}");
       rethrow;
