@@ -90,12 +90,13 @@ class _OTPFormState extends State<OTPForm> with TickerProviderStateMixin {
               mainAxisSize: MainAxisSize.max,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
+                const Spacer(),
                 Center(
                   child: Text(
-                    "ENTER OTP",
-                    style: _theme.textTheme.headlineSmall!.copyWith(
-                      color: _theme.colorScheme.highContrast,
-                      fontWeight: FontWeight.w500,
+                    "Phone Verification",
+                    style: _theme.textTheme.headlineMedium!.copyWith(
+                      color: _theme.primaryColor,
+                      fontWeight: FontWeight.w700,
                     ),
                   ),
                 ),
@@ -103,24 +104,19 @@ class _OTPFormState extends State<OTPForm> with TickerProviderStateMixin {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 24),
                   child: Text(
-                    subLabel,
+                    "$subLabel\n",
                     textAlign: TextAlign.center,
-                    style: _theme.textTheme.labelMedium!.copyWith(
-                      color: Colors.white,
-                    ),
+                    style: _theme.textTheme.titleMedium,
                   ),
                 ),
                 const SizedBox(height: 8.0),
                 Center(
                   child: Text(
                     widget.mobile ?? "",
-                    style: _theme.textTheme.labelLarge!.copyWith(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w200,
-                    ),
+                    style: _theme.textTheme.bodyLarge,
                   ),
                 ),
-                const SizedBox(height: 8.0),
+                const SizedBox(height: 16),
                 StreamBuilder<String>(
                   stream: otpController.pincodeStream,
                   initialData: widget.initialData,
@@ -150,8 +146,8 @@ class _OTPFormState extends State<OTPForm> with TickerProviderStateMixin {
                             strokeColorBuilder:
                                 CustomColorBuilder(context, enabled: _enabled),
                             bgColorBuilder: FixedColorBuilder(_enabled
-                                ? Colors.grey[100]!
-                                : Colors.grey[300]!),
+                                ? Colors.grey[300]!
+                                : Colors.grey[600]!),
                           ),
                           currentCode: _code,
                           onCodeSubmitted: (code) {
@@ -196,58 +192,68 @@ class _OTPFormState extends State<OTPForm> with TickerProviderStateMixin {
                   },
                 ),
                 const SizedBox(height: 32),
-                if (_enabled) ...[
-                  ElevatedButton(
-                    onPressed: _code.length == widget.digits
-                        ? () async {
-                            try {
-                              if (_code.isEmpty) throw "OTP is required";
-                              setState(() => _enabled = false);
-                              if (_auth.expiredOtps.contains(_code)) {
-                                throw "You have entered an expired OTP";
-                              }
-                              if (otpController.beOtp?.toString() != null &&
-                                  otpController.beOtp.toString() != _code) {
-                                throw "You have entered an invalid OTP";
-                              }
-                              _auth.expiredOtps.clear();
-                              await widget.onSubmit(_code);
-                            } catch (e) {
-                              setState(() => _enabled = true);
-                              await Popup.showError(e);
-                            } finally {
-                              setState(() => _enabled = true);
-                              pinController.clear();
-                              _code = "";
-                            }
-                          }
-                        : null,
-                    child: const SizedBox(
-                      height: 40,
-                      child: Center(
-                        child: Text(
-                          "SUBMIT",
+                Expanded(
+                  flex: 2,
+                  child: _enabled
+                      ? Column(
+                          children: [
+                            ElevatedButton(
+                              onPressed: _code.length == widget.digits
+                                  ? () async {
+                                      try {
+                                        if (_code.isEmpty)
+                                          throw "OTP is required";
+                                        setState(() => _enabled = false);
+                                        if (_auth.expiredOtps.contains(_code)) {
+                                          throw "You have entered an expired OTP";
+                                        }
+                                        if (otpController.beOtp?.toString() !=
+                                                null &&
+                                            otpController.beOtp.toString() !=
+                                                _code) {
+                                          throw "You have entered an invalid OTP";
+                                        }
+                                        _auth.expiredOtps.clear();
+                                        await widget.onSubmit(_code);
+                                      } catch (e) {
+                                        setState(() => _enabled = true);
+                                        await Popup.showError(e);
+                                      } finally {
+                                        setState(() => _enabled = true);
+                                        pinController.clear();
+                                        _code = "";
+                                      }
+                                    }
+                                  : null,
+                              child: const SizedBox(
+                                height: 40,
+                                child: Center(
+                                  child: Text(
+                                    "SUBMIT",
+                                  ),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 8),
+                            if (widget.enableResend)
+                              _ResendButton(pinController),
+                          ],
+                        )
+                      : Center(
+                          child: SizedBox.square(
+                            dimension: 60,
+                            child: CircularProgressIndicator(
+                              color: _theme.colorScheme.secondary,
+                              strokeWidth: 6,
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
-                  ),
-                  if (widget.enableResend) _ResendButton(pinController),
-                  const Spacer(),
-                  if (widget.onCancel != null)
-                    TextButton(
-                      onPressed: widget.onCancel,
-                      child: const Text("Back"),
-                    ),
-                ],
-                if (!_enabled)
-                  Center(
-                    child: SizedBox.square(
-                      dimension: 60,
-                      child: CircularProgressIndicator(
-                        color: _theme.colorScheme.secondary,
-                        strokeWidth: 6,
-                      ),
-                    ),
+                ),
+                const Spacer(flex: 3),
+                if (widget.onCancel != null)
+                  TextButton(
+                    onPressed: _enabled ? widget.onCancel : null,
+                    child: const Text("Cancel"),
                   ),
               ],
             );
