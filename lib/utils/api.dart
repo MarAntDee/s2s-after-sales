@@ -4,6 +4,8 @@ import 'dart:math' as math;
 
 import 'package:pretty_http_logger/pretty_http_logger.dart';
 
+import '../models/account.dart';
+
 abstract class PCApi {
   late final String server;
 
@@ -13,7 +15,7 @@ abstract class PCApi {
   //CHECK ACCOUNT
   Future<Map<String, dynamic>> checkAccount(String accountNumber);
   Future<bool> verifyAccount(String pincode, String referenceNumber);
-  Future getAccount(String referenceNumber);
+  Future<Account> getAccount(String referenceNumber);
 
   static HttpWithMiddleware http(String method) => HttpWithMiddleware.build(
         requestTimeout: const Duration(seconds: 30),
@@ -101,7 +103,7 @@ class ProdApi implements PCApi {
   }
 
   @override
-  Future getAccount(String referenceNumber) async {
+  Future<Account> getAccount(String referenceNumber) async {
     try {
       Map res = await _http("GETTING ACCOUNT INFO")
           .get(
@@ -120,7 +122,7 @@ class ProdApi implements PCApi {
         throw "Invalid response body structure";
       }
 
-      return;
+      return Account.fromMap(res['data']);
     } catch (e) {
       PCApi._logError("GETTING ACCOUNT INFO", e);
       if (e is String) rethrow;

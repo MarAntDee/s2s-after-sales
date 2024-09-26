@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:s2s_after_sales/blocs/auth.dart';
 
 import '../utils/navigator.dart';
 
@@ -9,6 +10,9 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ThemeData _theme = Theme.of(context);
+    AuthBloc _auth = AuthBloc.instance(context)!;
+
     return Scaffold(
       backgroundColor: Colors.black,
       body: Container(
@@ -30,34 +34,42 @@ class HomePage extends StatelessWidget {
                   end: Alignment.bottomCenter,
                 ),
               ),
-              // child: Center(
-              //   child: Padding(
-              //     padding: const EdgeInsets.all(16),
-              //     child: ConstrainedBox(
-              //       constraints:
-              //       const BoxConstraints(maxWidth: 360, maxHeight: 520),
-              //       child: Column(
-              //         crossAxisAlignment: CrossAxisAlignment.stretch,
-              //         children: [
-              //           const SizedBox(height: 60),
-              //           Expanded(
-              //             child: Container(
-              //               decoration: BoxDecoration(
-              //                 color: Colors.white38,
-              //                 borderRadius: BorderRadius.circular(24),
-              //               ),
-              //               child: Padding(
-              //                 padding: const EdgeInsets.all(30),
-              //                 child: _pages[selectedIndex],
-              //               ),
-              //             ),
-              //           ),
-              //           const SizedBox(height: 60),
-              //         ],
-              //       ),
-              //     ),
-              //   ),
-              // ),
+              child: Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: ConstrainedBox(
+                    constraints:
+                        const BoxConstraints(maxWidth: 480, maxHeight: 520),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        const SizedBox(height: 60),
+                        const Spacer(),
+                        Container(
+                          padding: const EdgeInsets.all(16),
+                          decoration: BoxDecoration(
+                            color: _theme.primaryColorLight.withOpacity(0.25),
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          child: Text(
+                            _auth.currentAccount.toString(),
+                            style: _theme.primaryTextTheme.titleMedium,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 32,
+                        ),
+                        ElevatedButton(
+                          onPressed: () {},
+                          child: const Text("Log out"),
+                        ),
+                        const Spacer(),
+                        const SizedBox(height: 60),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
             ),
           ),
         ),

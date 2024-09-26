@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:s2s_after_sales/blocs/base.dart';
+import 'package:s2s_after_sales/models/account.dart';
 import 'package:s2s_after_sales/utils/api.dart';
+import 'package:s2s_after_sales/utils/dev-tools.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthBloc implements BlocBase {
@@ -55,11 +57,19 @@ class AuthBloc implements BlocBase {
 
   bool get isLoggedIn => cache.containsKey(_refCacheKey);
 
+  //ACCOUNT INFO
+  Account? _account;
+  set currentAccount(Account? newValue) {
+    if (newValue != null) DevTools.printModel<Account>(newValue, withNew: true);
+    _account = newValue;
+  }
+
+  Account? get currentAccount => _account;
   Future getAccountInfo() async {
     try {
       String? refNumber = referenceNumber ?? pendingReferenceNumber;
       if (refNumber == null) throw "Unknown Reference Number";
-      await ProdApi().getAccount(refNumber);
+      currentAccount = await ProdApi().getAccount(refNumber);
     } catch (e) {
       print("AUTHBLOC GET ACCOUNT INFO ERROR: ${e.toString()}");
       rethrow;
