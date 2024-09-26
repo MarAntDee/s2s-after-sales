@@ -41,6 +41,9 @@ class AppTheme {
   static final ButtonStyle _elevatedButtonStyle = ElevatedButton.styleFrom(
         backgroundColor: ColorLibrary.mountainMeadow,
         foregroundColor: Colors.white,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(5),
+        ),
       ),
       _textButtonStyle = TextButton.styleFrom(
         foregroundColor: ColorLibrary.mountainMeadow,

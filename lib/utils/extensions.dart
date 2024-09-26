@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 extension AppString on String {
   bool get isNumeric => (int.tryParse(this) ?? -1) >= 0;
 
@@ -11,4 +13,6 @@ extension AppString on String {
 
     return "0${substring(2, 5)} ${substring(5, 8)} ${substring(8)}";
   }
+
+  Characters get characters => Characters(this);
 }
