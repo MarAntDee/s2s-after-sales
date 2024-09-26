@@ -47,12 +47,18 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Background(
       child: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 400),
-            child: AspectRatio(
-              aspectRatio: 1 / 2,
+        child: SingleChildScrollView(
+          physics: MediaQuery.of(context).size.height < 832
+              ? ClampingScrollPhysics()
+              : NeverScrollableScrollPhysics(),
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(
+                maxWidth: 400,
+                minHeight: 800,
+                maxHeight: 800,
+              ),
               child: Center(
                 child: Container(
                   decoration: AppBoxes().main,
