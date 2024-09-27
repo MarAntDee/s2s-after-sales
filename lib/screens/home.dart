@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:s2s_after_sales/blocs/auth.dart';
 import 'package:s2s_after_sales/components/background.dart';
+import 'package:s2s_after_sales/components/user-card.dart';
 
 import '../utils/navigator.dart';
 
@@ -23,17 +24,7 @@ class HomePage extends StatelessWidget {
               children: [
                 const SizedBox(height: 60),
                 const Spacer(),
-                Container(
-                  padding: const EdgeInsets.all(16),
-                  decoration: BoxDecoration(
-                    color: _theme.primaryColorLight.withOpacity(0.25),
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                  child: Text(
-                    _auth.currentAccount.toString(),
-                    style: _theme.primaryTextTheme.titleMedium,
-                  ),
-                ),
+                const UserCard(),
                 const SizedBox(
                   height: 32,
                 ),

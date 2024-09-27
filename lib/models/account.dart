@@ -3,6 +3,12 @@ import '../utils/dev-tools.dart';
 class Account with MappedModel {
   final String name, accountNumber, maskedMobileNumber, serialNumber;
 
+  String get accountNumberLabel => [
+        accountNumber.substring(0, 5),
+        accountNumber.substring(5, 9),
+        accountNumber.substring(9)
+      ].join(" ");
+
   Account._(
     this.name,
     this.accountNumber,
