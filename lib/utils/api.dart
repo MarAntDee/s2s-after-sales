@@ -51,6 +51,8 @@ class ProdApi implements PCApi {
       "Authorization":
           "3600bf62a3f79fa53f9e811bb76eaddf1073f691abd445cce221430092b75bd0",
       "x-device-key": _auth.uuid!,
+      if ((_auth.referenceNumber ?? _auth.pendingReferenceNumber) != null)
+        'x-auth': _auth.referenceNumber ?? _auth.pendingReferenceNumber!,
       "wsc-timestamp": DateTime.now().millisecondsSinceEpoch.toString(),
     };
   }
@@ -112,9 +114,7 @@ class ProdApi implements PCApi {
     try {
       Map res = await _http("GETTING ACCOUNT INFO")
           .get(
-            url(path: "/account", query: {
-              'x-auth': referenceNumber,
-            }),
+            url(path: "/account"),
             headers: header(),
           )
           .then((res) => jsonDecode(res.body));
