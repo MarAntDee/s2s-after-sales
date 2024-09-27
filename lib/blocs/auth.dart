@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:s2s_after_sales/blocs/base.dart';
 import 'package:s2s_after_sales/models/account.dart';
@@ -42,6 +44,22 @@ class AuthBloc implements BlocBase {
       rethrow;
     }
   }
+
+  //DEVICE ID
+  static const String _uuidCacheKey = "uuid";
+  String? get uuid => cache.getString(_uuidCacheKey);
+  set uuid(String? newValue) {
+    if (newValue == null) {
+      print("DELETING UNIQUE ID FROM CACHE");
+      cache.remove(_uuidCacheKey);
+    } else {
+      print("SETTING UNIQUE ID TO $newValue");
+      cache.setString(_uuidCacheKey, newValue);
+    }
+  }
+  static const _chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
+  static String _generateUuid(int length) => String.fromCharCodes(Iterable.generate(
+      length, (_) => _chars.codeUnitAt(Random().nextInt(_chars.length))));
 
   //ACCOUNT INFO
   static const String _refCacheKey = "referenceNumber";
@@ -89,7 +107,9 @@ class AuthBloc implements BlocBase {
   //OTP
   List<String> expiredOtps = [];
 
-  AuthBloc._(this.cache);
+  AuthBloc._(this.cache) {
+    if (uuid == null) uuid = _generateUuid(64);
+  }
 
   @override
   void dispose() {}
