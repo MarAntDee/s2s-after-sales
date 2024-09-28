@@ -11,55 +11,54 @@ class UserCard extends StatelessWidget {
   Widget build(BuildContext context) {
     AuthBloc auth = AuthBloc.instance(context)!;
     ThemeData _theme = Theme.of(context);
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 15),
-      constraints: const BoxConstraints(maxWidth: 540),
-      height: 236,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Expanded(
-            flex: 2,
-            child: Container(
-              padding: const EdgeInsets.only(top: 18, bottom: 12),
-              decoration: BoxDecoration(
-                color: _theme.colorScheme.secondary,
-                borderRadius: const BorderRadius.vertical(
-                  top: Radius.circular(15),
+    return Center(
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 24),
+        constraints: const BoxConstraints(maxWidth: 540),
+        height: 250,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Expanded(
+              child: Container(
+                padding: const EdgeInsets.only(top: 18, bottom: 12),
+                decoration: BoxDecoration(
+                  color: _theme.colorScheme.secondary,
+                  borderRadius: const BorderRadius.vertical(
+                    top: Radius.circular(15),
+                  ),
                 ),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Expanded(
                           child: Padding(
-                            padding: const EdgeInsets.only(left: 6),
-                            child: Text(
-                              auth.currentAccount!.accountNumberLabel,
-                              style:
-                                  _theme.primaryTextTheme.titleMedium!.copyWith(
-                                fontWeight: FontWeight.w700,
+                            padding: const EdgeInsets.only(left: 10),
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 6),
+                              child: Text(
+                                auth.currentAccount!.accountNumberLabel,
+                                style: _theme.primaryTextTheme.titleMedium!
+                                    .copyWith(
+                                  fontWeight: FontWeight.w700,
+                                ),
                               ),
                             ),
                           ),
                         ),
-                      ),
-                      const AppLogo(size: 50),
-                      const SizedBox(width: 12),
-                    ],
-                  ),
-                  const Spacer(),
-                ],
+                        const AppLogo(size: 50),
+                        const SizedBox(width: 12),
+                      ],
+                    ),
+                    const Spacer(),
+                  ],
+                ),
               ),
             ),
-          ),
-          Expanded(
-            child: Container(
+            Container(
               decoration: const BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.vertical(
@@ -70,7 +69,7 @@ class UserCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(right: 14),
+                    padding: const EdgeInsets.only(right: 16, top: 8),
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.end,
@@ -80,6 +79,7 @@ class UserCard extends StatelessWidget {
                           style: _theme.textTheme.bodySmall!
                               .copyWith(fontWeight: FontWeight.w700),
                         ),
+                        const SizedBox(height: 4),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
@@ -151,8 +151,8 @@ class UserCard extends StatelessWidget {
                 ],
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

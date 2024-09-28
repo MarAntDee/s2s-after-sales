@@ -2,6 +2,12 @@
   "configVersion": 2,
   "packages": [
     {
+      "name": "args",
+      "rootUri": "file:///Users/dee/.pub-cache/hosted/pub.dev/args-2.5.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
       "name": "async",
       "rootUri": "file:///Users/dee/.pub-cache/hosted/pub.dev/async-2.11.0",
       "packageUri": "lib/",
@@ -68,6 +74,12 @@
       "languageVersion": "2.19"
     },
     {
+      "name": "flutter_svg",
+      "rootUri": "file:///Users/dee/.pub-cache/hosted/pub.dev/flutter_svg-2.0.10+1",
+      "packageUri": "lib/",
+      "languageVersion": "2.19"
+    },
+    {
       "name": "flutter_test",
       "rootUri": "file:///Users/dee/Developer/flutter/packages/flutter_test",
       "packageUri": "lib/",
@@ -122,6 +134,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "path_parsing",
+      "rootUri": "file:///Users/dee/.pub-cache/hosted/pub.dev/path_parsing-1.0.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "path_provider_linux",
       "rootUri": "file:///Users/dee/.pub-cache/hosted/pub.dev/path_provider_linux-2.2.1",
       "packageUri": "lib/",
@@ -136,6 +154,12 @@
     {
       "name": "path_provider_windows",
       "rootUri": "file:///Users/dee/.pub-cache/hosted/pub.dev/path_provider_windows-2.3.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.2"
+    },
+    {
+      "name": "petitparser",
+      "rootUri": "file:///Users/dee/.pub-cache/hosted/pub.dev/petitparser-6.0.2",
       "packageUri": "lib/",
       "languageVersion": "3.2"
     },
@@ -260,6 +284,24 @@
       "languageVersion": "2.17"
     },
     {
+      "name": "vector_graphics",
+      "rootUri": "file:///Users/dee/.pub-cache/hosted/pub.dev/vector_graphics-1.1.11+1",
+      "packageUri": "lib/",
+      "languageVersion": "2.17"
+    },
+    {
+      "name": "vector_graphics_codec",
+      "rootUri": "file:///Users/dee/.pub-cache/hosted/pub.dev/vector_graphics_codec-1.1.11+1",
+      "packageUri": "lib/",
+      "languageVersion": "2.17"
+    },
+    {
+      "name": "vector_graphics_compiler",
+      "rootUri": "file:///Users/dee/.pub-cache/hosted/pub.dev/vector_graphics_compiler-1.1.11+1",
+      "packageUri": "lib/",
+      "languageVersion": "2.19"
+    },
+    {
       "name": "vector_math",
       "rootUri": "file:///Users/dee/.pub-cache/hosted/pub.dev/vector_math-2.1.4",
       "packageUri": "lib/",
@@ -278,13 +320,19 @@
       "languageVersion": "3.0"
     },
     {
+      "name": "xml",
+      "rootUri": "file:///Users/dee/.pub-cache/hosted/pub.dev/xml-6.5.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.2"
+    },
+    {
       "name": "s2s_after_sales",
       "rootUri": "../",
       "packageUri": "lib/",
       "languageVersion": "3.2"
     }
   ],
-  "generated": "2024-09-27T09:36:08.384487Z",
+  "generated": "2024-09-28T00:31:35.455676Z",
   "generator": "pub",
   "generatorVersion": "3.2.0"
 }
