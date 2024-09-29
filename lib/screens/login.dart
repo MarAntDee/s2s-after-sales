@@ -18,6 +18,7 @@ class LoginPage extends StatefulWidget {
       builder: (context) {
         return LoginPage();
       },
+      settings: settings,
     );
   }
 }

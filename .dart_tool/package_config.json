@@ -284,6 +284,12 @@
       "languageVersion": "2.17"
     },
     {
+      "name": "url_strategy",
+      "rootUri": "file:///Users/dee/.pub-cache/hosted/pub.dev/url_strategy-0.3.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.15"
+    },
+    {
       "name": "vector_graphics",
       "rootUri": "file:///Users/dee/.pub-cache/hosted/pub.dev/vector_graphics-1.1.11+1",
       "packageUri": "lib/",
@@ -332,7 +338,7 @@
       "languageVersion": "3.2"
     }
   ],
-  "generated": "2024-09-28T00:31:35.455676Z",
+  "generated": "2024-09-29T14:27:05.941808Z",
   "generator": "pub",
   "generatorVersion": "3.2.0"
 }

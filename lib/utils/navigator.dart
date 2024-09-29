@@ -2,9 +2,10 @@ import 'dart:developer';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:s2s_after_sales/screens/home.dart';
+import 'package:s2s_after_sales/screens/login.dart';
 
-import '../screens/home.dart';
-import '../screens/login.dart';
+import '../screens/404.dart';
 import '../screens/splash.dart';
 
 extension NavHandler on NavigatorState {
@@ -34,20 +35,12 @@ class Routers {
     switch (routeSettings.name) {
       case splash:
         return LoadingScreen.route(routeSettings);
-      case homeScreen:
-        return HomePage.route(routeSettings);
       case loginScreen:
         return LoginPage.route(routeSettings);
+      case homeScreen:
+        return HomePage.route(routeSettings);
       default:
-        return BlurredRouter(
-          builder: (context) {
-            return const Scaffold(
-              body: Center(
-                child: Text("No page found"),
-              ),
-            );
-          },
-        );
+        return Page404.route(routeSettings);
     }
   }
 }

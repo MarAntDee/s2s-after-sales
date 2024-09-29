@@ -18,6 +18,7 @@ class LoadingScreen extends StatefulWidget {
       builder: (context) {
         return const LoadingScreen();
       },
+      settings: settings,
     );
   }
 }

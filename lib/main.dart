@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:s2s_after_sales/theme/app.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_strategy/url_strategy.dart';
 
 import 'blocs/auth.dart';
 import 'utils/navigator.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   final SharedPreferences cache = await SharedPreferences.getInstance();
+  setPathUrlStrategy();
   runApp(
     AuthBloc.build(
       cache: cache,

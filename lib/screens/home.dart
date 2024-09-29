@@ -81,6 +81,7 @@ class HomePage extends StatelessWidget {
       builder: (context) {
         return const HomePage();
       },
+      settings: settings,
     );
   }
 }
