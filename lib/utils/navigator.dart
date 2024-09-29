@@ -4,6 +4,8 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:s2s_after_sales/screens/home.dart';
 import 'package:s2s_after_sales/screens/login.dart';
+import 'package:s2s_after_sales/screens/payment-failed.dart';
+import 'package:s2s_after_sales/screens/payment-success.dart';
 
 import '../screens/404.dart';
 import '../screens/splash.dart';
@@ -27,7 +29,9 @@ class Routers {
 
   static const String splash = "/",
       homeScreen = "/home",
-      loginScreen = "/login";
+      loginScreen = "/login",
+      paymentFailedScreen = "/payment-failed",
+      paymentSuccessScreen = "/payment-success";
 
   static String currentRoute = splash;
   static String previousCustomerRoute = splash;
@@ -43,6 +47,10 @@ class Routers {
         return LoginPage.route(routeSettings);
       case homeScreen:
         return HomePage.route(routeSettings);
+      case paymentFailedScreen:
+        return PaymentFailedPage.route(routeSettings);
+      case paymentSuccessScreen:
+        return PaymentSuccessPage.route(routeSettings);
       default:
         return Page404.route(routeSettings);
     }
