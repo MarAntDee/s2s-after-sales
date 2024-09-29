@@ -9,6 +9,10 @@ import '../screens/404.dart';
 import '../screens/splash.dart';
 
 extension NavHandler on NavigatorState {
+  Future popUntilRoot() async => pushReplacementNamed(
+        Routers.splash,
+      );
+
   Future popUntilHome() async => pushReplacementNamed(
         Routers.homeScreen,
       );

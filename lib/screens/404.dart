@@ -36,7 +36,7 @@ class Page404 extends StatelessWidget {
             ),
             const SizedBox(height: 40),
             ElevatedButton(
-              onPressed: Navigator.of(context).popUntilHome,
+              onPressed: Navigator.of(context).popUntilRoot,
               child: const Text('Back to Home'),
             ),
           ],
