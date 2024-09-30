@@ -4,7 +4,7 @@ import 'package:s2s_after_sales/blocs/auth.dart';
 import 'package:s2s_after_sales/utils/navigator.dart';
 
 class HomePanel extends StatelessWidget {
-  final String _iconPath = "assets/icons/";
+  final String _iconPath = "icons/";
 
   const HomePanel({super.key});
   @override
