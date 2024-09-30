@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:s2s_after_sales/components/product-shelf.dart';
 import 'package:s2s_after_sales/models/products.dart';
 import 'package:s2s_after_sales/utils/api.dart';
 
 import '../utils/navigator.dart';
 
 class Shop extends StatelessWidget {
-  const Shop({super.key});
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  Shop({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,22 +20,55 @@ class Shop extends StatelessWidget {
         appBar: AppBar(
           title: const Text("Buy Load"),
         ),
-        body: FutureBuilder<List<Product>>(
-            future: ProdApi().getProducts(),
-            builder: (context, products) {
-              if (!products.hasData)
-                return const Center(
-                  child: SizedBox.square(
-                    dimension: 60,
-                    child: CircularProgressIndicator(),
+        body: Form(
+          key: _formKey,
+          child: Center(
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 600),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: FutureBuilder<List<Product>>(
+                        future: ProdApi().getProducts(),
+                        builder: (context, products) {
+                          if (!products.hasData) {
+                            return const Center(
+                              child: SizedBox.square(
+                                dimension: 60,
+                                child: CircularProgressIndicator(),
+                              ),
+                            );
+                          }
+                          return ProductShelf(
+                            products.data!,
+                            validator: (product) {
+                              if (product == null) {
+                                return "Please pick a SuperFiber prepaid plan";
+                              }
+                              return null;
+                            },
+                            onSaved: (product) {},
+                          );
+                        }),
                   ),
-                );
-              return ListView(
-                children: products.data!
-                    .map((product) => Text(product.toString()))
-                    .toList(),
-              );
-            }),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16, vertical: 16),
+                    child: ElevatedButton(
+                      onPressed: () async {
+                        if (_formKey.currentState!.validate()) {
+                          _formKey.currentState!.save();
+                        }
+                      },
+                      child: const Text("Next"),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }
@@ -41,7 +76,7 @@ class Shop extends StatelessWidget {
   static route(RouteSettings settings) {
     return BlurredRouter(
       builder: (context) {
-        return const Shop();
+        return Shop();
       },
       settings: settings,
     );

@@ -6,6 +6,8 @@ class Product with MappedModel {
   final String? description;
   final double price;
 
+  bool get hasDescription => description != null;
+
   Product._(this.sku, this.name, this.description, this.price);
 
   Product.fromMap(Map map)
