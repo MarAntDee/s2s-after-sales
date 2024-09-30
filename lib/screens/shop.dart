@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:s2s_after_sales/utils/api.dart';
 
 import '../utils/navigator.dart';
 
@@ -15,6 +16,12 @@ class Shop extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: const Text("Buy Load"),
+        ),
+        body: Center(
+          child: ElevatedButton(
+            onPressed: ProdApi().getProducts,
+            child: Text("Get SKU List"),
+          ),
         ),
       ),
     );
