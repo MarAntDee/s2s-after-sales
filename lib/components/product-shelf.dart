@@ -4,13 +4,16 @@ import '../models/products.dart';
 
 class ProductShelf extends StatelessWidget {
   final List<Product> products;
+  final Product? initialProduct;
   final FormFieldValidator<Product>? validator;
   final FormFieldSetter<Product>? onSaved;
-  const ProductShelf(this.products, {super.key, this.validator, this.onSaved});
+  const ProductShelf(this.products,
+      {super.key, this.validator, this.onSaved, this.initialProduct});
 
   @override
   Widget build(BuildContext context) {
     return FormField<Product>(
+      initialValue: initialProduct,
       validator: validator,
       onSaved: onSaved,
       builder: (state) => ListView(
