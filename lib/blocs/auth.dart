@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:rxdart/rxdart.dart';
 import 'package:s2s_after_sales/blocs/base.dart';
 import 'package:s2s_after_sales/models/account.dart';
 import 'package:s2s_after_sales/utils/api.dart';
@@ -57,9 +58,12 @@ class AuthBloc implements BlocBase {
       cache.setString(_uuidCacheKey, newValue);
     }
   }
-  static const _chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
-  static String _generateUuid(int length) => String.fromCharCodes(Iterable.generate(
-      length, (_) => _chars.codeUnitAt(Random().nextInt(_chars.length))));
+
+  static const _chars =
+      'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
+  static String _generateUuid(int length) =>
+      String.fromCharCodes(Iterable.generate(
+          length, (_) => _chars.codeUnitAt(Random().nextInt(_chars.length))));
 
   //ACCOUNT INFO
   static const String _refCacheKey = "referenceNumber";
@@ -74,6 +78,10 @@ class AuthBloc implements BlocBase {
     }
   }
 
+  final BehaviorSubject<Account?> _currentAccountController =
+      BehaviorSubject<Account?>();
+  Stream<Account?> get accountStream => _currentAccountController.stream;
+
   bool get isLoggedIn => cache.containsKey(_refCacheKey);
 
   //ACCOUNT INFO
@@ -84,6 +92,7 @@ class AuthBloc implements BlocBase {
     } else {
       print("DELETING ACCOUNT");
     }
+    _currentAccountController.add(newValue);
     _account = newValue;
   }
 
@@ -92,7 +101,8 @@ class AuthBloc implements BlocBase {
     referenceNumber = null;
   }
 
-  Account? get currentAccount => _account;
+  Account? get currentAccount =>
+      _currentAccountController.valueOrNull ?? _account;
   Future getAccountInfo() async {
     try {
       String? refNumber = referenceNumber ?? pendingReferenceNumber;
