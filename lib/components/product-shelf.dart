@@ -31,7 +31,7 @@ class ProductShelf extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: products.map(
               (product) {
-                return _ProductCard(
+                return ProductCard(
                   product,
                   selected: state.value == product,
                   onChanged: (isSelected) => state.didChange(product),
@@ -55,13 +55,14 @@ class ProductShelf extends StatelessWidget {
   }
 }
 
-class _ProductCard extends StatelessWidget {
+class ProductCard extends StatelessWidget {
   final Product product;
   final ValueChanged<bool>? onChanged;
   final bool selected;
   final double _padding;
 
-  const _ProductCard(this.product, {this.selected = false, this.onChanged})
+  const ProductCard(this.product,
+      {super.key, this.selected = false, this.onChanged})
       : _padding = 30;
 
   @override

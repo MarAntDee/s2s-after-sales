@@ -8,7 +8,7 @@ import 'base.dart';
 
 class ShopKeeper implements BlocBase {
   //CART
-  Product? product;
+  Product? selectedProduct;
   final Completer<List<Product>> _productListCompleter =
       Completer<List<Product>>();
   Future<List<Product>> get getProductList => _productListCompleter.future;
