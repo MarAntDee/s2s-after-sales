@@ -14,39 +14,54 @@ class HomePanel extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 8),
       color: _theme.primaryColor,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: ["Buy", "Pay", "Logout"]
-            .map((key) => Material(
-                  color: Colors.transparent,
-                  child: InkWell(
-                    onTap: () {
-                      _auth.logout();
-                      Navigator.of(context).popUntilLogin();
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 20),
-                      child: Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 20)
-                                .copyWith(bottom: 8),
-                            child: SvgPicture.asset(
-                              "$_iconPath${key.toString()}.svg",
-                              width: 40,
-                              height: 40,
-                            ),
+      child: Center(
+        child: ConstrainedBox(
+          constraints: BoxConstraints(
+            maxWidth: 540,
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: ["Buy", "Logout"]
+                .map((key) => Material(
+                      color: Colors.transparent,
+                      child: InkWell(
+                        onTap: () {
+                          switch (key) {
+                            case "Logout":
+                              _auth.logout();
+                              Navigator.of(context).popUntilLogin();
+                              break;
+                            case "Buy":
+                              Navigator.of(context).pushToShop();
+                              break;
+                          }
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 20),
+                          child: Column(
+                            children: [
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 20)
+                                        .copyWith(bottom: 8),
+                                child: SvgPicture.asset(
+                                  "$_iconPath${key.toString()}.svg",
+                                  width: 40,
+                                  height: 40,
+                                ),
+                              ),
+                              Text(
+                                key,
+                                style: _theme.primaryTextTheme.bodySmall,
+                              ),
+                            ],
                           ),
-                          Text(
-                            key,
-                            style: _theme.primaryTextTheme.bodySmall,
-                          ),
-                        ],
+                        ),
                       ),
-                    ),
-                  ),
-                ))
-            .toList(),
+                    ))
+                .toList(),
+          ),
+        ),
       ),
     );
   }
