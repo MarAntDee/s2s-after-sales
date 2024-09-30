@@ -18,6 +18,7 @@ class LoadingScreen extends StatefulWidget {
       builder: (context) {
         return const LoadingScreen();
       },
+      settings: settings,
     );
   }
 }
@@ -76,6 +77,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
   }
 
   Future<void> navigationPage() async {
+    if (Routers.currentRoute != "/") return;
     if (_auth.isLoggedIn) {
       Navigator.of(context).popUntilHome();
     } else {

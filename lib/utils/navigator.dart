@@ -2,12 +2,19 @@ import 'dart:developer';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:s2s_after_sales/screens/home.dart';
+import 'package:s2s_after_sales/screens/login.dart';
+import 'package:s2s_after_sales/screens/payment-failed.dart';
+import 'package:s2s_after_sales/screens/payment-success.dart';
 
-import '../screens/home.dart';
-import '../screens/login.dart';
+import '../screens/404.dart';
 import '../screens/splash.dart';
 
 extension NavHandler on NavigatorState {
+  Future popUntilRoot() async => pushReplacementNamed(
+        Routers.splash,
+      );
+
   Future popUntilHome() async => pushReplacementNamed(
         Routers.homeScreen,
       );
@@ -22,7 +29,9 @@ class Routers {
 
   static const String splash = "/",
       homeScreen = "/home",
-      loginScreen = "/login";
+      loginScreen = "/login",
+      paymentFailedScreen = "/payment-failed",
+      paymentSuccessScreen = "/payment-success";
 
   static String currentRoute = splash;
   static String previousCustomerRoute = splash;
@@ -34,20 +43,16 @@ class Routers {
     switch (routeSettings.name) {
       case splash:
         return LoadingScreen.route(routeSettings);
-      case homeScreen:
-        return HomePage.route(routeSettings);
       case loginScreen:
         return LoginPage.route(routeSettings);
+      case homeScreen:
+        return HomePage.route(routeSettings);
+      case paymentFailedScreen:
+        return PaymentFailedPage.route(routeSettings);
+      case paymentSuccessScreen:
+        return PaymentSuccessPage.route(routeSettings);
       default:
-        return BlurredRouter(
-          builder: (context) {
-            return const Scaffold(
-              body: Center(
-                child: Text("No page found"),
-              ),
-            );
-          },
-        );
+        return Page404.route(routeSettings);
     }
   }
 }
