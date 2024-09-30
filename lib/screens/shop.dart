@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:s2s_after_sales/models/products.dart';
 import 'package:s2s_after_sales/utils/api.dart';
 
 import '../utils/navigator.dart';
@@ -17,12 +18,22 @@ class Shop extends StatelessWidget {
         appBar: AppBar(
           title: const Text("Buy Load"),
         ),
-        body: Center(
-          child: ElevatedButton(
-            onPressed: ProdApi().getProducts,
-            child: Text("Get SKU List"),
-          ),
-        ),
+        body: FutureBuilder<List<Product>>(
+            future: ProdApi().getProducts(),
+            builder: (context, products) {
+              if (!products.hasData)
+                return const Center(
+                  child: SizedBox.square(
+                    dimension: 60,
+                    child: CircularProgressIndicator(),
+                  ),
+                );
+              return ListView(
+                children: products.data!
+                    .map((product) => Text(product.toString()))
+                    .toList(),
+              );
+            }),
       ),
     );
   }

@@ -1,4 +1,6 @@
-class Product {
+import '../utils/dev-tools.dart';
+
+class Product with MappedModel {
   final int sku;
   final String name;
   final String? description;
@@ -13,4 +15,12 @@ class Product {
           map['description'],
           double.tryParse(map['price']) ?? 0,
         );
+
+  @override
+  Map toMap() => {
+        "SKU": sku,
+        "Name": name,
+        if (description != null) "Description": description,
+        "Price": price,
+      };
 }

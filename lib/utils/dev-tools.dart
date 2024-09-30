@@ -2,6 +2,10 @@ import 'dart:math' as math;
 
 mixin MappedModel {
   Map toMap() => {};
+
+  @override
+  String toString() =>
+      "${runtimeType.toString().toUpperCase()}${toMap().entries.map((entry) => "\n${"\t" * 8}${entry.key.toString().toUpperCase()}:${"\t" * 4}${entry.value.toString().toUpperCase()}").join()}";
 }
 
 class DevTools {
