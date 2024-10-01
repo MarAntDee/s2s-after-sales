@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:s2s_after_sales/blocs/auth.dart';
 
 import '../blocs/shopkeeper.dart';
 import '../models/products.dart';
@@ -13,6 +14,7 @@ class ProductShelf extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    AuthBloc auth = AuthBloc.instance(context)!;
     ThemeData theme = Theme.of(context);
     ShopKeeper shopkeeper = ShopKeeper.instance(context)!;
 
@@ -25,6 +27,10 @@ class ProductShelf extends StatelessWidget {
             child: FutureBuilder<List<Product>>(
                 future: shopkeeper.getProductList,
                 builder: (context, products) {
+                  if (products.error?.toString() ==
+                      "You are not allowed in this resource") {
+                    auth.logout(autologout: true);
+                  }
                   if (!products.hasData) {
                     return const Center(
                       child: SizedBox.square(

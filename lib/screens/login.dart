@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:s2s_after_sales/blocs/auth.dart';
 import 'package:s2s_after_sales/components/account-form.dart';
 import 'package:s2s_after_sales/components/background.dart';
+import 'package:s2s_after_sales/components/dialogs.dart';
 import 'package:s2s_after_sales/components/otp-form.dart';
 import 'package:s2s_after_sales/theme/boxes.dart';
 
 import '../utils/navigator.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+  final String? error;
+  const LoginPage({Key? key, this.error}) : super(key: key);
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -16,7 +19,9 @@ class LoginPage extends StatefulWidget {
   static route(RouteSettings settings) {
     return BlurredRouter(
       builder: (context) {
-        return LoginPage();
+        return LoginPage(
+          error: (settings.arguments as Map? ?? {})['error'],
+        );
       },
       settings: settings,
     );
@@ -43,6 +48,16 @@ class _LoginPageState extends State<LoginPage> {
           onCancel: () => setState(() => selectedIndex = 0),
         ),
       ];
+
+  @override
+  void initState() {
+    if (widget.error != null) {
+      SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
+        Popup.showError(widget.error);
+      });
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:s2s_after_sales/blocs/auth.dart';
 import 'package:s2s_after_sales/components/transaction-tile.dart';
 import 'package:s2s_after_sales/utils/api.dart';
 import 'package:s2s_after_sales/utils/navigator.dart';
@@ -13,6 +14,8 @@ class PaymentHistoryOverview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
+    AuthBloc auth = AuthBloc.instance(context)!;
+
     return Center(
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 20).copyWith(top: 20),
@@ -70,6 +73,10 @@ class PaymentHistoryOverview extends StatelessWidget {
               child: FutureBuilder<List<Transaction>>(
                 future: ProdApi().getPaymentHistory(),
                 builder: (context, transactions) {
+                  if (transactions.error?.toString() ==
+                      "You are not allowed in this resource") {
+                    auth.logout(autologout: true);
+                  }
                   if (!transactions.hasData) {
                     return const Center(
                       child: SizedBox.square(

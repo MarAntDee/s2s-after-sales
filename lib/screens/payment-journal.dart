@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:s2s_after_sales/blocs/auth.dart';
 
 import '../components/transaction-tile.dart';
 import '../models/transaction.dart';
@@ -10,6 +11,8 @@ class PaymentJournal extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    AuthBloc auth = AuthBloc.instance(context)!;
+
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -23,6 +26,10 @@ class PaymentJournal extends StatelessWidget {
           child: FutureBuilder<List<Transaction>>(
             future: ProdApi().getPaymentHistory(),
             builder: (context, transactions) {
+              if (transactions.error?.toString() ==
+                  "You are not allowed in this resource") {
+                auth.logout(autologout: true);
+              }
               if (!transactions.hasData) {
                 return const Center(
                   child: SizedBox.square(

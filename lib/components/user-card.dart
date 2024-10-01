@@ -117,11 +117,8 @@ class UserCard extends StatelessWidget {
                                   .withOpacity(0.6),
                         ),
                       ),
-                      SizedBox(
-                          width: (auth.currentAccount!.isExpired ?? false)
-                              ? 8
-                              : 14),
-                      if (true)
+                      const SizedBox(width: 14),
+                      if (false)
                         Container(
                           decoration: const BoxDecoration(
                             color: Colors.black,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:s2s_after_sales/blocs/auth.dart';
 import 'package:s2s_after_sales/blocs/shopkeeper.dart';
 import 'package:s2s_after_sales/components/dialogs.dart';
 import 'package:s2s_after_sales/components/product-shelf.dart';
@@ -14,6 +15,7 @@ class ShopCounter extends StatefulWidget {
 }
 
 class _ShopCounterState extends State<ShopCounter> {
+  AuthBloc get auth => AuthBloc.instance(context)!;
   ThemeData get theme => Theme.of(context);
   ShopKeeper get shopKeeper => ShopKeeper.instance(context)!;
 
@@ -71,6 +73,10 @@ class _ShopCounterState extends State<ShopCounter> {
               child: FutureBuilder<List<PaymentMethod>>(
                 future: shopKeeper.getPaymentMethodList,
                 builder: (context, paymentMethods) {
+                  if (paymentMethods.error?.toString() ==
+                      "You are not allowed in this resource") {
+                    auth.logout(autologout: true);
+                  }
                   if (!paymentMethods.hasData) {
                     return const Center(
                       child: SizedBox.square(
@@ -171,7 +177,12 @@ class _ShopCounterState extends State<ShopCounter> {
                     await ProdApi().purchase(shopKeeper.selectedProduct!,
                         shopKeeper.selectedPaymentMethod!);
                   } catch (e) {
-                    Popup.showError(e);
+                    if (e.toString() ==
+                        "You are not allowed in this resource") {
+                      auth.logout(autologout: true);
+                    } else {
+                      Popup.showError(e);
+                    }
                   }
                 },
                 child: const Text("Buy Load"),

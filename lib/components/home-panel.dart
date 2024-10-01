@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:s2s_after_sales/blocs/auth.dart';
 import 'package:s2s_after_sales/utils/navigator.dart';
 
 class HomePanel extends StatelessWidget {
-  final String _iconPath = "icons/";
+  final String _iconPath = "assets/icons/";
 
   const HomePanel({super.key});
   @override
@@ -44,8 +43,8 @@ class HomePanel extends StatelessWidget {
                                 padding:
                                     const EdgeInsets.symmetric(horizontal: 20)
                                         .copyWith(bottom: 8),
-                                child: SvgPicture.asset(
-                                  "$_iconPath${key.toString()}.svg",
+                                child: Image.asset(
+                                  "$_iconPath${key.toString()}.png",
                                   width: 40,
                                   height: 40,
                                 ),

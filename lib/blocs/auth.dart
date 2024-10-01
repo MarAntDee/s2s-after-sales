@@ -1,11 +1,14 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:s2s_after_sales/blocs/base.dart';
+import 'package:s2s_after_sales/main.dart';
 import 'package:s2s_after_sales/models/account.dart';
 import 'package:s2s_after_sales/utils/api.dart';
 import 'package:s2s_after_sales/utils/dev-tools.dart';
+import 'package:s2s_after_sales/utils/navigator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthBloc implements BlocBase {
@@ -95,9 +98,17 @@ class AuthBloc implements BlocBase {
     _account = newValue;
   }
 
-  void logout() {
+  void logout({bool? autologout}) {
+    String? _error = (autologout ?? false)
+        ? "Your account is logged in on another device, please log in again."
+        : null;
     currentAccount = null;
     referenceNumber = null;
+    SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
+      Navigator.of(navigatorKey.currentContext!).popUntilLogin(
+        error: _error,
+      );
+    });
   }
 
   Account? get currentAccount =>

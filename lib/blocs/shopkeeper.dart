@@ -22,8 +22,14 @@ class ShopKeeper implements BlocBase {
       _paymentMethodListCompleter.future;
 
   ShopKeeper._() {
-    _productListCompleter.complete(ProdApi().getProducts());
-    _paymentMethodListCompleter.complete(ProdApi().getPaymentMethods());
+    ProdApi()
+        .getProducts()
+        .then(_productListCompleter.complete)
+        .catchError(_productListCompleter.completeError);
+    ProdApi()
+        .getPaymentMethods()
+        .then(_paymentMethodListCompleter.complete)
+        .catchError(_paymentMethodListCompleter.completeError);
   }
 
   @override

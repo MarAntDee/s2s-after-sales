@@ -17,7 +17,10 @@ extension NavHandler on NavigatorState {
 
   Future popUntilHome() async => pushReplacementNamed(Routers.homeScreen);
 
-  Future popUntilLogin() async => pushReplacementNamed(Routers.loginScreen);
+  Future popUntilLogin({String? error}) async =>
+      pushReplacementNamed(Routers.loginScreen, arguments: {
+        if (error != null) 'error': error,
+      });
 
   Future pushToShop() async => pushReplacementNamed(Routers.shop);
 
