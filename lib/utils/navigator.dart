@@ -4,8 +4,9 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:s2s_after_sales/screens/home.dart';
 import 'package:s2s_after_sales/screens/login.dart';
-import 'package:s2s_after_sales/screens/payment-failed.dart';
-import 'package:s2s_after_sales/screens/payment-success.dart';
+import 'package:s2s_after_sales/screens/payment-journal.dart';
+import 'package:s2s_after_sales/screens/purchase-failed.dart';
+import 'package:s2s_after_sales/screens/purchase-success.dart';
 import 'package:s2s_after_sales/screens/shop.dart';
 
 import '../screens/404.dart';
@@ -19,6 +20,8 @@ extension NavHandler on NavigatorState {
   Future popUntilLogin() async => pushReplacementNamed(Routers.loginScreen);
 
   Future pushToShop() async => pushReplacementNamed(Routers.shop);
+
+  Future pushToPaymentJournal() async => pushReplacementNamed(Routers.journal);
 }
 
 class Routers {
@@ -27,6 +30,7 @@ class Routers {
   static const String splash = "/",
       homeScreen = "/home",
       loginScreen = "/login",
+      journal = "/payment-history",
       paymentFailedScreen = "/payment-failed",
       paymentSuccessScreen = "/payment-success",
       shop = "/shop";
@@ -45,6 +49,8 @@ class Routers {
         return LoginPage.route(routeSettings);
       case homeScreen:
         return HomePage.route(routeSettings);
+      case journal:
+        return PaymentJournal.route(routeSettings);
       case paymentFailedScreen:
         return PaymentFailedPage.route(routeSettings);
       case paymentSuccessScreen:

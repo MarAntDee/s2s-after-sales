@@ -1,6 +1,9 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:s2s_after_sales/components/transaction-tile.dart';
 import 'package:s2s_after_sales/utils/api.dart';
+import 'package:s2s_after_sales/utils/navigator.dart';
 
 import '../models/transaction.dart';
 
@@ -29,7 +32,7 @@ class PaymentHistoryOverview extends StatelessWidget {
                 Material(
                   color: Colors.transparent,
                   child: InkWell(
-                    onTap: ProdApi().getPaymentHistory,
+                    onTap: Navigator.of(context).pushToPaymentJournal,
                     borderRadius: BorderRadius.circular(15),
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
@@ -77,6 +80,7 @@ class PaymentHistoryOverview extends StatelessWidget {
                   }
                   return ListView(
                     children: transactions.data!
+                        .sublist(0, min(transactions.data!.length, 5))
                         .map((tx) => TransactionTile(tx))
                         .toList(),
                   );
