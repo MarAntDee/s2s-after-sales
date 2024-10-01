@@ -14,9 +14,7 @@ class Shop extends StatefulWidget {
 
   static route(RouteSettings settings) {
     return BlurredRouter(
-      builder: (context) => ShopKeeper.build(
-        child: const Shop(),
-      ),
+      builder: (context) => ShopKeeper.build(child: const Shop()),
       settings: settings,
     );
   }
@@ -37,27 +35,27 @@ class _ShopState extends State<Shop> {
 
   @override
   Widget build(BuildContext context) {
-    return PopScope(
-      canPop: _index == 0,
-      onPopInvoked: (canPop) {
-        switch (_index) {
-          case 1:
-            setState(() => _index = 0);
-            break;
-          default:
-            Navigator.of(context).popUntilHome();
-            break;
-        }
-      },
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text("Buy Load"),
+    return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.chevron_left_rounded),
+          onPressed: () {
+            switch (_index) {
+              case 1:
+                setState(() => _index = 0);
+                break;
+              default:
+                Navigator.of(context).popUntilHome();
+                break;
+            }
+          },
         ),
-        body: Center(
-          child: ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 600),
-            child: _pages[_index],
-          ),
+        title: const Text("Buy Load"),
+      ),
+      body: Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 600),
+          child: _pages[_index],
         ),
       ),
     );
