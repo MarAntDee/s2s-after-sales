@@ -27,6 +27,9 @@ abstract class PCApi {
   Future<List<PaymentMethod>> getPaymentMethods();
   Future purchase(Product product, PaymentMethod method);
 
+  //PAYMENT HISTORY
+  Future getPaymentHistory();
+
   static HttpWithMiddleware http(String method) => HttpWithMiddleware.build(
         requestTimeout: const Duration(seconds: 30),
         middlewares: [
@@ -229,6 +232,33 @@ class ProdApi implements PCApi {
       return;
     } catch (e) {
       PCApi._logError("PURCHASE", e);
+      if (e is String) rethrow;
+      if (e is SocketException) throw ("No internet");
+      if (e is Map) rethrow;
+      throw ("Unknown error");
+    }
+  }
+
+  @override
+  Future getPaymentHistory() async {
+    try {
+      Map res = await _http("GETTING PAYMENT HISTORY")
+          .get(
+            url(path: "/history"),
+            headers: header(),
+          )
+          .then((res) => jsonDecode(res.body));
+
+      if (!(res['status'] ?? false) || (res['code'] ?? 200) != 200) {
+        throw res.putIfAbsent('message', () => 'Unknown error');
+      }
+      if (res['data'] is! Map<String, dynamic>?) {
+        throw "Invalid response body structure";
+      }
+      if (res['data'] == null) throw "Missing response body";
+      return;
+    } catch (e) {
+      PCApi._logError("GETTING PAYMENT HISTORY", e);
       if (e is String) rethrow;
       if (e is SocketException) throw ("No internet");
       if (e is Map) rethrow;

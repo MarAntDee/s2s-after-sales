@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:s2s_after_sales/utils/api.dart';
 
 class PaymentHistoryOverview extends StatelessWidget {
   const PaymentHistoryOverview({super.key});
@@ -25,7 +26,7 @@ class PaymentHistoryOverview extends StatelessWidget {
                 Material(
                   color: Colors.transparent,
                   child: InkWell(
-                    onTap: () {},
+                    onTap: ProdApi().getPaymentHistory,
                     borderRadius: BorderRadius.circular(15),
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
