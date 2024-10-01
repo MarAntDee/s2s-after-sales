@@ -3,6 +3,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:s2s_after_sales/blocs/auth.dart';
 import 'package:s2s_after_sales/components/background.dart';
 import 'package:s2s_after_sales/components/home-panel.dart';
+import 'package:s2s_after_sales/components/payment-history-overview.dart';
 import 'package:s2s_after_sales/components/user-card.dart';
 import 'package:s2s_after_sales/theme/app.dart';
 
@@ -128,8 +129,8 @@ class _HomePageState extends State<HomePage> {
                     const UserCard(),
                   ],
                 ),
-                HomePanel(),
-                Spacer(),
+                const HomePanel(),
+                const Expanded(child: PaymentHistoryOverview()),
               ],
             ),
           );

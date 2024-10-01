@@ -15,4 +15,9 @@ class AppBoxes {
         color: _theme.colorScheme.surface,
         borderRadius: BorderRadius.circular(8),
       );
+
+  BoxDecoration get txTile => BoxDecoration(
+        color: _theme.colorScheme.surface,
+        borderRadius: BorderRadius.circular(8),
+      );
 }
