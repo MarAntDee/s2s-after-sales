@@ -4,6 +4,7 @@ import 'package:s2s_after_sales/utils/dev-tools.dart';
 class Transaction with MappedModel {
   final int id, sku, _timestampCreated;
   final String accountNumber,
+      title,
       paymentId,
       transactionNumber,
       paymentReferenceNumber,
@@ -11,7 +12,6 @@ class Transaction with MappedModel {
       dateCreatedText;
   final double price;
 
-  String get title => "Bought SuperFiber1-6G";
   String get priceText => "₱\t${NumberFormat('#,##0.00').format(price)}";
 
   DateTime get dateCreated =>
@@ -22,6 +22,7 @@ class Transaction with MappedModel {
     this.sku,
     this._timestampCreated,
     this.accountNumber,
+    this.title,
     this.paymentId,
     this.transactionNumber,
     this.paymentReferenceNumber,
@@ -35,6 +36,7 @@ class Transaction with MappedModel {
       int.parse(map['skuId'].toString()),
       int.parse(map['createdDate'].toString()),
       map['accountNumber'].toString(),
+      map['title'] ?? "Bought SuperFiber1-6G",
       map['paymentId'].toString(),
       map['transactionNumber'].toString(),
       map['paymentReferenceNumber'].toString(),
