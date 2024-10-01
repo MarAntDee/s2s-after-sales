@@ -35,8 +35,7 @@ class AuthBloc implements BlocBase {
 
   Future verifyAccount(String code) async {
     try {
-      bool success =
-          await ProdApi().verifyAccount(code, pendingReferenceNumber!);
+      bool success = await ProdApi().verifyAccount(code);
       if (!success) throw "OTP Verification failed please try again";
       await getAccountInfo();
       referenceNumber = pendingReferenceNumber;
@@ -107,7 +106,7 @@ class AuthBloc implements BlocBase {
     try {
       String? refNumber = referenceNumber ?? pendingReferenceNumber;
       if (refNumber == null) throw "Unknown Reference Number";
-      currentAccount = await ProdApi().getAccount(refNumber);
+      currentAccount = await ProdApi().getAccount();
     } catch (e) {
       print("AUTHBLOC GET ACCOUNT INFO ERROR: ${e.toString()}");
       rethrow;
