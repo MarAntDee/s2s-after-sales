@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:s2s_after_sales/components/dialogs.dart';
 import 'package:s2s_after_sales/models/transaction.dart';
 import 'package:s2s_after_sales/theme/boxes.dart';
 
@@ -33,7 +34,7 @@ class TransactionTile extends StatelessWidget {
           ),
         ),
         tileColor: Colors.transparent,
-        onTap: () {},
+        onTap: () => Popup.showPaymentDetails(_transaction),
       ),
     );
   }

@@ -259,6 +259,8 @@ class ProdApi implements PCApi {
       if (res['data']?['history'] == null) throw "Missing response body";
       return List.from(res['data']!['history'])
           .map<Transaction>((payload) => Transaction.fromMap(payload))
+          .toList()
+          .reversed
           .toList();
     } catch (e) {
       PCApi._logError("GETTING PAYMENT HISTORY", e);

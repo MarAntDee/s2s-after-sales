@@ -12,7 +12,7 @@ class Transaction with MappedModel {
   final double price;
 
   String get title => "Bought SuperFiber1-6G";
-  String get priceText => NumberFormat('#,##0.00').format(price);
+  String get priceText => "₱\t${NumberFormat('#,##0.00').format(price)}";
 
   DateTime get dateCreated =>
       DateTime.fromMillisecondsSinceEpoch(_timestampCreated);
@@ -44,13 +44,10 @@ class Transaction with MappedModel {
 
   @override
   Map toMap() => {
-        "ID": id,
-        "Sku": sku,
-        "Price": price,
+        "Price": priceText,
         "Account Number": accountNumber,
         "Status": status,
         "Payment ID": paymentId,
-        "Payment Reference Number": paymentReferenceNumber,
         "Transaction Number": transactionNumber,
         "Date Created": dateCreatedText,
       };
