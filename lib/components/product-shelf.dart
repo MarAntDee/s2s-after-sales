@@ -1,52 +1,96 @@
 import 'package:flutter/material.dart';
 
+import '../blocs/shopkeeper.dart';
 import '../models/products.dart';
 
 class ProductShelf extends StatelessWidget {
-  final List<Product> products;
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   final Product? initialProduct;
   final FormFieldValidator<Product>? validator;
   final FormFieldSetter<Product>? onSaved;
-  const ProductShelf(this.products,
-      {super.key, this.validator, this.onSaved, this.initialProduct});
+  ProductShelf({super.key, this.validator, this.onSaved, this.initialProduct});
 
   @override
   Widget build(BuildContext context) {
-    return FormField<Product>(
-      initialValue: initialProduct,
-      validator: validator,
-      onSaved: onSaved,
-      builder: (state) => ListView(
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.only(left: 30.0),
-            child: Text(
-              state.errorText ?? "",
-              style: Theme.of(state.context).textTheme.caption!.apply(
-                    color: Theme.of(state.context).errorColor,
-                  ),
-            ),
+    ThemeData theme = Theme.of(context);
+    ShopKeeper shopkeeper = ShopKeeper.instance(context)!;
+
+    return Form(
+      key: _formKey,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Expanded(
+            child: FutureBuilder<List<Product>>(
+                future: shopkeeper.getProductList,
+                builder: (context, products) {
+                  if (!products.hasData) {
+                    return const Center(
+                      child: SizedBox.square(
+                        dimension: 60,
+                        child: CircularProgressIndicator(),
+                      ),
+                    );
+                  }
+                  return FormField<Product>(
+                    initialValue: initialProduct,
+                    validator: validator,
+                    onSaved: onSaved,
+                    builder: (state) => ListView(
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.only(left: 30.0),
+                          child: Text(
+                            state.errorText ?? "",
+                            style: Theme.of(state.context)
+                                .textTheme
+                                .caption!
+                                .apply(
+                                  color: Theme.of(state.context).errorColor,
+                                ),
+                          ),
+                        ),
+                        Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: products.data!.map(
+                            (product) {
+                              return ProductCard(
+                                product,
+                                selected: state.value == product,
+                                onChanged: (isSelected) =>
+                                    state.didChange(product),
+                              );
+                            },
+                          ).toList(),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(
+                              left: 30.0, bottom: state.hasError ? 20 : 0),
+                          child: Text(
+                            state.errorText ?? "",
+                            style: Theme.of(state.context)
+                                .textTheme
+                                .caption!
+                                .apply(
+                                  color: Theme.of(state.context).errorColor,
+                                ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                }),
           ),
-          Column(
-            mainAxisSize: MainAxisSize.min,
-            children: products.map(
-              (product) {
-                return ProductCard(
-                  product,
-                  selected: state.value == product,
-                  onChanged: (isSelected) => state.didChange(product),
-                );
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+            child: ElevatedButton(
+              onPressed: () async {
+                if (_formKey.currentState!.validate()) {
+                  _formKey.currentState!.save();
+                }
               },
-            ).toList(),
-          ),
-          Padding(
-            padding:
-                EdgeInsets.only(left: 30.0, bottom: state.hasError ? 20 : 0),
-            child: Text(
-              state.errorText ?? "",
-              style: Theme.of(state.context).textTheme.caption!.apply(
-                    color: Theme.of(state.context).errorColor,
-                  ),
+              child: const Text("Next"),
             ),
           ),
         ],
