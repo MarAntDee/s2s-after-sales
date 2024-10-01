@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:js' as js;
 import 'dart:math' as math;
 
 import 'package:pretty_http_logger/pretty_http_logger.dart';
@@ -223,6 +224,8 @@ class ProdApi implements PCApi {
         throw "Invalid response body structure";
       }
       if (res['data'] == null) throw "Missing response body";
+      String redirectUrl = res['data']!['redirectUrl'];
+      js.context.callMethod('open', [redirectUrl, '_self']);
       return;
     } catch (e) {
       PCApi._logError("PURCHASE", e);

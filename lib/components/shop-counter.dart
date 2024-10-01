@@ -1,5 +1,3 @@
-import 'dart:js' as js;
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:s2s_after_sales/blocs/shopkeeper.dart';
@@ -172,8 +170,6 @@ class _ShopCounterState extends State<ShopCounter> {
                       throw "Please select your preferred payment method";
                     await ProdApi().purchase(shopKeeper.selectedProduct!,
                         shopKeeper.selectedPaymentMethod!);
-                    js.context.callMethod('open',
-                        ['https://stackoverflow.com/questions/ask', '_self']);
                   } catch (e) {
                     Popup.showError(e);
                   }
