@@ -1,3 +1,4 @@
+import 'package:intl/intl.dart';
 import 'package:s2s_after_sales/utils/dev-tools.dart';
 
 class Transaction with MappedModel {
@@ -9,6 +10,9 @@ class Transaction with MappedModel {
       status,
       dateCreatedText;
   final double price;
+
+  String get title => "Bought SuperFiber1-6G";
+  String get priceText => NumberFormat('#,##0.00').format(price);
 
   DateTime get dateCreated =>
       DateTime.fromMillisecondsSinceEpoch(_timestampCreated);

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:s2s_after_sales/components/transaction-tile.dart';
 import 'package:s2s_after_sales/utils/api.dart';
 
 import '../models/transaction.dart';
@@ -61,6 +62,7 @@ class PaymentHistoryOverview extends StatelessWidget {
                 ),
               ],
             ),
+            const SizedBox(height: 16),
             Expanded(
               child: FutureBuilder<List<Transaction>>(
                 future: ProdApi().getPaymentHistory(),
@@ -75,7 +77,7 @@ class PaymentHistoryOverview extends StatelessWidget {
                   }
                   return ListView(
                     children: transactions.data!
-                        .map((tx) => Text(tx.toString()))
+                        .map((tx) => TransactionTile(tx))
                         .toList(),
                   );
                 },
