@@ -1,6 +1,9 @@
+import 'dart:js' as js;
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:s2s_after_sales/blocs/shopkeeper.dart';
+import 'package:s2s_after_sales/components/dialogs.dart';
 import 'package:s2s_after_sales/components/product-shelf.dart';
 import 'package:s2s_after_sales/models/payment-method.dart';
 import 'package:s2s_after_sales/utils/api.dart';
@@ -158,9 +161,23 @@ class _ShopCounterState extends State<ShopCounter> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16)
+                  .copyWith(bottom: 32),
               child: ElevatedButton(
-                onPressed: ProdApi().getPaymentMethods,
+                onPressed: () async {
+                  try {
+                    if (shopKeeper.selectedProduct == null)
+                      throw "Please select a product to purchase";
+                    if (shopKeeper.selectedPaymentMethod == null)
+                      throw "Please select your preferred payment method";
+                    await ProdApi().purchase(shopKeeper.selectedProduct!,
+                        shopKeeper.selectedPaymentMethod!);
+                    js.context.callMethod('open',
+                        ['https://stackoverflow.com/questions/ask', '_self']);
+                  } catch (e) {
+                    Popup.showError(e);
+                  }
+                },
                 child: const Text("Buy Load"),
               ),
             ),

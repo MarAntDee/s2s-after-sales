@@ -83,7 +83,8 @@ class ProductShelf extends StatelessWidget {
                 }),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16)
+                .copyWith(bottom: 32),
             child: ElevatedButton(
               onPressed: () async {
                 if (_formKey.currentState!.validate()) {
