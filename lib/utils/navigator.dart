@@ -6,22 +6,19 @@ import 'package:s2s_after_sales/screens/home.dart';
 import 'package:s2s_after_sales/screens/login.dart';
 import 'package:s2s_after_sales/screens/payment-failed.dart';
 import 'package:s2s_after_sales/screens/payment-success.dart';
+import 'package:s2s_after_sales/screens/shop.dart';
 
 import '../screens/404.dart';
 import '../screens/splash.dart';
 
 extension NavHandler on NavigatorState {
-  Future popUntilRoot() async => pushReplacementNamed(
-        Routers.splash,
-      );
+  Future popUntilRoot() async => pushReplacementNamed(Routers.splash);
 
-  Future popUntilHome() async => pushReplacementNamed(
-        Routers.homeScreen,
-      );
+  Future popUntilHome() async => pushReplacementNamed(Routers.homeScreen);
 
-  Future popUntilLogin() async => pushReplacementNamed(
-        Routers.loginScreen,
-      );
+  Future popUntilLogin() async => pushReplacementNamed(Routers.loginScreen);
+
+  Future pushToShop() async => pushReplacementNamed(Routers.shop);
 }
 
 class Routers {
@@ -31,7 +28,8 @@ class Routers {
       homeScreen = "/home",
       loginScreen = "/login",
       paymentFailedScreen = "/payment-failed",
-      paymentSuccessScreen = "/payment-success";
+      paymentSuccessScreen = "/payment-success",
+      shop = "/shop";
 
   static String currentRoute = splash;
   static String previousCustomerRoute = splash;
@@ -51,6 +49,8 @@ class Routers {
         return PaymentFailedPage.route(routeSettings);
       case paymentSuccessScreen:
         return PaymentSuccessPage.route(routeSettings);
+      case shop:
+        return Shop.route(routeSettings);
       default:
         return Page404.route(routeSettings);
     }

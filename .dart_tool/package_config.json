@@ -104,6 +104,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "intl",
+      "rootUri": "file:///Users/dee/.pub-cache/hosted/pub.dev/intl-0.18.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "lints",
       "rootUri": "file:///Users/dee/.pub-cache/hosted/pub.dev/lints-2.1.1",
       "packageUri": "lib/",
@@ -338,7 +344,7 @@
       "languageVersion": "3.2"
     }
   ],
-  "generated": "2024-09-30T07:18:35.313810Z",
+  "generated": "2024-10-01T02:43:04.755385Z",
   "generator": "pub",
   "generatorVersion": "3.2.0"
 }

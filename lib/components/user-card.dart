@@ -83,7 +83,7 @@ class UserCard extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
-                            ...[
+                            if (auth.currentAccount!.isExpired ?? false) ...[
                               const SizedBox(width: 8),
                               Icon(
                                 Icons.warning_amber_rounded,
@@ -93,7 +93,7 @@ class UserCard extends StatelessWidget {
                             const SizedBox(width: 8),
                             Flexible(
                               child: Text(
-                                "SuperFiber 1-6G",
+                                auth.currentAccount!.currentProduct ?? "",
                                 textAlign: TextAlign.right,
                                 style: _theme.textTheme.titleLarge,
                                 overflow: TextOverflow.ellipsis,
@@ -109,12 +109,18 @@ class UserCard extends StatelessWidget {
                     children: [
                       const Spacer(),
                       Text(
-                        "expired last 2024-09-13 16:13:01",
+                        auth.currentAccount!.expirationText ?? "",
                         style: _theme.textTheme.bodySmall!.copyWith(
-                          color: _theme.colorScheme.error,
+                          color: (auth.currentAccount!.isExpired ?? false)
+                              ? _theme.colorScheme.error
+                              : _theme.colorScheme.onBackground
+                                  .withOpacity(0.6),
                         ),
                       ),
-                      const SizedBox(width: (true) ? 8 : 14),
+                      SizedBox(
+                          width: (auth.currentAccount!.isExpired ?? false)
+                              ? 8
+                              : 14),
                       if (true)
                         Container(
                           decoration: const BoxDecoration(

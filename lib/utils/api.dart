@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:js' as js;
 import 'dart:math' as math;
 
 import 'package:pretty_http_logger/pretty_http_logger.dart';
@@ -7,6 +8,8 @@ import 'package:s2s_after_sales/blocs/auth.dart';
 import 'package:s2s_after_sales/main.dart';
 
 import '../models/account.dart';
+import '../models/payment-method.dart';
+import '../models/products.dart';
 
 abstract class PCApi {
   late final String server;
@@ -16,8 +19,13 @@ abstract class PCApi {
 
   //CHECK ACCOUNT
   Future<Map<String, dynamic>> checkAccount(String accountNumber);
-  Future<bool> verifyAccount(String pincode, String referenceNumber);
-  Future<Account> getAccount(String referenceNumber);
+  Future<bool> verifyAccount(String pincode);
+  Future<Account> getAccount();
+
+  //SHOP
+  Future<List<Product>> getProducts();
+  Future<List<PaymentMethod>> getPaymentMethods();
+  Future purchase(Product product, PaymentMethod method);
 
   static HttpWithMiddleware http(String method) => HttpWithMiddleware.build(
         requestTimeout: const Duration(seconds: 30),
@@ -85,13 +93,12 @@ class ProdApi implements PCApi {
   }
 
   @override
-  Future<bool> verifyAccount(String pincode, String referenceNumber) async {
+  Future<bool> verifyAccount(String pincode) async {
     try {
       Map res = await _http("VERIFYING ACCOUNT").post(
         url(path: "/verify-otp"),
         headers: header(),
         body: {
-          "referenceNumber": referenceNumber,
           "pincode": pincode,
         },
       ).then((res) => jsonDecode(res.body));
@@ -110,7 +117,7 @@ class ProdApi implements PCApi {
   }
 
   @override
-  Future<Account> getAccount(String referenceNumber) async {
+  Future<Account> getAccount() async {
     try {
       Map res = await _http("GETTING ACCOUNT INFO")
           .get(
@@ -130,6 +137,98 @@ class ProdApi implements PCApi {
       return Account.fromMap(res['data']);
     } catch (e) {
       PCApi._logError("GETTING ACCOUNT INFO", e);
+      if (e is String) rethrow;
+      if (e is SocketException) throw ("No internet");
+      if (e is Map) rethrow;
+      throw ("Unknown error");
+    }
+  }
+
+  @override
+  Future<List<Product>> getProducts() async {
+    try {
+      Map res = await _http("GETTING PRODUCT LIST")
+          .get(
+            url(path: "/sku-list"),
+            headers: header(),
+          )
+          .then((res) => jsonDecode(res.body));
+
+      if (!(res['status'] ?? false) || (res['code'] ?? 200) != 200) {
+        throw res.putIfAbsent('message', () => 'Unknown error');
+      }
+      if (res['data'] is! Map<String, dynamic>?) {
+        throw "Invalid response body structure";
+      }
+      if (res['data']?['list'] == null) throw "Missing response body";
+      return List.from(res['data']!['list'])
+          .map<Product>((payload) => Product.fromMap(payload))
+          .toList();
+    } catch (e) {
+      PCApi._logError("GETTING PRODUCT LIST ERROR", e);
+      if (e is String) rethrow;
+      if (e is SocketException) throw ("No internet");
+      if (e is Map) rethrow;
+      throw ("Unknown error");
+    }
+  }
+
+  @override
+  Future<List<PaymentMethod>> getPaymentMethods() async {
+    try {
+      Map res = await _http("GETTING PAYMENT METHOD")
+          .get(
+            url(path: "/payment-methods"),
+            headers: header(),
+          )
+          .then((res) => jsonDecode(res.body));
+
+      if (!(res['status'] ?? false) || (res['code'] ?? 200) != 200) {
+        throw res.putIfAbsent('message', () => 'Unknown error');
+      }
+      if (res['data'] is! Map<String, dynamic>?) {
+        throw "Invalid response body structure";
+      }
+      if (res['data']?['paymentMethods'] == null) throw "Missing response body";
+      return List.from(res['data']!['paymentMethods'])
+          .map<PaymentMethod>((payload) => PaymentMethod.fromMap(payload))
+          .toList();
+    } catch (e) {
+      PCApi._logError("GETTING PAYMENT METHOD", e);
+      if (e is String) rethrow;
+      if (e is SocketException) throw ("No internet");
+      if (e is Map) rethrow;
+      throw ("Unknown error");
+    }
+  }
+
+  @override
+  Future purchase(Product product, PaymentMethod method) async {
+    try {
+      Map res = await _http(
+              "PURCHASE ${product.name.toUpperCase()} USING ${method.name.toUpperCase()}")
+          .post(
+        url(path: "/payment"),
+        headers: header(),
+        body: {
+          "skuId": product.sku.toString(),
+          "paymentMethod": method.code,
+          "force": true,
+        },
+      ).then((res) => jsonDecode(res.body));
+
+      if (!(res['status'] ?? false) || (res['code'] ?? 200) != 200) {
+        throw res.putIfAbsent('message', () => 'Unknown error');
+      }
+      if (res['data'] is! Map<String, dynamic>?) {
+        throw "Invalid response body structure";
+      }
+      if (res['data'] == null) throw "Missing response body";
+      String redirectUrl = res['data']!['redirectUrl'];
+      js.context.callMethod('open', [redirectUrl, '_self']);
+      return;
+    } catch (e) {
+      PCApi._logError("PURCHASE", e);
       if (e is String) rethrow;
       if (e is SocketException) throw ("No internet");
       if (e is Map) rethrow;

@@ -2,6 +2,7 @@ import '../utils/dev-tools.dart';
 
 class Account with MappedModel {
   final String name, accountNumber, maskedMobileNumber, serialNumber;
+  final String? currentProduct, _productExpirationDate;
 
   String get accountNumberLabel => [
         accountNumber.substring(0, 5),
@@ -9,11 +10,30 @@ class Account with MappedModel {
         accountNumber.substring(9)
       ].join(" ");
 
+  DateTime? get productExpirationDate =>
+      DateTime.tryParse(_productExpirationDate.toString());
+
+  bool? get isExpired {
+    if (productExpirationDate == null) return null;
+    return productExpirationDate!.isBefore(DateTime.now());
+  }
+
+  String? get expirationText {
+    if (isExpired == null)
+      return null;
+    else if (isExpired!)
+      return "expired last $_productExpirationDate";
+    else
+      return "will expire on $_productExpirationDate";
+  }
+
   Account._(
     this.name,
     this.accountNumber,
     this.maskedMobileNumber,
     this.serialNumber,
+    this.currentProduct,
+    this._productExpirationDate,
   );
 
   factory Account.fromMap(Map map) => Account._(
@@ -21,6 +41,8 @@ class Account with MappedModel {
         map['accountNumber'],
         map['mobileNumber'],
         map['serialNumber'],
+        map['package']?['name'],
+        map['package']?['expirationDateLabel'],
       );
 
   @override
@@ -30,8 +52,4 @@ class Account with MappedModel {
         "Masked Mobile Number": maskedMobileNumber,
         "Serial Number": serialNumber,
       };
-
-  @override
-  String toString() =>
-      "ACCOUNT\nNAME:${"\t" * 4}$name\nACCOUNT NUMBER:${"\t" * 4}$accountNumber\nMASKED MOBILE NUMBER:${"\t" * 4}$maskedMobileNumber\nSERIAL NUMBER:${"\t" * 4}$serialNumber";
 }

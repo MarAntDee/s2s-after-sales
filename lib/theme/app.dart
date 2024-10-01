@@ -33,9 +33,11 @@ class AppTheme {
     onSurface: ColorLibrary.darkText,
   );
 
-  static final AppBarTheme _appBarTheme = AppBarTheme(
-    color: ColorLibrary.spanishViolet,
-    foregroundColor: Colors.white,
+  static const AppBarTheme _appBarTheme = AppBarTheme(
+    elevation: 0,
+    backgroundColor: ColorLibrary.background,
+    foregroundColor: ColorLibrary.darkText,
+    centerTitle: false,
   );
 
   static final ButtonStyle _elevatedButtonStyle = ElevatedButton.styleFrom(
