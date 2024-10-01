@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:s2s_after_sales/blocs/shopkeeper.dart';
 import 'package:s2s_after_sales/components/product-shelf.dart';
+import 'package:s2s_after_sales/utils/api.dart';
 
 class ShopCounter extends StatelessWidget {
   const ShopCounter({super.key});
@@ -62,9 +63,7 @@ class ShopCounter extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
           child: ElevatedButton(
-            onPressed: () async {
-              try {} catch (e) {}
-            },
+            onPressed: ProdApi().getPaymentMethods,
             child: const Text("Buy Load"),
           ),
         ),

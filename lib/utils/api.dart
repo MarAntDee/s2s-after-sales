@@ -7,6 +7,7 @@ import 'package:s2s_after_sales/blocs/auth.dart';
 import 'package:s2s_after_sales/main.dart';
 
 import '../models/account.dart';
+import '../models/payment-method.dart';
 import '../models/products.dart';
 
 abstract class PCApi {
@@ -22,6 +23,7 @@ abstract class PCApi {
 
   //SHOP
   Future<List<Product>> getProducts();
+  Future<List<PaymentMethod>> getPaymentMethods();
 
   static HttpWithMiddleware http(String method) => HttpWithMiddleware.build(
         requestTimeout: const Duration(seconds: 30),
@@ -162,6 +164,35 @@ class ProdApi implements PCApi {
           .toList();
     } catch (e) {
       PCApi._logError("GETTING PRODUCT LIST ERROR", e);
+      if (e is String) rethrow;
+      if (e is SocketException) throw ("No internet");
+      if (e is Map) rethrow;
+      throw ("Unknown error");
+    }
+  }
+
+  @override
+  Future<List<PaymentMethod>> getPaymentMethods() async {
+    try {
+      Map res = await _http("GETTING PAYMENT METHOD")
+          .get(
+            url(path: "/payment-methods"),
+            headers: header(),
+          )
+          .then((res) => jsonDecode(res.body));
+
+      if (!(res['status'] ?? false) || (res['code'] ?? 200) != 200) {
+        throw res.putIfAbsent('message', () => 'Unknown error');
+      }
+      if (res['data'] is! Map<String, dynamic>?) {
+        throw "Invalid response body structure";
+      }
+      if (res['data']?['paymentMethods'] == null) throw "Missing response body";
+      return List.from(res['data']!['paymentMethods'])
+          .map<PaymentMethod>((payload) => PaymentMethod.fromMap(payload))
+          .toList();
+    } catch (e) {
+      PCApi._logError("GETTING PAYMENT METHOD", e);
       if (e is String) rethrow;
       if (e is SocketException) throw ("No internet");
       if (e is Map) rethrow;
