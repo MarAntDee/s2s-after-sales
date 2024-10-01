@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:s2s_after_sales/utils/api.dart';
 
+import '../models/transaction.dart';
+
 class PaymentHistoryOverview extends StatelessWidget {
   const PaymentHistoryOverview({super.key});
 
@@ -59,7 +61,26 @@ class PaymentHistoryOverview extends StatelessWidget {
                 ),
               ],
             ),
-            const Spacer(),
+            Expanded(
+              child: FutureBuilder<List<Transaction>>(
+                future: ProdApi().getPaymentHistory(),
+                builder: (context, transactions) {
+                  if (!transactions.hasData) {
+                    return const Center(
+                      child: SizedBox.square(
+                        dimension: 60,
+                        child: CircularProgressIndicator(),
+                      ),
+                    );
+                  }
+                  return ListView(
+                    children: transactions.data!
+                        .map((tx) => Text(tx.toString()))
+                        .toList(),
+                  );
+                },
+              ),
+            ),
           ],
         ),
       ),

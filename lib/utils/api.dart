@@ -6,6 +6,7 @@ import 'dart:math' as math;
 import 'package:pretty_http_logger/pretty_http_logger.dart';
 import 'package:s2s_after_sales/blocs/auth.dart';
 import 'package:s2s_after_sales/main.dart';
+import 'package:s2s_after_sales/models/transaction.dart';
 
 import '../models/account.dart';
 import '../models/payment-method.dart';
@@ -28,7 +29,7 @@ abstract class PCApi {
   Future purchase(Product product, PaymentMethod method);
 
   //PAYMENT HISTORY
-  Future getPaymentHistory();
+  Future<List<Transaction>> getPaymentHistory();
 
   static HttpWithMiddleware http(String method) => HttpWithMiddleware.build(
         requestTimeout: const Duration(seconds: 30),
@@ -240,7 +241,7 @@ class ProdApi implements PCApi {
   }
 
   @override
-  Future getPaymentHistory() async {
+  Future<List<Transaction>> getPaymentHistory() async {
     try {
       Map res = await _http("GETTING PAYMENT HISTORY")
           .get(
@@ -255,8 +256,10 @@ class ProdApi implements PCApi {
       if (res['data'] is! Map<String, dynamic>?) {
         throw "Invalid response body structure";
       }
-      if (res['data'] == null) throw "Missing response body";
-      return;
+      if (res['data']?['history'] == null) throw "Missing response body";
+      return List.from(res['data']!['history'])
+          .map<Transaction>((payload) => Transaction.fromMap(payload))
+          .toList();
     } catch (e) {
       PCApi._logError("GETTING PAYMENT HISTORY", e);
       if (e is String) rethrow;
