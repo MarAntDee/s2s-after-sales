@@ -51,6 +51,7 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   void initState() {
+    if (_auth.isLoggedIn) _auth.logout();
     if (widget.error != null) {
       SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
         Popup.showError(widget.error);

@@ -17,7 +17,7 @@ class PaymentJournal extends StatelessWidget {
       appBar: AppBar(
         leading: IconButton(
             icon: const Icon(Icons.chevron_left_rounded),
-            onPressed: Navigator.of(context).popUntilHome),
+            onPressed: Navigator.of(context).pop),
         title: const Text("Payment History"),
       ),
       body: Center(

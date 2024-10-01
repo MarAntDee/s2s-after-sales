@@ -58,7 +58,7 @@ class _ShopState extends State<Shop> {
                 _shopkeeper.selectedPaymentMethod = null;
                 break;
               default:
-                Navigator.of(context).popUntilHome();
+                Navigator.of(context).pop();
                 break;
             }
           },

@@ -22,9 +22,9 @@ extension NavHandler on NavigatorState {
         if (error != null) 'error': error,
       });
 
-  Future pushToShop() async => pushReplacementNamed(Routers.shop);
+  Future pushToShop() async => pushNamed(Routers.shop);
 
-  Future pushToPaymentJournal() async => pushReplacementNamed(Routers.journal);
+  Future pushToPaymentJournal() async => pushNamed(Routers.journal);
 }
 
 class Routers {

@@ -34,7 +34,7 @@ class _ShopCounterState extends State<ShopCounter> {
               .convenienceFee(shopKeeper.selectedProduct!.price),
         );
   String get totalPriceText {
-    double basePrice = double.tryParse(priceText) ?? 0,
+    double basePrice = double.tryParse(priceText.replaceAll(",", "")) ?? 0,
         convenienceFee = double.tryParse(convenienceFeeText) ?? 0;
     return NumberFormat('#,##0.00').format(basePrice + convenienceFee);
   }
