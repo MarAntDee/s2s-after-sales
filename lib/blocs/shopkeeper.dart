@@ -12,7 +12,9 @@ class ShopKeeper implements BlocBase {
   Product? selectedProduct;
   final Completer<List<Product>> _productListCompleter =
       Completer<List<Product>>();
-  Future<List<Product>> get getProductList => _productListCompleter.future;
+  Future<List<Product>> get getProductList async => (await Future.wait(
+          [_productListCompleter.future, _paymentMethodListCompleter.future]))
+      .first as List<Product>;
 
   //PAYMENT METHOD
   PaymentMethod? selectedPaymentMethod;
