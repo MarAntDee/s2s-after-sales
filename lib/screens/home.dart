@@ -84,7 +84,7 @@ class _HomePageState extends State<HomePage> {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         Container(
-                          height: 310 - 28,
+                          height: 285 - 28,
                           decoration: BoxDecoration(
                             image: const DecorationImage(
                               image: AssetImage("assets/images/login-bg.png"),

@@ -2,11 +2,13 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:s2s_after_sales/blocs/auth.dart';
+import 'package:s2s_after_sales/components/error.dart';
 import 'package:s2s_after_sales/components/transaction-tile.dart';
 import 'package:s2s_after_sales/utils/api.dart';
 import 'package:s2s_after_sales/utils/navigator.dart';
 
 import '../models/transaction.dart';
+import 'empty.dart';
 
 class PaymentHistoryOverview extends StatelessWidget {
   const PaymentHistoryOverview({super.key});
@@ -73,9 +75,13 @@ class PaymentHistoryOverview extends StatelessWidget {
               child: FutureBuilder<List<Transaction>>(
                 future: ProdApi().getPaymentHistory(),
                 builder: (context, transactions) {
-                  if (transactions.error?.toString() ==
-                      "You are not allowed in this resource") {
-                    auth.logout(autologout: true);
+                  if (transactions.hasError) {
+                    if (transactions.error?.toString() ==
+                        "You are not allowed in this resource") {
+                      auth.logout(autologout: true);
+                    } else {
+                      return ErrorDisplay.list(transactions.error);
+                    }
                   }
                   if (!transactions.hasData) {
                     return const Center(
@@ -83,6 +89,12 @@ class PaymentHistoryOverview extends StatelessWidget {
                         dimension: 60,
                         child: CircularProgressIndicator(),
                       ),
+                    );
+                  }
+                  if (transactions.data!.isEmpty) {
+                    return EmptyDisplay.list(
+                      "History is empty",
+                      Icons.book_rounded,
                     );
                   }
                   return ListView(

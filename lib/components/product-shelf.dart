@@ -1,7 +1,7 @@
-import 'dart:html' as html;
-
 import 'package:flutter/material.dart';
 import 'package:s2s_after_sales/blocs/auth.dart';
+import 'package:s2s_after_sales/components/empty.dart';
+import 'package:s2s_after_sales/components/error.dart';
 
 import '../blocs/shopkeeper.dart';
 import '../models/products.dart';
@@ -34,38 +34,7 @@ class ProductShelf extends StatelessWidget {
                         "You are not allowed in this resource") {
                       auth.logout(autologout: true);
                     } else {
-                      return Center(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            const Spacer(),
-                            Icon(
-                              Icons.warning_amber_rounded,
-                              size: 180,
-                              color: theme.colorScheme.onBackground
-                                  .withOpacity(0.3),
-                            ),
-                            const SizedBox(height: 16),
-                            Center(
-                              child: Text(
-                                products.error.toString(),
-                                style: theme.textTheme.headlineSmall!.copyWith(
-                                  color: theme.colorScheme.onBackground
-                                      .withOpacity(0.3),
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(16),
-                              child: ElevatedButton(
-                                onPressed: html.window.location.reload,
-                                child: const Text("Try Again"),
-                              ),
-                            ),
-                            const Spacer(flex: 2),
-                          ],
-                        ),
-                      );
+                      return ErrorDisplay.list(products.error);
                     }
                   }
                   if (!products.hasData) {
@@ -77,27 +46,9 @@ class ProductShelf extends StatelessWidget {
                     );
                   }
                   if (products.data!.isEmpty) {
-                    return Center(
-                      child: Column(
-                        children: [
-                          const Spacer(),
-                          Icon(
-                            Icons.shopping_basket_rounded,
-                            size: 120,
-                            color:
-                                theme.colorScheme.onBackground.withOpacity(0.3),
-                          ),
-                          const SizedBox(height: 16),
-                          Text(
-                            "Shop is empty",
-                            style: theme.textTheme.headlineSmall!.copyWith(
-                              color: theme.colorScheme.onBackground
-                                  .withOpacity(0.3),
-                            ),
-                          ),
-                          const Spacer(flex: 2),
-                        ],
-                      ),
+                    return EmptyDisplay.list(
+                      "Shop is empty",
+                      Icons.shopping_basket_rounded,
                     );
                   }
                   return FormField<Product>(

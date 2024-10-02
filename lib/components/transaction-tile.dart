@@ -16,7 +16,8 @@ class TransactionTile extends StatelessWidget {
       child: ListTile(
         title: Padding(
           padding: const EdgeInsets.only(bottom: 4),
-          child: Row(
+          child: Wrap(
+            direction: Axis.horizontal,
             children: [
               Text(
                 _transaction.title,
