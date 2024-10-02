@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:s2s_after_sales/blocs/shopkeeper.dart';
 import 'package:s2s_after_sales/components/product-shelf.dart';
@@ -23,6 +25,7 @@ class _ShopState extends State<Shop> {
   late List<Widget> _pages;
   int _index = 0;
   ShopKeeper get _shopkeeper => ShopKeeper.instance(context)!;
+  Size get _screen => MediaQuery.sizeOf(context);
 
   @override
   void initState() {
@@ -67,7 +70,8 @@ class _ShopState extends State<Shop> {
       ),
       body: Center(
         child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 600),
+          constraints: BoxConstraints(
+              maxWidth: 600, minHeight: max(_screen.height, 800)),
           child: _pages[_index],
         ),
       ),
