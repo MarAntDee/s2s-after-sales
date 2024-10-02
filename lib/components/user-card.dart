@@ -10,12 +10,12 @@ class UserCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     AuthBloc auth = AuthBloc.instance(context)!;
-    ThemeData _theme = Theme.of(context);
+    ThemeData theme = Theme.of(context);
     return Center(
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 24),
         constraints: const BoxConstraints(maxWidth: 540),
-        height: 250,
+        height: 225,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -23,7 +23,7 @@ class UserCard extends StatelessWidget {
               child: Container(
                 padding: const EdgeInsets.only(top: 18, bottom: 12),
                 decoration: BoxDecoration(
-                  color: _theme.colorScheme.secondary,
+                  color: theme.colorScheme.secondary,
                   borderRadius: const BorderRadius.vertical(
                     top: Radius.circular(15),
                   ),
@@ -41,7 +41,7 @@ class UserCard extends StatelessWidget {
                               padding: const EdgeInsets.only(left: 6),
                               child: Text(
                                 auth.currentAccount!.accountNumberLabel,
-                                style: _theme.primaryTextTheme.titleMedium!
+                                style: theme.primaryTextTheme.titleMedium!
                                     .copyWith(
                                   fontWeight: FontWeight.w700,
                                 ),
@@ -76,7 +76,7 @@ class UserCard extends StatelessWidget {
                       children: [
                         Text(
                           "Current Data Plan",
-                          style: _theme.textTheme.bodySmall!
+                          style: theme.textTheme.bodySmall!
                               .copyWith(fontWeight: FontWeight.w700),
                         ),
                         const SizedBox(height: 4),
@@ -95,7 +95,7 @@ class UserCard extends StatelessWidget {
                               child: Text(
                                 auth.currentAccount!.currentProduct ?? "",
                                 textAlign: TextAlign.right,
-                                style: _theme.textTheme.titleLarge,
+                                style: theme.textTheme.titleLarge,
                                 overflow: TextOverflow.ellipsis,
                                 maxLines: 1,
                               ),
@@ -110,11 +110,10 @@ class UserCard extends StatelessWidget {
                       const Spacer(),
                       Text(
                         auth.currentAccount!.expirationText ?? "",
-                        style: _theme.textTheme.bodySmall!.copyWith(
+                        style: theme.textTheme.bodySmall!.copyWith(
                           color: (auth.currentAccount!.isExpired ?? false)
-                              ? _theme.colorScheme.error
-                              : _theme.colorScheme.onBackground
-                                  .withOpacity(0.6),
+                              ? theme.colorScheme.error
+                              : theme.colorScheme.onBackground.withOpacity(0.6),
                         ),
                       ),
                       const SizedBox(width: 14),
@@ -140,9 +139,9 @@ class UserCard extends StatelessWidget {
                                     .copyWith(top: 6, bottom: 6),
                                 child: Text(
                                   "Buy Again",
-                                  style: _theme.textTheme.bodySmall!.copyWith(
+                                  style: theme.textTheme.bodySmall!.copyWith(
                                     fontWeight: FontWeight.w700,
-                                    color: _theme.colorScheme.highContrast,
+                                    color: theme.colorScheme.highContrast,
                                   ),
                                 ),
                               ),

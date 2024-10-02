@@ -8,57 +8,54 @@ class HomePanel extends StatelessWidget {
   const HomePanel({super.key});
   @override
   Widget build(BuildContext context) {
-    AuthBloc _auth = AuthBloc.instance(context)!;
-    ThemeData _theme = Theme.of(context);
+    AuthBloc auth = AuthBloc.instance(context)!;
+    ThemeData theme = Theme.of(context);
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 8),
-      color: _theme.primaryColor,
+      color: theme.primaryColor,
       child: Center(
         child: ConstrainedBox(
-          constraints: BoxConstraints(
-            maxWidth: 540,
-          ),
+          constraints: const BoxConstraints(maxWidth: 540),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: ["Buy", "Logout"]
-                .map((key) => Material(
-                      color: Colors.transparent,
-                      child: InkWell(
-                        onTap: () {
-                          switch (key) {
-                            case "Logout":
-                              _auth.logout();
-                              Navigator.of(context).popUntilLogin();
-                              break;
-                            case "Buy":
-                              Navigator.of(context).pushToShop();
-                              break;
-                          }
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 20),
-                          child: Column(
-                            children: [
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 20)
-                                        .copyWith(bottom: 8),
-                                child: Image.asset(
-                                  "$_iconPath${key.toString()}.png",
-                                  width: 40,
-                                  height: 40,
-                                ),
-                              ),
-                              Text(
-                                key,
-                                style: _theme.primaryTextTheme.bodySmall,
-                              ),
-                            ],
+            children: ["Buy", "Logout"].map((key) {
+              return Material(
+                color: Colors.transparent,
+                child: InkWell(
+                  onTap: () {
+                    switch (key) {
+                      case "Logout":
+                        auth.logout();
+                        Navigator.of(context).popUntilLogin();
+                        break;
+                      case "Buy":
+                        Navigator.of(context).pushToShop();
+                        break;
+                    }
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 20),
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20)
+                              .copyWith(bottom: 8),
+                          child: Image.asset(
+                            "$_iconPath${key.toString().toLowerCase()}.png",
+                            width: 40,
+                            height: 40,
                           ),
                         ),
-                      ),
-                    ))
-                .toList(),
+                        Text(
+                          key,
+                          style: theme.primaryTextTheme.bodySmall,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              );
+            }).toList(),
           ),
         ),
       ),

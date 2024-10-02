@@ -90,6 +90,7 @@ class ProdApi implements PCApi {
       return Map<String, dynamic>.from(res['data']);
     } catch (e) {
       PCApi._logError("CHECKING ACCOUNT", e);
+      if (e is TimeoutException) throw ("Request timeout");
       if (e is String) rethrow;
       if (e is SocketException) throw ("No internet");
       if (e is Map) rethrow;
@@ -114,6 +115,7 @@ class ProdApi implements PCApi {
       return res['message'].toString() == "Successfully verified OTP";
     } catch (e) {
       PCApi._logError("VERIFYING ACCOUNT", e);
+      if (e is TimeoutException) throw ("Request timeout");
       if (e is String) rethrow;
       if (e is SocketException) throw ("No internet");
       if (e is Map) rethrow;
@@ -142,6 +144,7 @@ class ProdApi implements PCApi {
       return Account.fromMap(res['data']);
     } catch (e) {
       PCApi._logError("GETTING ACCOUNT INFO", e);
+      if (e is TimeoutException) throw ("Request timeout");
       if (e is String) rethrow;
       if (e is SocketException) throw ("No internet");
       if (e is Map) rethrow;
@@ -171,6 +174,7 @@ class ProdApi implements PCApi {
           .toList();
     } catch (e) {
       PCApi._logError("GETTING PRODUCT LIST ERROR", e);
+      if (e is TimeoutException) throw ("Request timeout");
       if (e is String) rethrow;
       if (e is SocketException) throw ("No internet");
       if (e is Map) rethrow;
@@ -200,6 +204,7 @@ class ProdApi implements PCApi {
           .toList();
     } catch (e) {
       PCApi._logError("GETTING PAYMENT METHOD", e);
+      if (e is TimeoutException) throw ("Request timeout");
       if (e is String) rethrow;
       if (e is SocketException) throw ("No internet");
       if (e is Map) rethrow;
@@ -266,6 +271,7 @@ class ProdApi implements PCApi {
           .toList();
     } catch (e) {
       PCApi._logError("GETTING PAYMENT HISTORY", e);
+      if (e is TimeoutException) throw ("Request timeout");
       if (e is String) rethrow;
       if (e is SocketException) throw ("No internet");
       if (e is Map) rethrow;

@@ -10,7 +10,8 @@ class PaymentMethod with MappedModel {
   final double? minTransferFee, additionalFee, minValue, maxValue;
   final bool enableFee;
 
-  ImageProvider get image => AssetImage("assets/images/$code.png");
+  String get _imageDir => "assets/images/$code.png";
+  ImageProvider get image => AssetImage(_imageDir);
 
   double convenienceFee(double amount) {
     if (!enableFee) return 0;
@@ -51,6 +52,7 @@ class PaymentMethod with MappedModel {
         "Code": code,
         "Transfer Fee Rate": transferFeeRate,
         "Enable Fee": enableFee,
+        "Image Directory": _imageDir,
         if (minTransferFee != null) "Minimum Transfer Fee": minTransferFee,
         if (additionalFee != null) "Additional Fee": additionalFee,
         if (minValue != null) "Minimum Value": minValue,

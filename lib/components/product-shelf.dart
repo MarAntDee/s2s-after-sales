@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:s2s_after_sales/blocs/auth.dart';
+import 'package:s2s_after_sales/components/empty.dart';
+import 'package:s2s_after_sales/components/error.dart';
 
 import '../blocs/shopkeeper.dart';
 import '../models/products.dart';
@@ -27,9 +29,13 @@ class ProductShelf extends StatelessWidget {
             child: FutureBuilder<List<Product>>(
                 future: shopkeeper.getProductList,
                 builder: (context, products) {
-                  if (products.error?.toString() ==
-                      "You are not allowed in this resource") {
-                    auth.logout(autologout: true);
+                  if (products.hasError) {
+                    if (products.error?.toString() ==
+                        "You are not allowed in this resource") {
+                      auth.logout(autologout: true);
+                    } else {
+                      return ErrorDisplay.list(products.error);
+                    }
                   }
                   if (!products.hasData) {
                     return const Center(
@@ -39,66 +45,85 @@ class ProductShelf extends StatelessWidget {
                       ),
                     );
                   }
+                  if (products.data!.isEmpty) {
+                    return EmptyDisplay.list(
+                      "Shop is empty",
+                      Icons.shopping_basket_rounded,
+                    );
+                  }
                   return FormField<Product>(
                     initialValue: initialProduct,
                     validator: validator,
                     onSaved: onSaved,
-                    builder: (state) => ListView(
-                      children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.only(left: 30.0),
-                          child: Text(
-                            state.errorText ?? "",
-                            style: Theme.of(state.context)
-                                .textTheme
-                                .caption!
-                                .apply(
-                                  color: Theme.of(state.context).errorColor,
+                    builder: (state) => Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Expanded(
+                          child: ListView(
+                            children: <Widget>[
+                              Padding(
+                                padding: const EdgeInsets.only(left: 30.0),
+                                child: Text(
+                                  state.errorText ?? "",
+                                  style: Theme.of(state.context)
+                                      .textTheme
+                                      .caption!
+                                      .apply(
+                                        color:
+                                            Theme.of(state.context).errorColor,
+                                      ),
                                 ),
+                              ),
+                              Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: products.data!.map(
+                                  (product) {
+                                    return ProductCard(
+                                      product,
+                                      selected: state.value == product,
+                                      onChanged: (isSelected) =>
+                                          state.didChange(product),
+                                    );
+                                  },
+                                ).toList(),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    left: 30.0,
+                                    bottom: state.hasError ? 20 : 0),
+                                child: Text(
+                                  state.errorText ?? "",
+                                  style: Theme.of(state.context)
+                                      .textTheme
+                                      .caption!
+                                      .apply(
+                                        color:
+                                            Theme.of(state.context).errorColor,
+                                      ),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
-                        Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: products.data!.map(
-                            (product) {
-                              return ProductCard(
-                                product,
-                                selected: state.value == product,
-                                onChanged: (isSelected) =>
-                                    state.didChange(product),
-                              );
-                            },
-                          ).toList(),
-                        ),
                         Padding(
-                          padding: EdgeInsets.only(
-                              left: 30.0, bottom: state.hasError ? 20 : 0),
-                          child: Text(
-                            state.errorText ?? "",
-                            style: Theme.of(state.context)
-                                .textTheme
-                                .caption!
-                                .apply(
-                                  color: Theme.of(state.context).errorColor,
-                                ),
+                          padding: const EdgeInsets.symmetric(
+                                  horizontal: 16, vertical: 16)
+                              .copyWith(bottom: 32),
+                          child: ElevatedButton(
+                            onPressed: state.isValid
+                                ? () async {
+                                    if (_formKey.currentState!.validate()) {
+                                      _formKey.currentState!.save();
+                                    }
+                                  }
+                                : null,
+                            child: const Text("Next"),
                           ),
                         ),
                       ],
                     ),
                   );
                 }),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16)
-                .copyWith(bottom: 32),
-            child: ElevatedButton(
-              onPressed: () async {
-                if (_formKey.currentState!.validate()) {
-                  _formKey.currentState!.save();
-                }
-              },
-              child: const Text("Next"),
-            ),
           ),
         ],
       ),
