@@ -105,6 +105,10 @@ class AuthBloc implements BlocBase {
         : null;
     currentAccount = null;
     referenceNumber = null;
+    pendingAccountNumber = "";
+    pendingReferenceNumber = null;
+    maskedMobileNumber = null;
+    pincode = null;
     SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
       Navigator.of(navigatorKey.currentContext!).popUntilLogin(
         error: _error,

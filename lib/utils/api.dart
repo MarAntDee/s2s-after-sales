@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:js' as js;
@@ -233,6 +234,7 @@ class ProdApi implements PCApi {
       return;
     } catch (e) {
       PCApi._logError("PURCHASE", e);
+      if (e is TimeoutException) throw ("Request timeout");
       if (e is String) rethrow;
       if (e is SocketException) throw ("No internet");
       if (e is Map) rethrow;
