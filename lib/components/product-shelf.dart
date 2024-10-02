@@ -39,66 +39,103 @@ class ProductShelf extends StatelessWidget {
                       ),
                     );
                   }
+                  if (products.data!.isEmpty) {
+                    return Center(
+                      child: Column(
+                        children: [
+                          const Spacer(),
+                          Icon(
+                            Icons.shopping_basket_rounded,
+                            size: 120,
+                            color:
+                                theme.colorScheme.onBackground.withOpacity(0.3),
+                          ),
+                          const SizedBox(height: 16),
+                          Text(
+                            "Shop is empty",
+                            style: theme.textTheme.headlineSmall!.copyWith(
+                              color: theme.colorScheme.onBackground
+                                  .withOpacity(0.3),
+                            ),
+                          ),
+                          const Spacer(flex: 2),
+                        ],
+                      ),
+                    );
+                  }
                   return FormField<Product>(
                     initialValue: initialProduct,
                     validator: validator,
                     onSaved: onSaved,
-                    builder: (state) => ListView(
-                      children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.only(left: 30.0),
-                          child: Text(
-                            state.errorText ?? "",
-                            style: Theme.of(state.context)
-                                .textTheme
-                                .caption!
-                                .apply(
-                                  color: Theme.of(state.context).errorColor,
+                    builder: (state) => Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Expanded(
+                          child: ListView(
+                            children: <Widget>[
+                              Padding(
+                                padding: const EdgeInsets.only(left: 30.0),
+                                child: Text(
+                                  state.errorText ?? "",
+                                  style: Theme.of(state.context)
+                                      .textTheme
+                                      .caption!
+                                      .apply(
+                                        color:
+                                            Theme.of(state.context).errorColor,
+                                      ),
                                 ),
+                              ),
+                              Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: products.data!.map(
+                                  (product) {
+                                    return ProductCard(
+                                      product,
+                                      selected: state.value == product,
+                                      onChanged: (isSelected) =>
+                                          state.didChange(product),
+                                    );
+                                  },
+                                ).toList(),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    left: 30.0,
+                                    bottom: state.hasError ? 20 : 0),
+                                child: Text(
+                                  state.errorText ?? "",
+                                  style: Theme.of(state.context)
+                                      .textTheme
+                                      .caption!
+                                      .apply(
+                                        color:
+                                            Theme.of(state.context).errorColor,
+                                      ),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
-                        Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: products.data!.map(
-                            (product) {
-                              return ProductCard(
-                                product,
-                                selected: state.value == product,
-                                onChanged: (isSelected) =>
-                                    state.didChange(product),
-                              );
-                            },
-                          ).toList(),
-                        ),
                         Padding(
-                          padding: EdgeInsets.only(
-                              left: 30.0, bottom: state.hasError ? 20 : 0),
-                          child: Text(
-                            state.errorText ?? "",
-                            style: Theme.of(state.context)
-                                .textTheme
-                                .caption!
-                                .apply(
-                                  color: Theme.of(state.context).errorColor,
-                                ),
+                          padding: const EdgeInsets.symmetric(
+                                  horizontal: 16, vertical: 16)
+                              .copyWith(bottom: 32),
+                          child: ElevatedButton(
+                            onPressed: state.isValid
+                                ? () async {
+                                    if (_formKey.currentState!.validate()) {
+                                      _formKey.currentState!.save();
+                                    }
+                                  }
+                                : null,
+                            child: const Text("Next"),
                           ),
                         ),
                       ],
                     ),
                   );
                 }),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16)
-                .copyWith(bottom: 32),
-            child: ElevatedButton(
-              onPressed: () async {
-                if (_formKey.currentState!.validate()) {
-                  _formKey.currentState!.save();
-                }
-              },
-              child: const Text("Next"),
-            ),
           ),
         ],
       ),
