@@ -16,9 +16,23 @@ class TransactionTile extends StatelessWidget {
       child: ListTile(
         title: Padding(
           padding: const EdgeInsets.only(bottom: 4),
-          child: Text(
-            _transaction.title,
-            style: _theme.textTheme.titleSmall,
+          child: Row(
+            children: [
+              Text(
+                _transaction.title,
+                style: _theme.textTheme.titleSmall,
+              ),
+              if (_transaction.status == "PENDING")
+                Container(
+                  color: Colors.amber[200],
+                  padding: const EdgeInsets.symmetric(horizontal: 4),
+                  margin: const EdgeInsets.only(left: 8),
+                  child: Text(
+                    "Pending",
+                    style: _theme.textTheme.labelLarge,
+                  ),
+                ),
+            ],
           ),
         ),
         subtitle: Text(

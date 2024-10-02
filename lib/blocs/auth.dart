@@ -27,6 +27,7 @@ class AuthBloc implements BlocBase {
         "autolink",
         () => payload["status"] != "NOT_VERIFIED",
       );
+      if (autolink ?? false) referenceNumber = payload["referenceNumber"];
       pendingReferenceNumber = payload["referenceNumber"];
       pincode = payload['pincode'];
       return pincode;

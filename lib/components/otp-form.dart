@@ -147,7 +147,7 @@ class _OTPFormState extends State<OTPForm> with TickerProviderStateMixin {
                                 CustomColorBuilder(context, enabled: _enabled),
                             bgColorBuilder: FixedColorBuilder(_enabled
                                 ? Colors.grey[300]!
-                                : Colors.grey[600]!),
+                                : Colors.grey[400]!),
                           ),
                           currentCode: _code,
                           onCodeSubmitted: (code) {

@@ -35,7 +35,13 @@ class _LoginPageState extends State<LoginPage> {
   int selectedIndex = 0;
   List<Widget> get _pages => [
         AccountForm(
-          onSuccess: () => setState(() => selectedIndex = 1),
+          onSuccess: () async {
+            if (_auth.autolink ?? false) {
+              await _auth.getAccountInfo();
+              Navigator.of(context).popUntilHome();
+            } else
+              setState(() => selectedIndex = 1);
+          },
         ),
         OTPForm(
           initialData: _auth.pincode,
