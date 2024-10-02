@@ -50,29 +50,35 @@ class _ShopState extends State<Shop> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.chevron_left_rounded),
-          onPressed: () {
-            switch (_index) {
-              case 1:
-                setState(() => _index = 0);
-                _shopkeeper.selectedPaymentMethod = null;
-                break;
-              default:
-                Navigator.of(context).pop();
-                break;
-            }
-          },
+    return PopScope(
+      canPop: (false),
+      onPopInvoked: (canPop) {
+        Navigator.of(context).popUntilRoot();
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          leading: IconButton(
+            icon: const Icon(Icons.chevron_left_rounded),
+            onPressed: () {
+              switch (_index) {
+                case 1:
+                  setState(() => _index = 0);
+                  _shopkeeper.selectedPaymentMethod = null;
+                  break;
+                default:
+                  Navigator.of(context).maybePop();
+                  break;
+              }
+            },
+          ),
+          title: const Text("Buy Load"),
         ),
-        title: const Text("Buy Load"),
-      ),
-      body: Center(
-        child: ConstrainedBox(
-          constraints: BoxConstraints(
-              maxWidth: 600, minHeight: max(_screen.height, 800)),
-          child: _pages[_index],
+        body: Center(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+                maxWidth: 600, minHeight: max(_screen.height, 800)),
+            child: _pages[_index],
+          ),
         ),
       ),
     );

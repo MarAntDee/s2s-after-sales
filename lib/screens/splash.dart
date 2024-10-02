@@ -69,16 +69,20 @@ class _LoadingScreenState extends State<LoadingScreen> {
   }
 
   startTime() async {
-    var duration = const Duration(seconds: 2);
-    if (_auth.isLoggedIn) {
-      await _auth.getAccountInfo();
+    var duration = const Duration(milliseconds: 500);
+    try {
+      if (_auth.isLoggedIn) {
+        await _auth.getAccountInfo();
+      }
+      return Timer(duration, () => navigationPage(_auth.isLoggedIn));
+    } catch (e) {
+      return Timer(duration, () => navigationPage(false));
     }
-    return Timer(duration, navigationPage);
   }
 
-  Future<void> navigationPage() async {
+  Future<void> navigationPage(bool isLoggedIn) async {
     if (Routers.currentRoute != "/") return;
-    if (_auth.isLoggedIn) {
+    if (isLoggedIn) {
       Navigator.of(context).popUntilHome();
     } else {
       Navigator.of(context).popUntilLogin();

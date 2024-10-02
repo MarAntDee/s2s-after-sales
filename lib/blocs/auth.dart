@@ -23,8 +23,8 @@ class AuthBloc implements BlocBase {
       Map<String, dynamic> payload =
           await ProdApi().checkAccount(pendingAccountNumber);
       maskedMobileNumber = payload["mobileNumber"];
-      autolink = payload.putIfAbsent(
-        "autolink",
+      autolink = !payload.putIfAbsent(
+        "requireOTP",
         () => payload["status"] != "NOT_VERIFIED",
       );
       if (autolink ?? false) referenceNumber = payload["referenceNumber"];
