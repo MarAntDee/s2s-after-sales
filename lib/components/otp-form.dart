@@ -94,10 +94,11 @@ class _OTPFormState extends State<OTPForm> with TickerProviderStateMixin {
                 Center(
                   child: Text(
                     "Phone Verification",
-                    style: _theme.textTheme.headlineMedium!.copyWith(
+                    style: _theme.textTheme.headlineSmall!.copyWith(
                       color: _theme.primaryColor,
                       fontWeight: FontWeight.w700,
                     ),
+                    textAlign: TextAlign.center,
                   ),
                 ),
                 const SizedBox(height: 16.0),
