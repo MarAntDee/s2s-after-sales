@@ -34,7 +34,7 @@ class HomePanel extends StatelessWidget {
                     }
                   },
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 20),
+                    padding: const EdgeInsets.symmetric(vertical: 16),
                     child: Column(
                       children: [
                         Padding(
@@ -42,8 +42,8 @@ class HomePanel extends StatelessWidget {
                               .copyWith(bottom: 8),
                           child: Image.asset(
                             "$_iconPath${key.toString().toLowerCase()}.png",
-                            width: 40,
-                            height: 40,
+                            width: 32,
+                            height: 32,
                           ),
                         ),
                         Text(

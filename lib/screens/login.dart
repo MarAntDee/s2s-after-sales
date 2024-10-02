@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:s2s_after_sales/blocs/auth.dart';
@@ -31,6 +33,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final PageController controller = PageController();
   AuthBloc get _auth => AuthBloc.instance(context)!;
+  Size get _screen => MediaQuery.sizeOf(context);
 
   int selectedIndex = 0;
   List<Widget> get _pages => [
@@ -71,16 +74,13 @@ class _LoginPageState extends State<LoginPage> {
     return Background(
       child: Center(
         child: SingleChildScrollView(
-          physics: MediaQuery.of(context).size.height < 832
-              ? ClampingScrollPhysics()
-              : NeverScrollableScrollPhysics(),
+          physics: ClampingScrollPhysics(),
           child: Padding(
             padding: const EdgeInsets.all(16),
             child: ConstrainedBox(
-              constraints: const BoxConstraints(
+              constraints: BoxConstraints(
                 maxWidth: 400,
-                minHeight: 800,
-                maxHeight: 800,
+                maxHeight: max(_screen.height - 32, 400),
               ),
               child: Center(
                 child: Container(

@@ -32,7 +32,7 @@ class UserCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Expanded(
                           child: Padding(
@@ -43,13 +43,13 @@ class UserCard extends StatelessWidget {
                                 auth.currentAccount!.accountNumberLabel,
                                 style: theme.primaryTextTheme.titleMedium!
                                     .copyWith(
-                                  fontWeight: FontWeight.w700,
+                                  fontWeight: FontWeight.w500,
                                 ),
                               ),
                             ),
                           ),
                         ),
-                        const AppLogo(size: 50),
+                        const AppLogo(size: 60),
                         const SizedBox(width: 12),
                       ],
                     ),
