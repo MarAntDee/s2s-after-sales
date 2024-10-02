@@ -25,7 +25,7 @@ class AuthBloc implements BlocBase {
       maskedMobileNumber = payload["mobileNumber"];
       autolink = !payload.putIfAbsent(
         "requireOTP",
-        () => payload["status"] != "NOT_VERIFIED",
+        () => payload["status"] == "NOT_VERIFIED",
       );
       if (autolink ?? false) referenceNumber = payload["referenceNumber"];
       pendingReferenceNumber = payload["referenceNumber"];
