@@ -1,3 +1,5 @@
+import 'dart:html' as html;
+
 import 'package:flutter/material.dart';
 import 'package:s2s_after_sales/blocs/auth.dart';
 
@@ -27,9 +29,44 @@ class ProductShelf extends StatelessWidget {
             child: FutureBuilder<List<Product>>(
                 future: shopkeeper.getProductList,
                 builder: (context, products) {
-                  if (products.error?.toString() ==
-                      "You are not allowed in this resource") {
-                    auth.logout(autologout: true);
+                  if (products.hasError) {
+                    if (products.error?.toString() ==
+                        "You are not allowed in this resource") {
+                      auth.logout(autologout: true);
+                    } else {
+                      return Center(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            const Spacer(),
+                            Icon(
+                              Icons.warning_amber_rounded,
+                              size: 180,
+                              color: theme.colorScheme.onBackground
+                                  .withOpacity(0.3),
+                            ),
+                            const SizedBox(height: 16),
+                            Center(
+                              child: Text(
+                                products.error.toString(),
+                                style: theme.textTheme.headlineSmall!.copyWith(
+                                  color: theme.colorScheme.onBackground
+                                      .withOpacity(0.3),
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(16),
+                              child: ElevatedButton(
+                                onPressed: html.window.location.reload,
+                                child: const Text("Try Again"),
+                              ),
+                            ),
+                            const Spacer(flex: 2),
+                          ],
+                        ),
+                      );
+                    }
                   }
                   if (!products.hasData) {
                     return const Center(
