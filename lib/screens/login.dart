@@ -74,13 +74,14 @@ class _LoginPageState extends State<LoginPage> {
     return Background(
       child: Center(
         child: SingleChildScrollView(
-          physics: ClampingScrollPhysics(),
+          physics: const ClampingScrollPhysics(),
           child: Padding(
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.all(16)
+                .copyWith(bottom: MediaQuery.of(context).viewInsets.bottom),
             child: ConstrainedBox(
               constraints: BoxConstraints(
                 maxWidth: 400,
-                maxHeight: max(_screen.height - 32, 400),
+                maxHeight: max(_screen.height - 32, 800),
               ),
               child: Center(
                 child: Container(

@@ -76,7 +76,7 @@ class PaymentFailedPage extends StatelessWidget {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: _theme.colorScheme.error,
                   ),
-                  onPressed: () {},
+                  onPressed: Navigator.of(context).pushToShop,
                   child: Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: Text(
