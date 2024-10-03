@@ -42,10 +42,10 @@ class Routers {
   static String previousCustomerRoute = splash;
   static Route? onGenerateRouted(RouteSettings routeSettings) {
     previousCustomerRoute = currentRoute;
-    currentRoute = routeSettings.name ?? "";
+    currentRoute = (routeSettings.name ?? "").split("?").first;
     log("CURRENT ROUTE: $currentRoute");
 
-    switch (routeSettings.name) {
+    switch (currentRoute) {
       case splash:
         return LoadingScreen.route(routeSettings);
       case loginScreen:
