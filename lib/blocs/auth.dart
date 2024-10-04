@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:s2s_after_sales/blocs/base.dart';
+import 'package:s2s_after_sales/components/dialogs.dart';
 import 'package:s2s_after_sales/main.dart';
 import 'package:s2s_after_sales/models/account.dart';
 import 'package:s2s_after_sales/utils/api.dart';
@@ -103,6 +104,7 @@ class AuthBloc implements BlocBase {
     String? _error = (autologout ?? false)
         ? "Your account is logged in on another device, please log in again."
         : null;
+    _isOutageShown = false;
     currentAccount = null;
     referenceNumber = null;
     pendingAccountNumber = "";
@@ -116,6 +118,7 @@ class AuthBloc implements BlocBase {
     });
   }
 
+  bool _isOutageShown = false;
   Account? get currentAccount =>
       _currentAccountController.valueOrNull ?? _account;
   Future getAccountInfo() async {
@@ -123,6 +126,9 @@ class AuthBloc implements BlocBase {
       String? refNumber = referenceNumber ?? pendingReferenceNumber;
       if (refNumber == null) throw "Unknown Reference Number";
       currentAccount = await ProdApi().getAccount();
+      if (currentAccount!.hasOutage && !_isOutageShown)
+        Popup.showOutageAnnouncement();
+      _isOutageShown = true;
     } catch (e) {
       print("AUTHBLOC GET ACCOUNT INFO ERROR: ${e.toString()}");
       rethrow;

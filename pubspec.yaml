@@ -1,9 +1,9 @@
 name: s2s_after_sales
 description: "Website for users to pay their S2S bills"
 
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: 'none'
 
-version: 1.0.0+9
+version: 1.0.0+12
 
 environment:
   sdk: '>=3.2.0 <4.0.0'

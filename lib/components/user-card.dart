@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:s2s_after_sales/blocs/auth.dart';
+import 'package:s2s_after_sales/components/dialogs.dart';
 import 'package:s2s_after_sales/theme/app.dart';
 
 import 'app-logo.dart';
@@ -39,12 +40,35 @@ class UserCard extends StatelessWidget {
                             padding: const EdgeInsets.only(left: 10),
                             child: Padding(
                               padding: const EdgeInsets.only(left: 6),
-                              child: Text(
-                                auth.currentAccount!.accountNumberLabel,
-                                style: theme.primaryTextTheme.titleMedium!
-                                    .copyWith(
-                                  fontWeight: FontWeight.w500,
-                                ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    auth.currentAccount!.accountNumberLabel,
+                                    style: theme.primaryTextTheme.titleMedium!
+                                        .copyWith(
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                  if (auth.currentAccount!.hasOutage)
+                                    InkWell(
+                                      onTap: Popup.showOutageAnnouncement,
+                                      child: Container(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 4, vertical: 2),
+                                        decoration: BoxDecoration(
+                                          color: theme.colorScheme.error,
+                                          borderRadius:
+                                              BorderRadius.circular(2),
+                                        ),
+                                        child: Text(
+                                          "Temporary Internet Outage",
+                                          style:
+                                              theme.primaryTextTheme.labelSmall,
+                                        ),
+                                      ),
+                                    ),
+                                ],
                               ),
                             ),
                           ),
