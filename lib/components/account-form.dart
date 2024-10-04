@@ -78,6 +78,9 @@ class _AccountFormState extends State<AccountForm> {
                         "63${an.replaceAll(" ", "")}",
                   );
                 },
+                onSubmit: (_) {
+                  if (_onFieldSubmit != null) _onFieldSubmit!();
+                },
               ),
               const Spacer(),
               ElevatedButton(
