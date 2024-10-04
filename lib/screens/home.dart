@@ -7,6 +7,7 @@ import 'package:s2s_after_sales/components/payment-history-overview.dart';
 import 'package:s2s_after_sales/components/user-card.dart';
 import 'package:s2s_after_sales/theme/app.dart';
 
+import '../components/dialogs.dart';
 import '../models/account.dart';
 import '../utils/navigator.dart';
 
@@ -29,6 +30,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   ThemeData get _theme => Theme.of(context);
   AuthBloc get _auth => AuthBloc.instance(context)!;
+  bool _isOutageShown = false;
 
   @override
   void initState() {
@@ -37,10 +39,20 @@ class _HomePageState extends State<HomePage> {
         _auth.logout();
         Navigator.of(context).popUntilLogin();
       } else if (_auth.currentAccount == null) {
-        _auth.getAccountInfo().catchError((e) {
+        _auth.getAccountInfo().then((_) {
+          AuthBloc _auth = AuthBloc.instance(context)!;
+          if (_auth.currentAccount!.hasOutage && !_isOutageShown) {
+            Popup.showOutageAnnouncement();
+            _isOutageShown = true;
+          }
+        }).catchError((e) {
           _auth.logout();
-          return Navigator.of(context).popUntilLogin();
+          Navigator.of(context).popUntilLogin();
+          return;
         });
+      } else if (_auth.currentAccount!.hasOutage && !_isOutageShown) {
+        Popup.showOutageAnnouncement();
+        _isOutageShown = true;
       }
     });
     super.initState();
