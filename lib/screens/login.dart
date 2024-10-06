@@ -31,6 +31,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final ScrollController scrollController = ScrollController();
+  final FocusNode _node = FocusNode();
   final PageController controller = PageController();
   AuthBloc get _auth => AuthBloc.instance(context)!;
   Size get _screen => MediaQuery.sizeOf(context);
@@ -38,6 +40,7 @@ class _LoginPageState extends State<LoginPage> {
   int selectedIndex = 0;
   List<Widget> get _pages => [
         AccountForm(
+          node: _node,
           onSuccess: () async {
             if (_auth.autolink ?? false) {
               await _auth.getAccountInfo();
@@ -66,6 +69,15 @@ class _LoginPageState extends State<LoginPage> {
         Popup.showError(widget.error);
       });
     }
+    _node.addListener(() {
+      if (_node.hasFocus) {
+        scrollController.animateTo(
+          scrollController.position.maxScrollExtent,
+          curve: Curves.easeOut,
+          duration: const Duration(milliseconds: 300),
+        );
+      }
+    });
     super.initState();
   }
 
@@ -74,6 +86,7 @@ class _LoginPageState extends State<LoginPage> {
     return Background(
       child: Center(
         child: SingleChildScrollView(
+          controller: scrollController,
           physics: const ClampingScrollPhysics(),
           child: Padding(
             padding: const EdgeInsets.all(16)

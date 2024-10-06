@@ -8,7 +8,8 @@ import 'app-logo.dart';
 
 class AccountForm extends StatefulWidget {
   final VoidCallback? onSuccess;
-  const AccountForm({super.key, this.onSuccess});
+  final FocusNode? node;
+  const AccountForm({super.key, this.onSuccess, this.node});
 
   @override
   State<AccountForm> createState() => _AccountFormState();
@@ -72,6 +73,7 @@ class _AccountFormState extends State<AccountForm> {
                   FilteringTextInputFormatter.digitsOnly,
                   AccountFormatter(),
                 ],
+                node: widget.node,
                 onChanged: (an) {
                   setState(
                     () => _auth.pendingAccountNumber =
@@ -120,6 +122,7 @@ class _LoginFormfield extends FormField<String> {
     bool isObscure = false,
     List<TextInputFormatter>? inputFormatters,
     String? hintText,
+    FocusNode? node,
     Function(String)? onChanged,
     Function(String)? onSubmit,
   }) : super(builder: (state) {
@@ -132,6 +135,7 @@ class _LoginFormfield extends FormField<String> {
                 height: 50,
                 child: TextField(
                   textAlignVertical: TextAlignVertical.center,
+                  focusNode: node,
                   style: TextStyle(color: theme.colorScheme.secondaryColorDark),
                   cursorColor: theme.colorScheme.secondaryColorDark,
                   inputFormatters: inputFormatters,
