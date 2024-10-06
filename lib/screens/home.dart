@@ -87,6 +87,38 @@ class _HomePageState extends State<HomePage> {
             );
           }
           return Scaffold(
+            drawer: Drawer(
+              child: Column(
+                children: [
+                  const SizedBox(height: 60),
+                  Expanded(
+                    child: ListView(
+                      children: [
+                        ListTile(
+                          leading: Icon(
+                            Icons.shopping_cart_checkout_rounded,
+                            color: _theme.primaryColor,
+                          ),
+                          title: const Text("Buy"),
+                          onTap: Navigator.of(context).pushToShop,
+                        ),
+                        ListTile(
+                          leading: Icon(
+                            Icons.logout,
+                            color: _theme.primaryColor,
+                          ),
+                          title: const Text("Logout"),
+                          onTap: () {
+                            _auth.logout();
+                            Navigator.of(context).popUntilLogin();
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
             body: Column(
               children: [
                 Stack(
@@ -98,6 +130,7 @@ class _HomePageState extends State<HomePage> {
                         Container(
                           height: 285 - 28,
                           decoration: BoxDecoration(
+                            color: Colors.black,
                             image: const DecorationImage(
                               image: AssetImage("assets/images/login-bg.png"),
                               fit: BoxFit.cover,
@@ -110,23 +143,37 @@ class _HomePageState extends State<HomePage> {
                                 _theme.colorScheme.secondaryColorDark,
                               ],
                               stops: const [0, 0.7, 1],
-                              begin: const Alignment(-0.35, -1),
-                              end: const Alignment(0.35, 1),
+                              begin: const Alignment(-0.1, -1),
+                              end: const Alignment(0.1, 1),
                             ),
                           ),
                           child: Align(
                             alignment: Alignment.topLeft,
                             child: Container(
-                              padding: const EdgeInsets.only(left: 24),
+                              padding: const EdgeInsets.only(left: 8),
                               height: 60,
                               child: Align(
                                 alignment: Alignment.centerLeft,
-                                child: Text(
-                                  _auth.currentAccount!.name,
-                                  style: _theme.primaryTextTheme.titleMedium!
-                                      .copyWith(
-                                    fontWeight: FontWeight.w700,
-                                  ),
+                                child: Row(
+                                  children: [
+                                    Builder(
+                                      builder: (context) => IconButton(
+                                        onPressed:
+                                            Scaffold.of(context).openDrawer,
+                                        color: Colors.white,
+                                        icon: const Icon(Icons.menu),
+                                      ),
+                                    ),
+                                    const SizedBox(width: 8),
+                                    Text(
+                                      _auth.currentAccount!.name,
+                                      style: _theme
+                                          .primaryTextTheme.titleMedium!
+                                          .copyWith(
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:s2s_after_sales/blocs/auth.dart';
 import 'package:s2s_after_sales/components/dialogs.dart';
 import 'package:s2s_after_sales/theme/app.dart';
+import 'package:s2s_after_sales/utils/navigator.dart';
 
 import 'app-logo.dart';
 
@@ -78,6 +79,57 @@ class UserCard extends StatelessWidget {
                       ],
                     ),
                     const Spacer(),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Container(
+                        decoration: const BoxDecoration(
+                          color: Colors.white54,
+                          borderRadius: BorderRadius.horizontal(
+                            right: Radius.circular(300),
+                          ),
+                        ),
+                        child: Material(
+                          color: Colors.transparent,
+                          child: InkWell(
+                            borderRadius: const BorderRadius.horizontal(
+                              right: Radius.circular(300),
+                            ),
+                            onTap: Navigator.of(context).pushToShop,
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.all(6).copyWith(right: 14),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Container(
+                                    width: 16,
+                                    height: 16,
+                                    decoration: const BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: Colors.white,
+                                    ),
+                                    child: FittedBox(
+                                      child: Text(
+                                        "+",
+                                        style: theme.textTheme.labelLarge!
+                                            .copyWith(
+                                                fontWeight: FontWeight.w700),
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 6),
+                                  Text(
+                                    "Buy Load",
+                                    style: theme.textTheme.labelMedium!
+                                        .copyWith(fontWeight: FontWeight.w700),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),
