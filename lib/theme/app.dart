@@ -9,7 +9,7 @@ class AppTheme {
     primaryColorDark: ColorLibrary.spanishViolet[900]!,
     colorScheme: _scheme,
     useMaterial3: true,
-    fontFamily: "Poppins",
+    fontFamily: "Nunito",
     appBarTheme: _appBarTheme,
     dialogTheme: _dialogTheme,
     elevatedButtonTheme: ElevatedButtonThemeData(

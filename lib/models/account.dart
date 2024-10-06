@@ -46,7 +46,7 @@ class Account with MappedModel {
         map['serialNumber'],
         map['package']?['name'],
         map['package']?['expirationDateLabel'],
-        map['outage']?['status'] ?? true,
+        map['outage']?['status'] ?? false,
         map['outage']?['message'],
       );
 
