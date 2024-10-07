@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:s2s_after_sales/blocs/auth.dart';
 import 'package:s2s_after_sales/models/transaction.dart';
 
-import '../blocs/auth.dart';
 import '../main.dart';
 
 class Popup {
@@ -66,21 +66,21 @@ class Popup {
 
   static Future showOutageAnnouncement() => showDialog(
         context: _context()!,
-        builder: (context) => AlertDialog(
-          title: const Text(
-            "📢 Internet Outage Announcement 📢",
-            textAlign: TextAlign.center,
-          ),
-          content: Text(
-            "${AuthBloc.instance(context)!.currentAccount!.outageMessage ?? "We would like to inform you that there is currently a temporary internet outage affecting your area. Our team is actively working to resolve the issue as quickly as possible."}\n\nDuring this outage, you may experience difficulties accessing the internet and related services. We apologize for any inconvenience this may cause and appreciate your understanding and patience.",
-            textAlign: TextAlign.center,
-          ),
-          actions: [
-            TextButton(
-              onPressed: Navigator.of(context).pop,
-              child: const Text("Close"),
+        builder: (context) {
+          AuthBloc auth = AuthBloc.instance(context)!;
+          return AlertDialog(
+            content: Text(
+              auth.currentAccount!.outageDescription ??
+                  "📢 Internet Outage Announcement 📢\n\nWe would like to inform you that there is currently a temporary internet outage affecting your area. Our team is actively working to resolve the issue as quickly as possible.\n\nDuring this outage, you may experience difficulties accessing the internet and related services. We apologize for any inconvenience this may cause and appreciate your understanding and patience.",
+              textAlign: TextAlign.center,
             ),
-          ],
-        ),
+            actions: [
+              TextButton(
+                onPressed: Navigator.of(context).pop,
+                child: const Text("Close"),
+              ),
+            ],
+          );
+        },
       );
 }

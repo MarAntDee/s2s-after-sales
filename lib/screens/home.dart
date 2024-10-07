@@ -39,9 +39,10 @@ class _HomePageState extends State<HomePage> {
         _auth.logout();
         Navigator.of(context).popUntilLogin();
       } else if (_auth.currentAccount == null) {
+        print("FROM HOME NULL ACCOUNT");
         _auth.getAccountInfo().then((_) {
           AuthBloc _auth = AuthBloc.instance(context)!;
-          if (_auth.currentAccount!.hasOutage && !_isOutageShown) {
+          if ((_auth.currentAccount!.hasOutage ?? false) && !_isOutageShown) {
             Popup.showOutageAnnouncement();
             _isOutageShown = true;
           }
@@ -50,7 +51,8 @@ class _HomePageState extends State<HomePage> {
           Navigator.of(context).popUntilLogin();
           return;
         });
-      } else if (_auth.currentAccount!.hasOutage && !_isOutageShown) {
+      } else if ((_auth.currentAccount!.hasOutage ?? false) &&
+          !_isOutageShown) {
         Popup.showOutageAnnouncement();
         _isOutageShown = true;
       }

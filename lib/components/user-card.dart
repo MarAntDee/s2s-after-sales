@@ -51,23 +51,43 @@ class UserCard extends StatelessWidget {
                                       fontWeight: FontWeight.w500,
                                     ),
                                   ),
-                                  if (auth.currentAccount!.hasOutage)
+                                  if (auth.currentAccount!.hasOutage != null)
                                     InkWell(
-                                      onTap: Popup.showOutageAnnouncement,
+                                      onTap: auth.currentAccount!.hasOutage!
+                                          ? Popup.showOutageAnnouncement
+                                          : null,
                                       child: Container(
                                         padding: const EdgeInsets.symmetric(
                                             horizontal: 4, vertical: 2),
                                         decoration: BoxDecoration(
-                                          color: theme.colorScheme.error,
+                                          color: auth.currentAccount!.hasOutage!
+                                              ? theme.colorScheme.error
+                                              : theme.colorScheme
+                                                  .secondaryColorDark,
                                           borderRadius:
                                               BorderRadius.circular(2),
                                         ),
                                         child: Text(
-                                          "Temporary Internet Outage",
+                                          auth.currentAccount!.outageTitle ??
+                                              (auth.currentAccount!.hasOutage!
+                                                  ? "Temporary Internet Outage"
+                                                  : "Internet Connection Restored"),
                                           style:
                                               theme.primaryTextTheme.labelSmall,
                                         ),
                                       ),
+                                    ),
+                                  const SizedBox(height: 4),
+                                  if ((!(auth.currentAccount!.hasOutage ??
+                                          false)) &&
+                                      auth.currentAccount!.outageDescription !=
+                                          null)
+                                    Text(
+                                      auth.currentAccount!.outageDescription!,
+                                      style: theme.primaryTextTheme.labelSmall!
+                                          .copyWith(
+                                              color: theme.colorScheme
+                                                  .secondaryColorLight),
                                     ),
                                 ],
                               ),

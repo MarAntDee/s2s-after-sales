@@ -71,11 +71,9 @@ class _LoadingScreenState extends State<LoadingScreen> {
   startTime() async {
     var duration = const Duration(milliseconds: 500);
     try {
-      if (_auth.isLoggedIn) {
-        await _auth.getAccountInfo();
-      }
       return Timer(duration, () => navigationPage(_auth.isLoggedIn));
     } catch (e) {
+      print("SPLASH ERROR: ${e.toString()}");
       return Timer(duration, () => navigationPage(false));
     }
   }

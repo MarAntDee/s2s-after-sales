@@ -4,6 +4,7 @@ import 'dart:io';
 import 'dart:js' as js;
 import 'dart:math' as math;
 
+import 'package:flutter/foundation.dart';
 import 'package:pretty_http_logger/pretty_http_logger.dart';
 import 'package:s2s_after_sales/blocs/auth.dart';
 import 'package:s2s_after_sales/main.dart';
@@ -58,7 +59,7 @@ class ProdApi implements PCApi {
   }
 
   @override
-  Map<String, String> header() {
+  Map<String, String> header({Map<String, String>? add}) {
     final AuthBloc _auth = AuthBloc.instance(navigatorKey.currentContext!)!;
     return {
       "Authorization":
@@ -67,6 +68,7 @@ class ProdApi implements PCApi {
       if ((_auth.referenceNumber ?? _auth.pendingReferenceNumber) != null)
         'x-auth': _auth.referenceNumber ?? _auth.pendingReferenceNumber!,
       "wsc-timestamp": DateTime.now().millisecondsSinceEpoch.toString(),
+      if (add != null) ...add,
     };
   }
 
@@ -129,7 +131,11 @@ class ProdApi implements PCApi {
       Map res = await _http("GETTING ACCOUNT INFO")
           .get(
             url(path: "/account"),
-            headers: header(),
+            headers: header(
+              add: {
+                "testmode": kDebugMode.toString(),
+              },
+            ),
           )
           .then((res) => jsonDecode(res.body));
 
