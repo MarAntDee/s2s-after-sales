@@ -1,3 +1,6 @@
+import 'dart:html' as html;
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:s2s_after_sales/blocs/auth.dart';
@@ -121,78 +124,100 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
             ),
-            body: Column(
-              children: [
-                Stack(
-                  alignment: Alignment.bottomCenter,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        Container(
-                          height: 285 - 28,
-                          decoration: BoxDecoration(
-                            color: Colors.black,
-                            image: const DecorationImage(
-                              image: AssetImage("assets/images/login-bg.png"),
-                              fit: BoxFit.cover,
-                              opacity: 0.25,
-                            ),
-                            gradient: LinearGradient(
-                              colors: <Color>[
-                                _theme.colorScheme.primaryColorDark,
-                                _theme.colorScheme.primary,
-                                _theme.colorScheme.secondaryColorDark,
-                              ],
-                              stops: const [0, 0.7, 1],
-                              begin: const Alignment(-0.1, -1),
-                              end: const Alignment(0.1, 1),
-                            ),
-                          ),
-                          child: Align(
-                            alignment: Alignment.topLeft,
-                            child: Container(
-                              padding: const EdgeInsets.only(left: 8),
-                              height: 60,
-                              child: Align(
-                                alignment: Alignment.centerLeft,
-                                child: Row(
-                                  children: [
-                                    Builder(
-                                      builder: (context) => IconButton(
-                                        onPressed:
-                                            Scaffold.of(context).openDrawer,
-                                        color: Colors.white,
-                                        icon: const Icon(Icons.menu),
+            body: ScrollConfiguration(
+              behavior: ScrollConfiguration.of(context).copyWith(
+                physics: const ClampingScrollPhysics(),
+                dragDevices: {
+                  PointerDeviceKind.touch,
+                  PointerDeviceKind.mouse,
+                  PointerDeviceKind.trackpad
+                },
+              ),
+              child: RefreshIndicator(
+                onRefresh: () async => html.window.location.reload(),
+                child: CustomScrollView(
+                  slivers: [
+                    SliverFillRemaining(
+                      child: Column(
+                        children: [
+                          Stack(
+                            alignment: Alignment.bottomCenter,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                children: [
+                                  Container(
+                                    height: 285 - 28,
+                                    decoration: BoxDecoration(
+                                      color: Colors.black,
+                                      image: const DecorationImage(
+                                        image: AssetImage(
+                                            "assets/images/login-bg.png"),
+                                        fit: BoxFit.cover,
+                                        opacity: 0.25,
+                                      ),
+                                      gradient: LinearGradient(
+                                        colors: <Color>[
+                                          _theme.colorScheme.primaryColorDark,
+                                          _theme.colorScheme.primary,
+                                          _theme.colorScheme.secondaryColorDark,
+                                        ],
+                                        stops: const [0, 0.7, 1],
+                                        begin: const Alignment(-0.1, -1),
+                                        end: const Alignment(0.1, 1),
                                       ),
                                     ),
-                                    const SizedBox(width: 8),
-                                    Text(
-                                      _auth.currentAccount!.name,
-                                      style: _theme
-                                          .primaryTextTheme.titleMedium!
-                                          .copyWith(
-                                        fontWeight: FontWeight.w700,
+                                    child: Align(
+                                      alignment: Alignment.topLeft,
+                                      child: Container(
+                                        padding: const EdgeInsets.only(left: 8),
+                                        height: 60,
+                                        child: Align(
+                                          alignment: Alignment.centerLeft,
+                                          child: Row(
+                                            children: [
+                                              Builder(
+                                                builder: (context) =>
+                                                    IconButton(
+                                                  onPressed:
+                                                      Scaffold.of(context)
+                                                          .openDrawer,
+                                                  color: Colors.white,
+                                                  icon: const Icon(Icons.menu),
+                                                ),
+                                              ),
+                                              const SizedBox(width: 8),
+                                              Text(
+                                                _auth.currentAccount!.name,
+                                                style: _theme.primaryTextTheme
+                                                    .titleMedium!
+                                                    .copyWith(
+                                                  fontWeight: FontWeight.w700,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
                                       ),
                                     ),
-                                  ],
-                                ),
+                                  ),
+                                  Container(
+                                    color: _theme.primaryColor,
+                                    height: 28,
+                                  ),
+                                ],
                               ),
-                            ),
+                              const UserCard(),
+                            ],
                           ),
-                        ),
-                        Container(
-                          color: _theme.primaryColor,
-                          height: 28,
-                        ),
-                      ],
+                          const HomePanel(),
+                          const Expanded(child: PaymentHistoryOverview()),
+                        ],
+                      ),
                     ),
-                    const UserCard(),
                   ],
                 ),
-                const HomePanel(),
-                const Expanded(child: PaymentHistoryOverview()),
-              ],
+              ),
             ),
           );
         });
