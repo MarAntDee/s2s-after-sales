@@ -18,6 +18,8 @@ class AppTheme {
     textButtonTheme: TextButtonThemeData(
       style: _textButtonStyle,
     ),
+    textTheme: _textTheme,
+    primaryTextTheme: _textTheme,
   );
 
   static final ColorScheme _scheme = ColorScheme.light(
@@ -60,6 +62,24 @@ class AppTheme {
   static final TextSelectionThemeData _textSelectionThemeData =
       TextSelectionThemeData(
     cursorColor: ColorLibrary.mountainMeadow[900]!,
+  );
+
+  static const TextTheme _textTheme = TextTheme(
+    displayLarge: TextStyle(fontSize: 52),
+    displayMedium: TextStyle(fontSize: 40),
+    displaySmall: TextStyle(fontSize: 32),
+    headlineLarge: TextStyle(fontSize: 28),
+    headlineMedium: TextStyle(fontSize: 24),
+    headlineSmall: TextStyle(fontSize: 22),
+    titleLarge: TextStyle(fontSize: 20),
+    titleMedium: TextStyle(fontSize: 14),
+    titleSmall: TextStyle(fontSize: 12),
+    bodyLarge: TextStyle(fontSize: 14),
+    bodyMedium: TextStyle(fontSize: 12),
+    bodySmall: TextStyle(fontSize: 11),
+    labelLarge: TextStyle(fontSize: 12),
+    labelMedium: TextStyle(fontSize: 11),
+    labelSmall: TextStyle(fontSize: 10),
   );
 }
 
