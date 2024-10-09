@@ -9,7 +9,9 @@ import 'app-logo.dart';
 class AccountForm extends StatefulWidget {
   final VoidCallback? onSuccess;
   final FocusNode? node;
-  const AccountForm({super.key, this.onSuccess, this.node});
+  final bool hasFocus;
+  const AccountForm(
+      {super.key, this.onSuccess, this.node, this.hasFocus = false});
 
   @override
   State<AccountForm> createState() => _AccountFormState();
@@ -57,9 +59,9 @@ class _AccountFormState extends State<AccountForm> {
         : Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const Spacer(flex: 2),
+              Spacer(flex: widget.hasFocus ? 1 : 2),
               const Expanded(flex: 3, child: AppLogo()),
-              const Spacer(flex: 3),
+              Spacer(flex: widget.hasFocus ? 2 : 3),
               const Text(
                 "Enter S2S Account Number",
                 textAlign: TextAlign.center,
@@ -84,7 +86,7 @@ class _AccountFormState extends State<AccountForm> {
                   if (_onFieldSubmit != null) _onFieldSubmit!();
                 },
               ),
-              const Spacer(),
+              Spacer(flex: widget.hasFocus ? 2 : 1),
               ElevatedButton(
                 onPressed: _onFieldSubmit,
                 child: const SizedBox(
@@ -109,7 +111,7 @@ class _AccountFormState extends State<AccountForm> {
                   ),
                 ),
               ),
-              const Spacer(flex: 2),
+              Spacer(flex: widget.hasFocus ? 3 : 2),
             ],
           );
   }

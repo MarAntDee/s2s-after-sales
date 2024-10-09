@@ -4,7 +4,6 @@ import 'dart:io';
 import 'dart:js' as js;
 import 'dart:math' as math;
 
-import 'package:flutter/foundation.dart';
 import 'package:pretty_http_logger/pretty_http_logger.dart';
 import 'package:s2s_after_sales/blocs/auth.dart';
 import 'package:s2s_after_sales/main.dart';
@@ -133,7 +132,7 @@ class ProdApi implements PCApi {
             url(path: "/account"),
             headers: header(
               add: {
-                "testmode": kDebugMode.toString(),
+                "testmode": "true",
               },
             ),
           )

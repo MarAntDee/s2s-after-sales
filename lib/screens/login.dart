@@ -36,11 +36,13 @@ class _LoginPageState extends State<LoginPage> {
   final PageController controller = PageController();
   AuthBloc get _auth => AuthBloc.instance(context)!;
   Size get _screen => MediaQuery.sizeOf(context);
+  bool hasFocus = false;
 
   int selectedIndex = 0;
   List<Widget> get _pages => [
         AccountForm(
           node: _node,
+          hasFocus: hasFocus,
           onSuccess: () async {
             if (_auth.autolink ?? false) {
               await _auth.getAccountInfo();
@@ -77,6 +79,7 @@ class _LoginPageState extends State<LoginPage> {
           duration: const Duration(milliseconds: 300),
         );
       }
+      setState(() => hasFocus = _node.hasFocus);
     });
     super.initState();
   }
