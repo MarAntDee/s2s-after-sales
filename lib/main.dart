@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'S2S After Sales',
+      title: 'Surf2Sawa',
       theme: AppTheme.data,
       navigatorKey: navigatorKey,
       initialRoute: Routers.splash,
