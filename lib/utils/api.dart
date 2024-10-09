@@ -20,7 +20,8 @@ abstract class PCApi {
   Map<String, String> header();
 
   //CHECK ACCOUNT
-  Future<Map<String, dynamic>> checkAccount(String accountNumber);
+  Future<Map<String, dynamic>> checkAccount(String accountNumber,
+      {String? username, String? userId});
   Future<bool> verifyAccount(String pincode);
   Future<Account> getAccount();
 
@@ -72,12 +73,17 @@ class ProdApi implements PCApi {
   }
 
   @override
-  Future<Map<String, dynamic>> checkAccount(String accountNumber) async {
+  Future<Map<String, dynamic>> checkAccount(String accountNumber,
+      {String? username, String? userId}) async {
     try {
       Map res = await _http("CHECKING ACCOUNT").post(
         url(path: "/check-account"),
         headers: header(),
-        body: {"accountNumber": accountNumber},
+        body: {
+          "accountNumber": accountNumber,
+          if (userId != null) "userId": userId,
+          if (username != null) "username": username,
+        },
       ).then((res) => jsonDecode(res.body));
 
       if (!(res['status'] ?? false) || (res['code'] ?? 200) != 200) {

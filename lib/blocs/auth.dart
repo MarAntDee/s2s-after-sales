@@ -1,3 +1,4 @@
+import 'dart:html' as html;
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -17,11 +18,38 @@ class AuthBloc implements BlocBase {
   String? pendingReferenceNumber, maskedMobileNumber, pincode;
   String pendingAccountNumber = "";
   bool? autolink;
+  String? userId, username;
+
+  void _parseBaseParameter() {
+    try {
+      String url = html.window.location.href;
+      if (!url.contains("?")) return;
+      List<String> chunk = url.split("?");
+      if (chunk.length != 2) return;
+      String rawParam = url.split("?")[1];
+      if (rawParam.isEmpty) return;
+      List<String> queryChunks = rawParam.split("&");
+      Map<String, String> queryParameter = {};
+      for (String query in queryChunks) {
+        if (!query.contains("=")) throw "Improper format";
+        List<String> entry = query.split("=");
+        if (entry.length != 2) throw "Improper format";
+        queryParameter[entry[0].toString()] = entry[1].toString();
+      }
+      userId = queryParameter["userId"];
+      username = queryParameter["username"];
+    } catch (e) {
+      return;
+    }
+  }
 
   Future<String?> checkAccount() async {
     try {
-      Map<String, dynamic> payload =
-          await ProdApi().checkAccount(pendingAccountNumber);
+      Map<String, dynamic> payload = await ProdApi().checkAccount(
+        pendingAccountNumber,
+        userId: userId,
+        username: username,
+      );
       maskedMobileNumber = payload["mobileNumber"];
       autolink = !payload.putIfAbsent(
         "requireOTP",
@@ -133,6 +161,7 @@ class AuthBloc implements BlocBase {
   List<String> expiredOtps = [];
 
   AuthBloc._(this.cache) {
+    _parseBaseParameter();
     if (uuid == null) uuid = _generateUuid(64);
   }
 
