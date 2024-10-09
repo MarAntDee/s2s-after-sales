@@ -173,9 +173,9 @@ class UserCard extends StatelessWidget {
                         Text(
                           "Current Data Plan",
                           style: theme.textTheme.bodySmall!
-                              .copyWith(fontWeight: FontWeight.w700),
+                              .copyWith(fontWeight: FontWeight.w500),
                         ),
-                        const SizedBox(height: 4),
+                        const SizedBox(height: 2),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
@@ -184,6 +184,7 @@ class UserCard extends StatelessWidget {
                               Icon(
                                 Icons.warning_amber_rounded,
                                 color: Colors.red[900],
+                                size: 16,
                               ),
                             ],
                             const SizedBox(width: 8),
@@ -191,13 +192,16 @@ class UserCard extends StatelessWidget {
                               child: Text(
                                 auth.currentAccount!.currentProduct ?? "",
                                 textAlign: TextAlign.right,
-                                style: theme.textTheme.titleLarge,
+                                style: theme.textTheme.bodyLarge!.copyWith(
+                                  fontWeight: FontWeight.w700,
+                                ),
                                 overflow: TextOverflow.ellipsis,
                                 maxLines: 1,
                               ),
                             ),
                           ],
                         ),
+                        const SizedBox(height: 4),
                       ],
                     ),
                   ),

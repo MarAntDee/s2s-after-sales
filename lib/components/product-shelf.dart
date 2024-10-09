@@ -149,7 +149,7 @@ class ProductCard extends StatelessWidget {
       duration: const Duration(milliseconds: 400),
       curve: Curves.easeInOutCirc,
       margin: EdgeInsets.symmetric(horizontal: _padding, vertical: 6),
-      height: 140,
+      height: 100,
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
         color: theme.colorScheme.background,
@@ -197,8 +197,8 @@ class ProductCard extends StatelessWidget {
             ),
             const SizedBox(width: 8),
             SizedBox(
-              width: 72,
-              height: 72,
+              width: 60,
+              height: 60,
               child: AspectRatio(
                 aspectRatio: 1,
                 child: Padding(
