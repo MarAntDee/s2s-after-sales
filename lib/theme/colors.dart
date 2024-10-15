@@ -4,7 +4,7 @@ class ColorLibrary {
   static const Color background = Color(0xFFF6F6F6),
       surface = Color(0xFFFFFFFF),
       darkText = Color(0xFF1B1B1B),
-      yellow = Color(0xFFFFFC54);
+      yellow = Color(0xFFFFCF2D);
 
   //CONVERGE COLOR
   static const int _spanishViolet = 0xFF41317D, _mountainMeadow = 0xFF29B198;
@@ -40,31 +40,31 @@ class ColorLibrary {
       );
 
   //UCHAT COLOR
-  static const int _jacarta = 0xFF302F50, _persianGreen = 0xFF00A288;
-  static MaterialColor jacarta = const MaterialColor(
-        _jacarta,
+  static const int _blueBlack = 0xFF0d0a3b, _jade = 0xFF00a287;
+  static MaterialColor blueBlack = const MaterialColor(
+        _blueBlack,
         <int, Color>{
-          50: Color(0xFFe9ebf0),
-          100: Color(0xFFc8ccdc),
-          200: Color(0xFFa6acc4),
-          300: Color(0xFF848bab),
-          400: Color(0xFF6b729a),
-          500: Color(0xFF545a8a),
-          600: Color(0xFF4d5281),
-          700: Color(0xFF444876),
-          800: Color(0xFF3d3f69),
-          900: Color(_jacarta),
+          50: Color(0xFFe4e5ec),
+          100: Color(0xFFbbbdd2),
+          200: Color(0xFF8f93b3),
+          300: Color(0xFF666a95),
+          400: Color(0xFF494d82),
+          500: Color(0xFF2d316f),
+          600: Color(0xFF282b67),
+          700: Color(0xFF20235d),
+          800: Color(0xFF181a51),
+          900: Color(_blueBlack),
         },
       ),
-      persianGreen = const MaterialColor(
-        _persianGreen,
+      jade = const MaterialColor(
+        _jade,
         <int, Color>{
           50: Color(0xFFe1f4f1),
           100: Color(0xFFb4e3da),
           200: Color(0xFF83d2c3),
           300: Color(0xFF51bfaa),
           400: Color(0xFF29b198),
-          500: Color(_persianGreen),
+          500: Color(_jade),
           600: Color(0xFF00947a),
           700: Color(0xFF00846a),
           800: Color(0xFF00745c),
@@ -75,16 +75,16 @@ class ColorLibrary {
 
 // {
 // "Primary": {
-// "50": "#e9ebf0",
-// "100": "#c8ccdc",
-// "200": "#a6acc4",
-// "300": "#848bab",
-// "400": "#6b729a",
-// "500": "#545a8a",
-// "600": "#4d5281",
-// "700": "#444876",
-// "800": "#3d3f69",
-// "900": "#302f50"
+// "50": "#e4e5ec",
+// "100": "#bbbdd2",
+// "200": "#8f93b3",
+// "300": "#666a95",
+// "400": "#494d82",
+// "500": "#2d316f",
+// "600": "#282b67",
+// "700": "#20235d",
+// "800": "#181a51",
+// "900": "#0d0a3b"
 // },
 // "Secondary": {
 // "50": "#e1f4f1",

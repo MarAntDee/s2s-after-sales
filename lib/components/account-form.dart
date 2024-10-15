@@ -93,7 +93,7 @@ class _AccountFormState extends State<AccountForm> {
                   height: 40,
                   child: Center(
                     child: Text(
-                      "Check Account",
+                      "Link Account",
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 12,

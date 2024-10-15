@@ -8,7 +8,6 @@ import 'package:s2s_after_sales/components/background.dart';
 import 'package:s2s_after_sales/components/home-panel.dart';
 import 'package:s2s_after_sales/components/payment-history-overview.dart';
 import 'package:s2s_after_sales/components/user-card.dart';
-import 'package:s2s_after_sales/theme/app.dart';
 
 import '../components/dialogs.dart';
 import '../models/account.dart';
@@ -149,23 +148,17 @@ class _HomePageState extends State<HomePage> {
                                   Container(
                                     height: 285 - 28,
                                     decoration: BoxDecoration(
-                                      color: Colors.black,
-                                      image: const DecorationImage(
-                                        image: AssetImage(
-                                            "assets/images/login-bg.png"),
-                                        fit: BoxFit.cover,
-                                        opacity: 0.25,
-                                      ),
-                                      gradient: LinearGradient(
-                                        colors: <Color>[
-                                          _theme.colorScheme.primaryColorDark,
-                                          _theme.colorScheme.primary,
-                                          _theme.colorScheme.secondaryColorDark,
-                                        ],
-                                        stops: const [0, 0.7, 1],
-                                        begin: const Alignment(-0.1, -1),
-                                        end: const Alignment(0.1, 1),
-                                      ),
+                                      color: _theme.primaryColor,
+                                      // gradient: LinearGradient(
+                                      //   colors: <Color>[
+                                      //     _theme.colorScheme.primaryColorDark,
+                                      //     _theme.colorScheme.primary,
+                                      //     _theme.colorScheme.secondaryColorDark,
+                                      //   ],
+                                      //   stops: const [0, 0.7, 1],
+                                      //   begin: const Alignment(-0.1, -1),
+                                      //   end: const Alignment(0.1, 1),
+                                      // ),
                                     ),
                                     child: Align(
                                       alignment: Alignment.topLeft,

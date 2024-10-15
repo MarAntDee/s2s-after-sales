@@ -4,9 +4,9 @@ import 'colors.dart';
 
 class AppTheme {
   static ThemeData data = ThemeData(
-    primaryColor: ColorLibrary.spanishViolet,
-    primaryColorLight: ColorLibrary.spanishViolet[50]!,
-    primaryColorDark: ColorLibrary.spanishViolet[900]!,
+    primaryColor: ColorLibrary.blueBlack,
+    primaryColorLight: ColorLibrary.blueBlack[50]!,
+    primaryColorDark: ColorLibrary.blueBlack[900]!,
     colorScheme: _scheme,
     useMaterial3: true,
     fontFamily: "Nunito",
@@ -23,9 +23,9 @@ class AppTheme {
   );
 
   static final ColorScheme _scheme = ColorScheme.light(
-    primary: ColorLibrary.spanishViolet,
+    primary: ColorLibrary.blueBlack,
     onPrimary: Colors.white,
-    secondary: ColorLibrary.mountainMeadow,
+    secondary: ColorLibrary.jade,
     onSecondary: Colors.white,
     error: Colors.red[700]!,
     onError: Colors.white,
@@ -43,14 +43,14 @@ class AppTheme {
   );
 
   static final ButtonStyle _elevatedButtonStyle = ElevatedButton.styleFrom(
-        backgroundColor: ColorLibrary.mountainMeadow,
+        backgroundColor: ColorLibrary.jade,
         foregroundColor: Colors.white,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(5),
         ),
       ),
       _textButtonStyle = TextButton.styleFrom(
-        foregroundColor: ColorLibrary.mountainMeadow,
+        foregroundColor: ColorLibrary.jade,
       );
 
   static final DialogTheme _dialogTheme = DialogTheme(
@@ -61,7 +61,7 @@ class AppTheme {
 
   static final TextSelectionThemeData _textSelectionThemeData =
       TextSelectionThemeData(
-    cursorColor: ColorLibrary.mountainMeadow[900]!,
+    cursorColor: ColorLibrary.jade[900]!,
   );
 
   static const TextTheme _textTheme = TextTheme(
@@ -84,11 +84,11 @@ class AppTheme {
 }
 
 extension AppColorScheme on ColorScheme {
-  MaterialColor get primarySwatch => ColorLibrary.spanishViolet;
+  MaterialColor get primarySwatch => ColorLibrary.blueBlack;
   Color get primaryColorLight => primarySwatch[50]!;
   Color get primaryColorDark => primarySwatch[900]!;
 
-  MaterialColor get secondarySwatch => ColorLibrary.mountainMeadow;
+  MaterialColor get secondarySwatch => ColorLibrary.jade;
   Color get secondaryColorLight => secondarySwatch[50]!;
   Color get secondaryColorDark => secondarySwatch[900]!;
 

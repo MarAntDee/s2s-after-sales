@@ -55,10 +55,13 @@ class PaymentJournal extends StatelessWidget {
                     Icons.book_rounded,
                   );
                 }
-                return ListView(
-                  children: transactions.data!
-                      .map((tx) => TransactionTile(tx))
-                      .toList(),
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: ListView(
+                    children: transactions.data!
+                        .map((tx) => TransactionTile(tx))
+                        .toList(),
+                  ),
                 );
               },
             ),
