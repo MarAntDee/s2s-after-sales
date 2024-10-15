@@ -5,6 +5,7 @@ class ColorLibrary {
       surface = Color(0xFFFFFFFF),
       darkText = Color(0xFF1B1B1B),
       yellow = Color(0xFFFFCF2D);
+  static MaterialColor primary = spanishViolet, secondary = mountainMeadow;
 
   //CONVERGE COLOR
   static const int _spanishViolet = 0xFF41317D, _mountainMeadow = 0xFF29B198;

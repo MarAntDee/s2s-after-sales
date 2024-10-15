@@ -8,6 +8,7 @@ import 'package:surf2sawa/components/background.dart';
 import 'package:surf2sawa/components/home-panel.dart';
 import 'package:surf2sawa/components/payment-history-overview.dart';
 import 'package:surf2sawa/components/user-card.dart';
+import 'package:surf2sawa/theme/app.dart';
 
 import '../components/dialogs.dart';
 import '../models/account.dart';
@@ -149,16 +150,22 @@ class _HomePageState extends State<HomePage> {
                                     height: 285 - 28,
                                     decoration: BoxDecoration(
                                       color: _theme.primaryColor,
-                                      // gradient: LinearGradient(
-                                      //   colors: <Color>[
-                                      //     _theme.colorScheme.primaryColorDark,
-                                      //     _theme.colorScheme.primary,
-                                      //     _theme.colorScheme.secondaryColorDark,
-                                      //   ],
-                                      //   stops: const [0, 0.7, 1],
-                                      //   begin: const Alignment(-0.1, -1),
-                                      //   end: const Alignment(0.1, 1),
-                                      // ),
+                                      image: const DecorationImage(
+                                        image: AssetImage(
+                                            "assets/images/login-bg.png"),
+                                        fit: BoxFit.cover,
+                                        opacity: 0.25,
+                                      ),
+                                      gradient: LinearGradient(
+                                        colors: <Color>[
+                                          _theme.colorScheme.primaryColorDark,
+                                          _theme.colorScheme.primary,
+                                          _theme.colorScheme.secondaryColorDark,
+                                        ],
+                                        stops: const [0, 0.7, 1],
+                                        begin: const Alignment(-0.1, -1),
+                                        end: const Alignment(0.1, 1),
+                                      ),
                                     ),
                                     child: Align(
                                       alignment: Alignment.topLeft,
