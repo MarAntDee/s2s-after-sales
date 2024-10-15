@@ -4,8 +4,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pin_input_text_field/pin_input_text_field.dart';
-import 'package:s2s_after_sales/theme/app.dart';
-import 'package:s2s_after_sales/utils/extensions.dart';
+import 'package:surf2sawa/theme/app.dart';
+import 'package:surf2sawa/utils/extensions.dart';
 
 import '../blocs/auth.dart';
 import '../blocs/otp-controller.dart';

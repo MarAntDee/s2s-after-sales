@@ -3,11 +3,11 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:s2s_after_sales/blocs/auth.dart';
-import 'package:s2s_after_sales/components/background.dart';
-import 'package:s2s_after_sales/components/home-panel.dart';
-import 'package:s2s_after_sales/components/payment-history-overview.dart';
-import 'package:s2s_after_sales/components/user-card.dart';
+import 'package:surf2sawa/blocs/auth.dart';
+import 'package:surf2sawa/components/background.dart';
+import 'package:surf2sawa/components/home-panel.dart';
+import 'package:surf2sawa/components/payment-history-overview.dart';
+import 'package:surf2sawa/components/user-card.dart';
 
 import '../components/dialogs.dart';
 import '../models/account.dart';

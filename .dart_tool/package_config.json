@@ -338,13 +338,13 @@
       "languageVersion": "3.2"
     },
     {
-      "name": "s2s_after_sales",
+      "name": "surf2sawa",
       "rootUri": "../",
       "packageUri": "lib/",
       "languageVersion": "3.2"
     }
   ],
-  "generated": "2024-10-09T06:21:54.244303Z",
+  "generated": "2024-10-15T07:11:11.682988Z",
   "generator": "pub",
   "generatorVersion": "3.2.0"
 }

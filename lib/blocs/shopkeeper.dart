@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:s2s_after_sales/utils/api.dart';
+import 'package:surf2sawa/utils/api.dart';
 
 import '../models/payment-method.dart';
 import '../models/products.dart';

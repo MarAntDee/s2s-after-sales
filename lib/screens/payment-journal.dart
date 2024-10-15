@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:s2s_after_sales/blocs/auth.dart';
+import 'package:surf2sawa/blocs/auth.dart';
 
 import '../components/empty.dart';
 import '../components/error.dart';

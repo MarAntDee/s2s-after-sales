@@ -1,5 +1,5 @@
 import 'package:flutter/services.dart';
-import 'package:s2s_after_sales/utils/extensions.dart';
+import 'package:surf2sawa/utils/extensions.dart';
 
 class TimeFormatter {
   String timeLeft(int time) {

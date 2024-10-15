@@ -2,12 +2,12 @@ import 'dart:developer';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:s2s_after_sales/screens/home.dart';
-import 'package:s2s_after_sales/screens/login.dart';
-import 'package:s2s_after_sales/screens/payment-journal.dart';
-import 'package:s2s_after_sales/screens/purchase-failed.dart';
-import 'package:s2s_after_sales/screens/purchase-success.dart';
-import 'package:s2s_after_sales/screens/shop.dart';
+import 'package:surf2sawa/screens/home.dart';
+import 'package:surf2sawa/screens/login.dart';
+import 'package:surf2sawa/screens/payment-journal.dart';
+import 'package:surf2sawa/screens/purchase-failed.dart';
+import 'package:surf2sawa/screens/purchase-success.dart';
+import 'package:surf2sawa/screens/shop.dart';
 
 import '../screens/404.dart';
 import '../screens/splash.dart';

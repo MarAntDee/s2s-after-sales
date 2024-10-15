@@ -4,13 +4,13 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:s2s_after_sales/blocs/base.dart';
-import 'package:s2s_after_sales/main.dart';
-import 'package:s2s_after_sales/models/account.dart';
-import 'package:s2s_after_sales/utils/api.dart';
-import 'package:s2s_after_sales/utils/dev-tools.dart';
-import 'package:s2s_after_sales/utils/navigator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:surf2sawa/blocs/base.dart';
+import 'package:surf2sawa/main.dart';
+import 'package:surf2sawa/models/account.dart';
+import 'package:surf2sawa/utils/api.dart';
+import 'package:surf2sawa/utils/dev-tools.dart';
+import 'package:surf2sawa/utils/navigator.dart';
 
 class AuthBloc implements BlocBase {
   final SharedPreferences cache;

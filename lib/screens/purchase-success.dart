@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:s2s_after_sales/theme/boxes.dart';
+import 'package:surf2sawa/theme/boxes.dart';
 
 import '../utils/navigator.dart';
 

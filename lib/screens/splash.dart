@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:s2s_after_sales/blocs/auth.dart';
-import 'package:s2s_after_sales/components/background.dart';
+import 'package:surf2sawa/blocs/auth.dart';
+import 'package:surf2sawa/components/background.dart';
 
 import '../utils/navigator.dart';
 

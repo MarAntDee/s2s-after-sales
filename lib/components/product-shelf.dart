@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:s2s_after_sales/blocs/auth.dart';
-import 'package:s2s_after_sales/components/empty.dart';
-import 'package:s2s_after_sales/components/error.dart';
+import 'package:surf2sawa/blocs/auth.dart';
+import 'package:surf2sawa/components/empty.dart';
+import 'package:surf2sawa/components/error.dart';
 
 import '../blocs/shopkeeper.dart';
 import '../models/products.dart';

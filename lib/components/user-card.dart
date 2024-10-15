@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:s2s_after_sales/blocs/auth.dart';
-import 'package:s2s_after_sales/components/dialogs.dart';
-import 'package:s2s_after_sales/theme/app.dart';
-import 'package:s2s_after_sales/utils/navigator.dart';
+import 'package:surf2sawa/blocs/auth.dart';
+import 'package:surf2sawa/components/dialogs.dart';
+import 'package:surf2sawa/theme/app.dart';
+import 'package:surf2sawa/utils/navigator.dart';
 
 import 'app-logo.dart';
 
