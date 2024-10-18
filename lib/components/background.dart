@@ -14,11 +14,6 @@ class Background extends StatelessWidget {
       backgroundColor: Colors.black,
       body: Container(
         decoration: BoxDecoration(
-          image: const DecorationImage(
-            image: AssetImage("assets/images/login-bg.png"),
-            fit: BoxFit.cover,
-            opacity: 0.25,
-          ),
           gradient: LinearGradient(
             colors: <Color>[
               _theme.colorScheme.primaryColorDark,

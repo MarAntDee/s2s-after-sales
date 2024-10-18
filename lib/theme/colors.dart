@@ -5,7 +5,40 @@ class ColorLibrary {
       surface = Color(0xFFFFFFFF),
       darkText = Color(0xFF1B1B1B),
       yellow = Color(0xFFFFCF2D);
-  static MaterialColor primary = spanishViolet, secondary = mountainMeadow;
+  static MaterialColor primary = raspberry, secondary = sunshine;
+
+  //SURF2SAWA COLOR
+  static const int _raspberry = 0xFFE7196B, _sunshine = 0xFFFCBD00;
+  static MaterialColor raspberry = const MaterialColor(
+        _raspberry,
+        <int, Color>{
+          50: Color(0xFFFBE4ED),
+          100: Color(0xFFF6BBD3),
+          200: Color(0xFFF18FB6),
+          300: Color(0xFFED6299),
+          400: Color(0xFFE93F82),
+          500: Color(_raspberry),
+          600: Color(0xFFD61768),
+          700: Color(0xFFBF1662),
+          800: Color(0xFFAA135D),
+          900: Color(0xFF840F54),
+        },
+      ),
+      sunshine = const MaterialColor(
+        _sunshine,
+        <int, Color>{
+          50: Color(0xFFfff7e1),
+          100: Color(0xFFfeebb2),
+          200: Color(0xFFfede80),
+          300: Color(0xFFfdd24d),
+          400: Color(0xFFfdc625),
+          500: Color(_sunshine),
+          600: Color(0xFFfcaf00),
+          700: Color(0xFFfc9c00),
+          800: Color(0xFFfc8b00),
+          900: Color(0xFFfc6b00)
+        },
+      );
 
   //CONVERGE COLOR
   static const int _spanishViolet = 0xFF41317D, _mountainMeadow = 0xFF29B198;
@@ -73,30 +106,3 @@ class ColorLibrary {
         },
       );
 }
-
-// {
-// "Primary": {
-// "50": "#e4e5ec",
-// "100": "#bbbdd2",
-// "200": "#8f93b3",
-// "300": "#666a95",
-// "400": "#494d82",
-// "500": "#2d316f",
-// "600": "#282b67",
-// "700": "#20235d",
-// "800": "#181a51",
-// "900": "#0d0a3b"
-// },
-// "Secondary": {
-// "50": "#e1f4f1",
-// "100": "#b4e3da",
-// "200": "#83d2c3",
-// "300": "#51bfaa",
-// "400": "#29b198",
-// "500": "#00a287",
-// "600": "#00947a",
-// "700": "#00846a",
-// "800": "#00745c",
-// "900": "#005740"
-// }
-// }
