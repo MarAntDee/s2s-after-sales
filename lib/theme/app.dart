@@ -9,7 +9,7 @@ class AppTheme {
     primaryColorDark: ColorLibrary.primary[900]!,
     colorScheme: _scheme,
     useMaterial3: true,
-    fontFamily: "Nunito",
+    fontFamily: "Work Sans",
     appBarTheme: _appBarTheme,
     dialogTheme: _dialogTheme,
     elevatedButtonTheme: ElevatedButtonThemeData(
