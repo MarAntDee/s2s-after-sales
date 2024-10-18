@@ -125,6 +125,7 @@ extension AppColorScheme on ColorScheme {
   Color get secondaryColorLight => secondarySwatch[50]!;
   Color get secondaryColorDark => secondarySwatch[900]!;
 
+  Color get lightGrayText => ColorLibrary.lightGray;
   Color get darkGrayText => ColorLibrary.darkGray;
 
   Color get highContrast => ColorLibrary.yellow;

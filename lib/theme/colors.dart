@@ -5,6 +5,7 @@ class ColorLibrary {
       surface = Color(0xFFFFFFFF),
       darkText = Color(0xFF1B1B1B),
       darkGray = Color(0xFF323232),
+      lightGray = Color(0xFF7F7F7F),
       yellow = Color(0xFFFFCF2D);
   static MaterialColor primary = raspberry, secondary = sunshine;
 
