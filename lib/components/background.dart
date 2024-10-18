@@ -1,7 +1,6 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:surf2sawa/theme/app.dart';
 
 class Background extends StatelessWidget {
   final Widget? child;
@@ -12,23 +11,37 @@ class Background extends StatelessWidget {
     ThemeData _theme = Theme.of(context);
     return Scaffold(
       backgroundColor: Colors.black,
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: <Color>[
-              _theme.colorScheme.primaryColorDark,
-              _theme.colorScheme.primary,
-              _theme.colorScheme.secondaryColorDark,
-            ],
-            stops: const [0, 0.7, 1],
-            begin: const Alignment(-0.35, -1),
-            end: const Alignment(0.35, 1),
+      body: Stack(
+        fit: StackFit.expand,
+        children: [
+          Positioned.fill(
+            child: Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: <Color>[
+                    _theme.colorScheme.primary,
+                    _theme.colorScheme.secondary,
+                  ],
+                  begin: const Alignment(-1.5, -0.4),
+                  end: const Alignment(1.5, 0.4),
+                ),
+              ),
+              child: BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 111, sigmaY: 111),
+              ),
+            ),
           ),
-        ),
-        child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-          child: child,
-        ),
+          Positioned(
+            right: 0,
+            bottom: 30,
+            height: MediaQuery.sizeOf(context).height / 2,
+            child: Image.asset(
+              "assets/ui/bg-dots.png",
+              fit: BoxFit.contain,
+            ),
+          ),
+          if (child != null) Positioned.fill(child: child!),
+        ],
       ),
     );
   }

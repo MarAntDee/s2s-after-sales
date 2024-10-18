@@ -55,11 +55,11 @@ class _LoadingScreenState extends State<LoadingScreen> {
             end: Alignment.bottomCenter,
           ),
         ),
-        child: Center(
+        child: const Center(
           child: SizedBox.square(
             dimension: 120,
             child: CircularProgressIndicator(
-              color: _theme.colorScheme.secondary,
+              color: Colors.white,
               strokeWidth: 6,
             ),
           ),
@@ -69,7 +69,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
   }
 
   startTime() async {
-    var duration = const Duration(milliseconds: 500);
+    var duration = const Duration(minutes: 500);
     try {
       return Timer(duration, () => navigationPage(_auth.isLoggedIn));
     } catch (e) {
