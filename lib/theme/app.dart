@@ -15,6 +15,7 @@ class AppTheme {
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: _elevatedButtonStyle,
     ),
+    inputDecorationTheme: _inputDecorationTheme,
     textButtonTheme: TextButtonThemeData(
       style: _textButtonStyle,
     ),
@@ -70,9 +71,30 @@ class AppTheme {
     ),
   );
 
+  static final InputDecorationTheme _inputDecorationTheme =
+      InputDecorationTheme(
+    isDense: true,
+    contentPadding: EdgeInsets.zero,
+    labelStyle: const TextStyle(
+      fontSize: 18,
+      color: ColorLibrary.darkGray,
+      fontWeight: FontWeight.w500,
+    ),
+    hintStyle: TextStyle(
+      fontSize: 18,
+      color: ColorLibrary.darkGray.withOpacity(0.6),
+      fontWeight: FontWeight.w500,
+    ),
+    prefixStyle: const TextStyle(
+      fontSize: 18,
+      color: ColorLibrary.darkGray,
+      fontWeight: FontWeight.w500,
+    ),
+  );
+
   static final TextSelectionThemeData _textSelectionThemeData =
       TextSelectionThemeData(
-    cursorColor: ColorLibrary.secondary[900]!,
+    cursorColor: ColorLibrary.primary,
   );
 
   static const TextTheme _textTheme = TextTheme(
@@ -102,6 +124,8 @@ extension AppColorScheme on ColorScheme {
   MaterialColor get secondarySwatch => ColorLibrary.secondary;
   Color get secondaryColorLight => secondarySwatch[50]!;
   Color get secondaryColorDark => secondarySwatch[900]!;
+
+  Color get darkGrayText => ColorLibrary.darkGray;
 
   Color get highContrast => ColorLibrary.yellow;
 }

@@ -4,6 +4,7 @@ class ColorLibrary {
   static const Color background = Color(0xFFF6F6F6),
       surface = Color(0xFFFFFFFF),
       darkText = Color(0xFF1B1B1B),
+      darkGray = Color(0xFF323232),
       yellow = Color(0xFFFFCF2D);
   static MaterialColor primary = raspberry, secondary = sunshine;
 
