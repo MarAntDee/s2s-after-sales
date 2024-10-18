@@ -5,9 +5,9 @@ import 'dart:js' as js;
 import 'dart:math' as math;
 
 import 'package:pretty_http_logger/pretty_http_logger.dart';
-import 'package:s2s_after_sales/blocs/auth.dart';
-import 'package:s2s_after_sales/main.dart';
-import 'package:s2s_after_sales/models/transaction.dart';
+import 'package:surf2sawa/blocs/auth.dart';
+import 'package:surf2sawa/main.dart';
+import 'package:surf2sawa/models/transaction.dart';
 
 import '../models/account.dart';
 import '../models/payment-method.dart';

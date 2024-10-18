@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:s2s_after_sales/theme/app.dart';
+import 'package:surf2sawa/theme/app.dart';
 
 class Background extends StatelessWidget {
   final Widget? child;

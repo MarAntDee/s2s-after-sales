@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:s2s_after_sales/theme/app.dart';
+import 'package:surf2sawa/theme/app.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_strategy/url_strategy.dart';
 

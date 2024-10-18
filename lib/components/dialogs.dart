@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:s2s_after_sales/blocs/auth.dart';
-import 'package:s2s_after_sales/models/transaction.dart';
+import 'package:surf2sawa/blocs/auth.dart';
+import 'package:surf2sawa/models/transaction.dart';
 
 import '../main.dart';
 

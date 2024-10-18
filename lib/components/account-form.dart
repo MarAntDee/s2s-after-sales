@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:s2s_after_sales/theme/app.dart';
+import 'package:surf2sawa/theme/app.dart';
 
 import '../blocs/auth.dart';
 import '../utils/formatters.dart';
@@ -93,7 +93,7 @@ class _AccountFormState extends State<AccountForm> {
                   height: 40,
                   child: Center(
                     child: Text(
-                      "Check Account",
+                      "Link Account",
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 12,

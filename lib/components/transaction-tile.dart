@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:s2s_after_sales/components/dialogs.dart';
-import 'package:s2s_after_sales/models/transaction.dart';
-import 'package:s2s_after_sales/theme/boxes.dart';
+import 'package:surf2sawa/components/dialogs.dart';
+import 'package:surf2sawa/models/transaction.dart';
+import 'package:surf2sawa/theme/boxes.dart';
 
 class TransactionTile extends StatelessWidget {
   final Transaction _transaction;

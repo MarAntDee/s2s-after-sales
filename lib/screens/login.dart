@@ -2,12 +2,12 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:s2s_after_sales/blocs/auth.dart';
-import 'package:s2s_after_sales/components/account-form.dart';
-import 'package:s2s_after_sales/components/background.dart';
-import 'package:s2s_after_sales/components/dialogs.dart';
-import 'package:s2s_after_sales/components/otp-form.dart';
-import 'package:s2s_after_sales/theme/boxes.dart';
+import 'package:surf2sawa/blocs/auth.dart';
+import 'package:surf2sawa/components/account-form.dart';
+import 'package:surf2sawa/components/background.dart';
+import 'package:surf2sawa/components/dialogs.dart';
+import 'package:surf2sawa/components/otp-form.dart';
+import 'package:surf2sawa/theme/boxes.dart';
 
 import '../utils/navigator.dart';
 

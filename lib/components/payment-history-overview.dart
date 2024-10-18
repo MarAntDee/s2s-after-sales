@@ -1,11 +1,11 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:s2s_after_sales/blocs/auth.dart';
-import 'package:s2s_after_sales/components/error.dart';
-import 'package:s2s_after_sales/components/transaction-tile.dart';
-import 'package:s2s_after_sales/utils/api.dart';
-import 'package:s2s_after_sales/utils/navigator.dart';
+import 'package:surf2sawa/blocs/auth.dart';
+import 'package:surf2sawa/components/error.dart';
+import 'package:surf2sawa/components/transaction-tile.dart';
+import 'package:surf2sawa/utils/api.dart';
+import 'package:surf2sawa/utils/navigator.dart';
 
 import '../models/transaction.dart';
 import 'empty.dart';

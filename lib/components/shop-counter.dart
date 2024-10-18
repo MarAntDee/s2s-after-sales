@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:s2s_after_sales/blocs/auth.dart';
-import 'package:s2s_after_sales/blocs/shopkeeper.dart';
-import 'package:s2s_after_sales/components/dialogs.dart';
-import 'package:s2s_after_sales/components/product-shelf.dart';
-import 'package:s2s_after_sales/models/payment-method.dart';
-import 'package:s2s_after_sales/utils/api.dart';
+import 'package:surf2sawa/blocs/auth.dart';
+import 'package:surf2sawa/blocs/shopkeeper.dart';
+import 'package:surf2sawa/components/dialogs.dart';
+import 'package:surf2sawa/components/product-shelf.dart';
+import 'package:surf2sawa/models/payment-method.dart';
+import 'package:surf2sawa/utils/api.dart';
 
 class ShopCounter extends StatefulWidget {
   const ShopCounter({super.key});

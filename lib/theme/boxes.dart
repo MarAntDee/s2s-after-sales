@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:s2s_after_sales/main.dart';
+import 'package:surf2sawa/main.dart';
 
 class AppBoxes {
   final BuildContext _context = navigatorKey.currentContext!;

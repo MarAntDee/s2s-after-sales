@@ -1,9 +1,9 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:s2s_after_sales/blocs/shopkeeper.dart';
-import 'package:s2s_after_sales/components/product-shelf.dart';
-import 'package:s2s_after_sales/components/shop-counter.dart';
+import 'package:surf2sawa/blocs/shopkeeper.dart';
+import 'package:surf2sawa/components/product-shelf.dart';
+import 'package:surf2sawa/components/shop-counter.dart';
 
 import '../utils/navigator.dart';
 

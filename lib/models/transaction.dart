@@ -1,5 +1,5 @@
 import 'package:intl/intl.dart';
-import 'package:s2s_after_sales/utils/dev-tools.dart';
+import 'package:surf2sawa/utils/dev-tools.dart';
 
 class Transaction with MappedModel {
   final int id, sku, _timestampCreated;

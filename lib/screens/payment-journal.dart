@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:s2s_after_sales/blocs/auth.dart';
+import 'package:surf2sawa/blocs/auth.dart';
 
 import '../components/empty.dart';
 import '../components/error.dart';
@@ -55,10 +55,13 @@ class PaymentJournal extends StatelessWidget {
                     Icons.book_rounded,
                   );
                 }
-                return ListView(
-                  children: transactions.data!
-                      .map((tx) => TransactionTile(tx))
-                      .toList(),
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: ListView(
+                    children: transactions.data!
+                        .map((tx) => TransactionTile(tx))
+                        .toList(),
+                  ),
                 );
               },
             ),

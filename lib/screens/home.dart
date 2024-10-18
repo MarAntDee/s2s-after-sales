@@ -3,12 +3,12 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:s2s_after_sales/blocs/auth.dart';
-import 'package:s2s_after_sales/components/background.dart';
-import 'package:s2s_after_sales/components/home-panel.dart';
-import 'package:s2s_after_sales/components/payment-history-overview.dart';
-import 'package:s2s_after_sales/components/user-card.dart';
-import 'package:s2s_after_sales/theme/app.dart';
+import 'package:surf2sawa/blocs/auth.dart';
+import 'package:surf2sawa/components/background.dart';
+import 'package:surf2sawa/components/home-panel.dart';
+import 'package:surf2sawa/components/payment-history-overview.dart';
+import 'package:surf2sawa/components/user-card.dart';
+import 'package:surf2sawa/theme/app.dart';
 
 import '../components/dialogs.dart';
 import '../models/account.dart';
@@ -149,7 +149,7 @@ class _HomePageState extends State<HomePage> {
                                   Container(
                                     height: 285 - 28,
                                     decoration: BoxDecoration(
-                                      color: Colors.black,
+                                      color: _theme.primaryColor,
                                       image: const DecorationImage(
                                         image: AssetImage(
                                             "assets/images/login-bg.png"),
