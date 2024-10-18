@@ -69,7 +69,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
   }
 
   startTime() async {
-    var duration = const Duration(minutes: 500);
+    var duration = const Duration(milliseconds: 500);
     try {
       return Timer(duration, () => navigationPage(_auth.isLoggedIn));
     } catch (e) {

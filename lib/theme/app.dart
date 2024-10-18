@@ -43,14 +43,25 @@ class AppTheme {
   );
 
   static final ButtonStyle _elevatedButtonStyle = ElevatedButton.styleFrom(
-        backgroundColor: ColorLibrary.secondary,
+        backgroundColor: ColorLibrary.primary,
         foregroundColor: Colors.white,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(5),
+          borderRadius: BorderRadius.circular(12),
+        ),
+        elevation: 0,
+        padding: const EdgeInsets.symmetric(vertical: 20),
+        textStyle: const TextStyle(
+          fontWeight: FontWeight.w500,
+          fontSize: 14,
         ),
       ),
       _textButtonStyle = TextButton.styleFrom(
-        foregroundColor: ColorLibrary.secondary,
+        foregroundColor: Colors.white,
+        textStyle: const TextStyle(
+          decoration: TextDecoration.underline,
+          fontSize: 11,
+          fontWeight: FontWeight.w500,
+        ),
       );
 
   static final DialogTheme _dialogTheme = DialogTheme(
