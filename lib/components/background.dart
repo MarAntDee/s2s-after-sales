@@ -5,7 +5,8 @@ import 'package:flutter/material.dart';
 class Background extends StatelessWidget {
   final Widget? child;
   final double? dotsPadding, dotsHeight;
-  const Background({super.key, this.child, this.dotsPadding, this.dotsHeight});
+  final bool fromTop;
+  const Background({super.key, this.child, this.dotsPadding, this.dotsHeight, this.fromTop = false,});
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +35,8 @@ class Background extends StatelessWidget {
           ),
           Positioned(
             right: 0,
-            bottom: dotsPadding ?? 30,
+            bottom: fromTop ? null : dotsPadding ?? 30,
+            top: fromTop ? (dotsPadding ?? 30) : null,
             height: dotsHeight ?? (MediaQuery.sizeOf(context).height / 2),
             child: Image.asset(
               "assets/ui/bg-dots.png",

@@ -9,17 +9,20 @@ class Transaction with MappedModel {
       transactionNumber,
       paymentReferenceNumber,
       status,
-      dateCreatedText;
+      dateTimeCreatedText;
+  final String? product;
   final double price;
 
   String get priceText => "₱\t${NumberFormat('#,##0.00').format(price)}";
 
   DateTime get dateCreated =>
       DateTime.fromMillisecondsSinceEpoch(_timestampCreated);
+  String get dateCreatedText => DateFormat.MMMd().format(dateCreated);
 
   Transaction._(
     this.id,
     this.sku,
+      this.product,
     this._timestampCreated,
     this.accountNumber,
     this.title,
@@ -27,16 +30,17 @@ class Transaction with MappedModel {
     this.transactionNumber,
     this.paymentReferenceNumber,
     this.status,
-    this.dateCreatedText,
+    this.dateTimeCreatedText,
     this.price,
   );
 
   factory Transaction.fromMap(Map map) => Transaction._(
       int.parse(map['_id'].toString()),
       int.parse(map['skuId'].toString()),
+      map['skuName'],
       int.parse(map['createdDate'].toString()),
       map['accountNumber'].toString(),
-      map['title'] ?? "Bought SuperFiber1-6G",
+      map['title'] ?? "Unknown Transaction",
       map['paymentId'].toString(),
       map['transactionNumber'].toString(),
       map['paymentReferenceNumber'].toString(),
@@ -51,6 +55,6 @@ class Transaction with MappedModel {
         "Status": status,
         "Payment ID": paymentId,
         "Transaction Number": transactionNumber,
-        "Date Created": dateCreatedText,
+        "Date Created": dateTimeCreatedText,
       };
 }

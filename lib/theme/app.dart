@@ -38,9 +38,15 @@ class AppTheme {
 
   static const AppBarTheme _appBarTheme = AppBarTheme(
     elevation: 0,
-    backgroundColor: ColorLibrary.background,
-    foregroundColor: ColorLibrary.darkText,
+    backgroundColor: Colors.transparent,
+    foregroundColor: Colors.white,
     centerTitle: false,
+    titleTextStyle: TextStyle(
+      fontFamily: "WorkSans",
+      fontSize: 16,
+      fontWeight: FontWeight.w700,
+      color: Colors.white,
+    ),
   );
 
   static final ButtonStyle _elevatedButtonStyle = ElevatedButton.styleFrom(
