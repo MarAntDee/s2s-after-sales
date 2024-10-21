@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:surf2sawa/blocs/auth.dart';
 import 'package:surf2sawa/components/empty.dart';
 import 'package:surf2sawa/components/error.dart';
+import 'package:surf2sawa/theme/app.dart';
 
 import '../blocs/shopkeeper.dart';
 import '../models/products.dart';
@@ -105,21 +107,6 @@ class ProductShelf extends StatelessWidget {
                             ],
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                                  horizontal: 16, vertical: 16)
-                              .copyWith(bottom: 32),
-                          child: ElevatedButton(
-                            onPressed: state.isValid
-                                ? () async {
-                                    if (_formKey.currentState!.validate()) {
-                                      _formKey.currentState!.save();
-                                    }
-                                  }
-                                : null,
-                            child: const Text("Next"),
-                          ),
-                        ),
                       ],
                     ),
                   );
@@ -145,90 +132,74 @@ class ProductCard extends StatelessWidget {
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
 
-    return AnimatedContainer(
-      duration: const Duration(milliseconds: 400),
-      curve: Curves.easeInOutCirc,
-      margin: EdgeInsets.symmetric(horizontal: _padding, vertical: 6),
-      height: 100,
-      padding: const EdgeInsets.all(14),
+    return Container(
+      height: 120,
+      margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 4),
+      padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: theme.colorScheme.background,
+        color: theme.colorScheme.surface,
+        borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: selected
-              ? theme.colorScheme.primary
-              : theme.colorScheme.onBackground.withOpacity(0.6),
-          width: selected ? 4 : 1,
+          color: theme.highlightColor.withOpacity(0.25),
+          width: 1,
         ),
-        borderRadius: BorderRadius.circular(5),
       ),
-      child: InkWell(
-        onTap: onChanged == null ? null : () => onChanged!(selected),
-        child: Row(
-          children: [
-            Expanded(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Text(
-                        product.name,
-                        style: theme.textTheme.titleMedium!.copyWith(
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 4),
-                  if (product.hasDescription)
-                    Text(
-                      product.description!,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: theme.textTheme.titleMedium!.copyWith(
-                        color: theme.colorScheme.onBackground.withOpacity(0.6),
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                  const Spacer(),
-                ],
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Text(
+                product.name,
+                style: theme.textTheme.titleSmall,
               ),
-            ),
-            const SizedBox(width: 8),
-            SizedBox(
-              width: 60,
-              height: 60,
-              child: AspectRatio(
-                aspectRatio: 1,
-                child: Padding(
-                  padding: const EdgeInsets.all(4),
-                  child: Container(
-                    alignment: Alignment.center,
-                    padding: const EdgeInsets.symmetric(horizontal: 8),
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      border: Border.all(
-                        color: theme.colorScheme.secondary,
-                        width: 4,
-                      ),
-                    ),
-                    child: FittedBox(
-                      child: Text(
-                        product.price.toInt().toString(),
-                        style: theme.textTheme.titleMedium!.copyWith(
-                          color: theme.colorScheme.primary,
-                          fontSize: 18,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
+            ],
+          ),
+          const SizedBox(height: 4),
+          if (product.hasDescription)
+            Row(
+              children: [
+                Icon(
+                  Icons.check,
+                  size: 16,
+                  color: theme.colorScheme.secondary,
+                ),
+                Expanded(
+                  child: Text(
+                    product.description!,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: theme.textTheme.bodySmall!.copyWith(
+                      color: theme.colorScheme.onBackground.withOpacity(0.6),
+                      fontWeight: FontWeight.w400,
                     ),
                   ),
                 ),
-              ),
+              ],
             ),
-          ],
-        ),
+          Expanded(
+            child: Row(
+              children: [
+                Text(
+                  NumberFormat('₱#,##0.00').format(product.price),
+                  style: theme.textTheme.bodyLarge!.copyWith(
+                    color: theme.colorScheme.darkGrayText,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                const Spacer(),
+                SizedBox(
+                  width: 60,
+                  child: ElevatedButton(
+                    onPressed: () {},
+                    child: const Text("Buy"),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
