@@ -45,9 +45,6 @@ class _OTPFormState extends State<OTPForm> with TickerProviderStateMixin {
 
   late AnimationController _controller;
 
-  final String subLabel =
-      "Kindly enter the 6-digit OTP sent to your mobile phone number:";
-
   _listenForCode() async {
     await SmsAutoFill().listenForCode();
   }
@@ -78,187 +75,194 @@ class _OTPFormState extends State<OTPForm> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return OtpBloc.build(
-      api: widget.onResend,
-      initialData: widget.initialData,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: Builder(
-          builder: (context) {
-            OtpBloc otpController = OtpBloc.instance(context)!;
-            return Column(
-              mainAxisSize: MainAxisSize.max,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                const Spacer(),
-                Center(
-                  child: Text(
-                    "Phone Verification",
-                    style: _theme.textTheme.headlineSmall!.copyWith(
-                      color: _theme.primaryColor,
-                      fontWeight: FontWeight.w700,
+    return ConstrainedBox(
+      constraints: const BoxConstraints(
+        maxWidth: 400
+      ),
+      child: OtpBloc.build(
+        api: widget.onResend,
+        initialData: widget.initialData,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Builder(
+            builder: (context) {
+              OtpBloc otpController = OtpBloc.instance(context)!;
+              return Column(
+                mainAxisSize: MainAxisSize.max,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  Center(
+                    child: Text(
+                      "OTP Verification",
+                      style: _theme.textTheme.headlineSmall!.copyWith(
+                        color: _theme.colorScheme.darkGrayText,
+                        fontWeight: FontWeight.w500,
+                      ),
+                      textAlign: TextAlign.center,
                     ),
-                    textAlign: TextAlign.center,
                   ),
-                ),
-                const SizedBox(height: 16.0),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 24),
-                  child: Text(
-                    "$subLabel\n",
-                    textAlign: TextAlign.center,
-                    style: _theme.textTheme.titleMedium,
-                  ),
-                ),
-                const SizedBox(height: 8.0),
-                Center(
-                  child: Text(
-                    widget.mobile ?? "",
-                    style: _theme.textTheme.bodyLarge,
-                  ),
-                ),
-                const SizedBox(height: 16),
-                StreamBuilder<String>(
-                  stream: otpController.pincodeStream,
-                  initialData: widget.initialData,
-                  builder: (context, pincode) {
-                    otpController.beOtp = pincode.data;
-                    return Column(
-                      children: [
-                        CustomPinFieldAutoFill(
-                          enabled: _enabled,
-                          codeLength: widget.digits,
-                          controller: pinController,
-                          focusNode: _node,
-                          autoFocus: false,
-                          cursor: Cursor(
-                            color: _theme.colorScheme.secondary,
-                            enabled: true,
-                            radius: const Radius.circular(2),
-                            width: 2,
-                            height: 24,
-                          ),
-                          decoration: BoxLooseDecoration(
-                            textStyle: TextStyle(
-                              fontSize: 20,
-                              color: _theme.colorScheme.onBackground,
-                            ),
-                            strokeWidth: 2,
-                            strokeColorBuilder:
-                                CustomColorBuilder(context, enabled: _enabled),
-                            bgColorBuilder: FixedColorBuilder(_enabled
-                                ? Colors.grey[300]!
-                                : Colors.grey[400]!),
-                          ),
-                          currentCode: _code,
-                          onCodeSubmitted: (code) {
-                            setState(() => _enabled = false);
-                            widget.onSubmit(code).catchError((e) {
-                              setState(() => _enabled = true);
-                              // Popup.showError(e);
-                            }).whenComplete(() {
-                              setState(() => _enabled = true);
-                              pinController.clear();
-                              _code = "";
-                            });
-                          },
-                          onCodeChanged: (code) async {
-                            print(code.trim());
-                            String trimmedCode =
-                                (code.isNumeric || code.trim().isEmpty)
-                                    ? code.trim()
-                                    : code
-                                        .trim()
-                                        .substring(0, code.trim().length - 1);
-                            pinController.text = trimmedCode;
-                            pinController.selection =
-                                TextSelection.fromPosition(
-                              TextPosition(offset: trimmedCode.length),
-                            );
-                            _code = trimmedCode;
-                            if (trimmedCode.length == widget.digits) {
-                              FocusScope.of(context).requestFocus(FocusNode());
-                            }
-                            setState(() {});
-                          },
+                  const SizedBox(height: 16.0),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 24),
+                    child: RichText(
+                      textAlign: TextAlign.center,
+                      text: TextSpan(
+                        text: 'Enter the OTP sent to ',
+                        style: _theme.textTheme.labelMedium!.copyWith(
+                          color: _theme.colorScheme.darkGrayText,
                         ),
-                        ((pincode.data ?? "").isNotEmpty)
-                            ? Text(
-                                "PIN: ${pincode.data ?? ""}",
-                                style: _theme.textTheme.labelSmall,
-                              )
-                            : Container(),
-                      ],
-                    );
-                  },
-                ),
-                const SizedBox(height: 32),
-                Expanded(
-                  flex: 2,
-                  child: _enabled
-                      ? Column(
-                          children: [
-                            ElevatedButton(
-                              onPressed: _code.length == widget.digits
-                                  ? () async {
-                                      try {
-                                        if (_code.isEmpty)
-                                          throw "OTP is required";
-                                        setState(() => _enabled = false);
-                                        if (_auth.expiredOtps.contains(_code)) {
-                                          throw "You have entered an expired OTP";
+                        children: <TextSpan>[
+                          TextSpan(
+                            text: '+${widget.mobile}',
+                            style: const TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  const Spacer(),
+                  StreamBuilder<String>(
+                    stream: otpController.pincodeStream,
+                    initialData: widget.initialData,
+                    builder: (context, pincode) {
+                      otpController.beOtp = pincode.data;
+                      return Column(
+                        children: [
+                          CustomPinFieldAutoFill(
+                            enabled: _enabled,
+                            codeLength: widget.digits,
+                            controller: pinController,
+                            focusNode: _node,
+                            autoFocus: false,
+                            cursor: Cursor(
+                              color: _theme.colorScheme.secondaryColorDark,
+                              enabled: true,
+                              radius: const Radius.circular(2),
+                              width: 2,
+                              height: 18,
+                            ),
+                            decoration: UnderlineDecoration(
+                              textStyle: _theme.inputDecorationTheme.labelStyle!.copyWith(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                              ),
+                              lineHeight: 0.87,
+                              colorBuilder:
+                                  CustomColorBuilder(context, enabled: _enabled),
+                            ),
+                            currentCode: _code,
+                            onCodeSubmitted: (code) {
+                              setState(() => _enabled = false);
+                              widget.onSubmit(code).catchError((e) {
+                                setState(() => _enabled = true);
+                                // Popup.showError(e);
+                              }).whenComplete(() {
+                                setState(() => _enabled = true);
+                                pinController.clear();
+                                _code = "";
+                              });
+                            },
+                            onCodeChanged: (code) async {
+                              print(code.trim());
+                              String trimmedCode =
+                                  (code.isNumeric || code.trim().isEmpty)
+                                      ? code.trim()
+                                      : code
+                                          .trim()
+                                          .substring(0, code.trim().length - 1);
+                              pinController.text = trimmedCode;
+                              pinController.selection =
+                                  TextSelection.fromPosition(
+                                TextPosition(offset: trimmedCode.length),
+                              );
+                              _code = trimmedCode;
+                              if (trimmedCode.length == widget.digits) {
+                                FocusScope.of(context).requestFocus(FocusNode());
+                              }
+                              setState(() {});
+                            },
+                          ),
+                          ((pincode.data ?? "").isNotEmpty)
+                              ? Text(
+                                  "PIN: ${pincode.data ?? ""}",
+                                  style: _theme.textTheme.labelSmall,
+                                )
+                              : Container(),
+                        ],
+                      );
+                    },
+                  ),
+                  const SizedBox(height: 16),
+                  Expanded(
+                    flex: 2,
+                    child: _enabled
+                        ? Column(
+                            children: [
+                              if (widget.enableResend)
+                                _ResendButton(pinController),
+                              const Spacer(flex: 2),
+                              ElevatedButton(
+                                onPressed: _code.length == widget.digits
+                                    ? () async {
+                                        try {
+                                          if (_code.isEmpty)
+                                            throw "OTP is required";
+                                          setState(() => _enabled = false);
+                                          if (_auth.expiredOtps.contains(_code)) {
+                                            throw "You have entered an expired OTP";
+                                          }
+                                          if (otpController.beOtp?.toString() !=
+                                                  null &&
+                                              otpController.beOtp.toString() !=
+                                                  _code) {
+                                            throw "You have entered an invalid OTP";
+                                          }
+                                          _auth.expiredOtps.clear();
+                                          await widget.onSubmit(_code);
+                                        } catch (e) {
+                                          setState(() => _enabled = true);
+                                          await Popup.showError(e);
+                                        } finally {
+                                          setState(() => _enabled = true);
+                                          pinController.clear();
+                                          _code = "";
                                         }
-                                        if (otpController.beOtp?.toString() !=
-                                                null &&
-                                            otpController.beOtp.toString() !=
-                                                _code) {
-                                          throw "You have entered an invalid OTP";
-                                        }
-                                        _auth.expiredOtps.clear();
-                                        await widget.onSubmit(_code);
-                                      } catch (e) {
-                                        setState(() => _enabled = true);
-                                        await Popup.showError(e);
-                                      } finally {
-                                        setState(() => _enabled = true);
-                                        pinController.clear();
-                                        _code = "";
                                       }
-                                    }
-                                  : null,
-                              child: const SizedBox(
-                                height: 40,
-                                child: Center(
-                                  child: Text(
-                                    "SUBMIT",
+                                    : null,
+                                child: const SizedBox(
+                                  child: Center(
+                                    child: Text(
+                                      "Verify",
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                            const SizedBox(height: 8),
-                            if (widget.enableResend)
-                              _ResendButton(pinController),
-                          ],
-                        )
-                      : Center(
-                          child: SizedBox.square(
-                            dimension: 60,
-                            child: CircularProgressIndicator(
-                              color: _theme.colorScheme.secondary,
-                              strokeWidth: 6,
+                              const SizedBox(height: 8),
+                              if (widget.onCancel != null)
+                                TextButton(
+                                  onPressed: _enabled ? widget.onCancel : null,
+                                  style: TextButton.styleFrom(
+                                    foregroundColor: _theme.primaryColor,
+                                  ),
+                                  child: const Text("Cancel"),
+                                ),
+                              const Spacer(),
+                            ],
+                          )
+                        : Center(
+                            child: SizedBox.square(
+                              dimension: 60,
+                              child: CircularProgressIndicator(
+                                color: _theme.colorScheme.secondary,
+                                strokeWidth: 6,
+                              ),
                             ),
                           ),
-                        ),
-                ),
-                const Spacer(flex: 3),
-                if (widget.onCancel != null)
-                  TextButton(
-                    onPressed: _enabled ? widget.onCancel : null,
-                    child: const Text("Cancel"),
                   ),
-              ],
-            );
-          },
+                ],
+              );
+            },
+          ),
         ),
       ),
     );
@@ -283,11 +287,11 @@ class CustomColorBuilder extends ColorBuilder {
   Color indexProperty(int index) {
     if (!enabled) return Colors.grey[300]!;
     if (index == currentIndex) {
-      return currentIndexColor ?? _theme.colorScheme.secondary;
+      return currentIndexColor ?? _theme.colorScheme.secondaryColorDark;
     } else if (index < currentIndex) {
-      return enteredColor ?? _theme.colorScheme.onBackground;
+      return enteredColor ?? _theme.colorScheme.primary;
     } else {
-      return notEnteredColor ?? Colors.grey[100]!;
+      return notEnteredColor ?? Colors.grey[300]!;
     }
   }
 
@@ -340,25 +344,28 @@ class _CustomPinFieldAutoFillState extends State<CustomPinFieldAutoFill>
 
   @override
   Widget build(BuildContext context) {
-    return PinInputTextField(
-      enabled: widget.enabled,
-      pinLength: widget.codeLength,
-      decoration: widget.decoration ??
-          BoxLooseDecoration(
-              strokeColorBuilder: const FixedColorBuilder(Colors.black),
-              textStyle: const TextStyle(color: Colors.black)),
-      focusNode: widget.focusNode,
-      enableInteractiveSelection: false,
-      autocorrect: false,
-      cursor: widget.cursor,
-      autofillHints: const <String>[AutofillHints.oneTimeCode],
-      textCapitalization: TextCapitalization.none,
-      toolbarOptions: const ToolbarOptions(paste: true),
-      keyboardType: widget.keyboardType,
-      autoFocus: widget.autoFocus,
-      controller: controller,
-      textInputAction: widget.textInputAction,
-      onSubmit: widget.onCodeSubmitted,
+    return SizedBox(
+      height: 32,
+      child: PinInputTextField(
+        enabled: widget.enabled,
+        pinLength: widget.codeLength,
+        decoration: widget.decoration ??
+            UnderlineDecoration(
+                colorBuilder: const FixedColorBuilder(Colors.black),
+                textStyle: const TextStyle(color: Colors.black)),
+        focusNode: widget.focusNode,
+        enableInteractiveSelection: false,
+        autocorrect: false,
+        cursor: widget.cursor,
+        autofillHints: const <String>[AutofillHints.oneTimeCode],
+        textCapitalization: TextCapitalization.none,
+        toolbarOptions: const ToolbarOptions(paste: true),
+        keyboardType: widget.keyboardType,
+        autoFocus: widget.autoFocus,
+        controller: controller,
+        textInputAction: widget.textInputAction,
+        onSubmit: widget.onCodeSubmitted,
+      ),
     );
   }
 
@@ -609,8 +616,8 @@ class _ResendButtonState extends State<_ResendButton> {
         onPressed: null,
         child: Text(
           (_start <= 0)
-              ? "Resend OTP"
-              : "Resend OTP in ${TimeFormatter().timeLeft(_start)}",
+              ? "Didn’t you receive the OTP? Resend OTP"
+              : "Didn’t you receive the OTP? Resend OTP in ${TimeFormatter().timeLeft(_start)}",
           style:
               _theme.textTheme.titleSmall!.apply(color: _theme.disabledColor),
         ));
