@@ -19,7 +19,6 @@ class Dashboard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ThemeData _theme = Theme.of(context);
-    AuthBloc _auth = AuthBloc.instance(context)!;
 
     return Background(
       fromTop: true,
@@ -27,38 +26,6 @@ class Dashboard extends StatelessWidget {
       end: const Alignment(1, -1/3),
       dotsPadding: 60,
       child: Scaffold(
-        drawer: Drawer(
-          child: Column(
-            children: [
-              const SizedBox(height: 60),
-              Expanded(
-                child: ListView(
-                  children: [
-                    ListTile(
-                      leading: Icon(
-                        Icons.shopping_cart_checkout_rounded,
-                        color: _theme.primaryColor,
-                      ),
-                      title: const Text("Buy"),
-                      onTap: Navigator.of(context).pushToShop,
-                    ),
-                    ListTile(
-                      leading: Icon(
-                        Icons.logout,
-                        color: _theme.primaryColor,
-                      ),
-                      title: const Text("Logout"),
-                      onTap: () {
-                        _auth.logout();
-                        Navigator.of(context).popUntilLogin();
-                      },
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
         backgroundColor: Colors.transparent,
         body: ScrollConfiguration(
           behavior: ScrollConfiguration.of(context).copyWith(
@@ -78,7 +45,7 @@ class Dashboard extends StatelessWidget {
                 SliverFillRemaining(
                   child: Column(
                     children: [
-                      const Spacer(),
+                      const Expanded(child: HomePanel()),
                       Expanded(
                         flex: 2,
                           child: Container(

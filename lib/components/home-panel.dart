@@ -1,59 +1,114 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:surf2sawa/blocs/auth.dart';
+import 'package:surf2sawa/theme/app.dart';
+import 'package:surf2sawa/utils/navigator.dart';
+
+import 'app-logo.dart';
 
 class HomePanel extends StatelessWidget {
-  final String _iconPath = "assets/icons/";
 
   const HomePanel({super.key});
   @override
   Widget build(BuildContext context) {
     AuthBloc auth = AuthBloc.instance(context)!;
     ThemeData theme = Theme.of(context);
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-      color: theme.primaryColor,
-      // child: Center(
-      //   child: ConstrainedBox(
-      //     constraints: const BoxConstraints(maxWidth: 540),
-      //     child: Row(
-      //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      //       children: ["Buy"].map((key) {
-      //         return Material(
-      //           color: Colors.transparent,
-      //           child: InkWell(
-      //             onTap: () {
-      //               switch (key) {
-      //                 case "Buy":
-      //                   Navigator.of(context).pushToShop();
-      //                   break;
-      //               }
-      //             },
-      //             child: Padding(
-      //               padding: const EdgeInsets.symmetric(vertical: 16),
-      //               child: Column(
-      //                 children: [
-      //                   Padding(
-      //                     padding: const EdgeInsets.symmetric(horizontal: 20)
-      //                         .copyWith(bottom: 8),
-      //                     child: Image.asset(
-      //                       "$_iconPath${key.toString().toLowerCase()}.png",
-      //                       width: 32,
-      //                       height: 32,
-      //                     ),
-      //                   ),
-      //                   Text(
-      //                     key,
-      //                     style: theme.primaryTextTheme.bodySmall,
-      //                   ),
-      //                 ],
-      //               ),
-      //             ),
-      //           ),
-      //         );
-      //       }).toList(),
-      //     ),
-      //   ),
-      // ),
+    return ConstrainedBox(
+      constraints: const BoxConstraints(
+        maxWidth: 480,
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 30),
+        child: Column(
+          children: <Widget>[
+            const SizedBox(height: 24),
+            const AppLogo(size: 60),
+            Row(
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      "Good Morning, ${auth.username ?? auth.currentAccount!.name}",
+                      style: theme.primaryTextTheme.labelMedium,
+                    ),
+                    Text(
+                      auth.currentAccount!.accountNumber,
+                      style: theme.primaryTextTheme.bodyLarge!.copyWith(
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ],
+                ),
+                const Spacer(),
+                Container(
+                  width: 38,
+                  height: 38,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: theme.colorScheme.primaryColorLight,
+                  ),
+                  child: const Icon(
+                    Icons.person_2_outlined,
+                    color: Colors.black,
+                  ),
+                ),
+              ],
+            ),
+            Expanded(
+              child: Center(
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(12),
+                  child: BackdropFilter(
+                    filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+                    child: Container(
+                      height: 80,
+                      padding: const EdgeInsets.all(20),
+                      decoration: const BoxDecoration(
+                        color: Colors.white38,
+                      ),
+                      child: Row(
+                        children: <Widget>[
+                          if (auth.currentAccount!.currentProduct != null) Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Text(
+                                "Current Data Plan",
+                                style: theme.primaryTextTheme.labelSmall,
+                              ),
+                              Text(
+                                auth.currentAccount!.currentProduct!,
+                                style: theme.primaryTextTheme.titleLarge!
+                                    .copyWith(fontWeight: FontWeight.w700)
+                                    .apply(fontSizeDelta: -4),
+                              ),
+                            ],
+                          ),
+                          if (auth.currentAccount!.currentProduct == null) Text(
+                            "No Load Left?\nLet’s get you back online!",
+                            textAlign: TextAlign.start,
+                            style: theme.primaryTextTheme.labelSmall,
+                          ),
+                          const Spacer(),
+                          SizedBox(
+                            width: 80,
+                            child: ElevatedButton(
+                              onPressed: Navigator.of(context).pushToShop,
+                              child: const Text("Buy Load"),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
