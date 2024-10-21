@@ -1,6 +1,7 @@
 import 'dart:html' as html;
 import 'dart:math';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:rxdart/rxdart.dart';
@@ -22,6 +23,11 @@ class AuthBloc implements BlocBase {
 
   void _parseBaseParameter() {
     try {
+      if (kDebugMode) {
+        userId = "639285018871";
+        username = "nap";
+        return;
+      }
       String url = html.window.location.href;
       if (!url.contains("?")) return;
       List<String> chunk = url.split("?");
