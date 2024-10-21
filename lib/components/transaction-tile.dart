@@ -13,10 +13,10 @@ class TransactionTile extends StatelessWidget {
     ThemeData _theme = Theme.of(context);
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 4),
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         border: Border(
           bottom: BorderSide(
-            color: Color(0xFFE6E6E6),
+            color: _theme.highlightColor,
             width: 1,
           ),
         ),

@@ -6,7 +6,8 @@ class Background extends StatelessWidget {
   final Widget? child;
   final double? dotsPadding, dotsHeight;
   final bool fromTop;
-  const Background({super.key, this.child, this.dotsPadding, this.dotsHeight, this.fromTop = false,});
+  final Alignment? begin, end;
+  const Background({super.key, this.child, this.dotsPadding, this.dotsHeight, this.fromTop = false, this.begin, this.end,});
 
   @override
   Widget build(BuildContext context) {
@@ -24,8 +25,8 @@ class Background extends StatelessWidget {
                     _theme.colorScheme.primary,
                     _theme.colorScheme.secondary,
                   ],
-                  begin: const Alignment(-1.5, -0.4),
-                  end: const Alignment(1.5, 0.4),
+                  begin: begin ?? const Alignment(-1.5, -0.4),
+                  end: end ?? const Alignment(1.5, 0.4),
                 ),
               ),
               child: BackdropFilter(

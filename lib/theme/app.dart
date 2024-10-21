@@ -7,6 +7,7 @@ class AppTheme {
     primaryColor: ColorLibrary.primary,
     primaryColorLight: ColorLibrary.primary[50]!,
     primaryColorDark: ColorLibrary.primary[900]!,
+    highlightColor: const Color(0xFFE6E6E6),
     colorScheme: _scheme,
     useMaterial3: true,
     fontFamily: "Work Sans",

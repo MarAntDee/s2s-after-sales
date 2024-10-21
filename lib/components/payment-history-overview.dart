@@ -22,9 +22,6 @@ class PaymentHistoryOverview extends StatelessWidget {
     return Center(
       child: Container(
         padding: const EdgeInsets.only(top: 20),
-        constraints: const BoxConstraints(
-          maxWidth: 720,
-        ),
         child: Column(
           children: [
             Padding(
