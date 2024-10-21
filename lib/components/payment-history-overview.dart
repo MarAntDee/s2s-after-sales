@@ -98,6 +98,8 @@ class PaymentHistoryOverview extends StatelessWidget {
                     );
                   }
                   return ListView(
+                    scrollDirection: Axis.vertical,
+                    shrinkWrap: true,
                     children: transactions.data!
                         .sublist(0, min(transactions.data!.length, 5))
                         .map((tx) => TransactionTile(tx))
