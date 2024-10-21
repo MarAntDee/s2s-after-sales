@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:surf2sawa/blocs/auth.dart';
+import 'package:surf2sawa/blocs/shopkeeper.dart';
+import 'package:surf2sawa/components/shop-counter.dart';
+import 'package:surf2sawa/models/products.dart';
 import 'package:surf2sawa/models/transaction.dart';
 
 import '../main.dart';
@@ -83,4 +86,18 @@ class Popup {
           );
         },
       );
+
+  static Future showCheckoutCounter(ShopKeeper shopKeeper) => showModalBottomSheet(
+      context: _context()!,
+      builder: (context) {
+        ThemeData theme = Theme.of(context);
+        return Container(
+        decoration: BoxDecoration(
+          color: theme.scaffoldBackgroundColor,
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
+        ),
+          child: CheckoutCounter(shopKeeper),
+      );
+      },
+  );
 }

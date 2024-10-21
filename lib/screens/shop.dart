@@ -45,7 +45,7 @@ class _ShopState extends State<Shop> {
           setState(() => _index = 1);
         },
       ),
-      const ShopCounter(),
+      CheckoutCounter(_shopkeeper),
     ];
     super.initState();
   }

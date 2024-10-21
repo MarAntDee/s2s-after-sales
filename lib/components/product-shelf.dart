@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:surf2sawa/blocs/auth.dart';
+import 'package:surf2sawa/components/dialogs.dart';
 import 'package:surf2sawa/components/empty.dart';
 import 'package:surf2sawa/components/error.dart';
 import 'package:surf2sawa/theme/app.dart';
@@ -80,12 +81,7 @@ class ProductShelf extends StatelessWidget {
                                 mainAxisSize: MainAxisSize.min,
                                 children: products.data!.map(
                                   (product) {
-                                    return ProductCard(
-                                      product,
-                                      selected: state.value == product,
-                                      onChanged: (isSelected) =>
-                                          state.didChange(product),
-                                    );
+                                    return ProductCard(product);
                                   },
                                 ).toList(),
                               ),
@@ -120,13 +116,9 @@ class ProductShelf extends StatelessWidget {
 
 class ProductCard extends StatelessWidget {
   final Product product;
-  final ValueChanged<bool>? onChanged;
-  final bool selected;
-  final double _padding;
 
   const ProductCard(this.product,
-      {super.key, this.selected = false, this.onChanged})
-      : _padding = 30;
+      {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -192,7 +184,11 @@ class ProductCard extends StatelessWidget {
                 SizedBox(
                   width: 60,
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      ShopKeeper _shopkeeper = ShopKeeper.instance(context)!;
+                      _shopkeeper.selectedProduct = product;
+                      Popup.showCheckoutCounter(_shopkeeper);
+                    },
                     child: const Text("Buy"),
                   ),
                 ),
