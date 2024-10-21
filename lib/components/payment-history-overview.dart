@@ -21,32 +21,34 @@ class PaymentHistoryOverview extends StatelessWidget {
 
     return Center(
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 20).copyWith(top: 20),
+        padding: const EdgeInsets.only(top: 20),
         constraints: const BoxConstraints(
           maxWidth: 720,
         ),
         child: Column(
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "Payment History",
-                  style: theme.textTheme.titleLarge!
-                      .copyWith(fontWeight: FontWeight.w500, color: theme.colorScheme.darkGrayText,
-                  ).apply(fontSizeDelta: -4),
-                ),
-                IconButton(
-                  onPressed: Navigator.of(context).pushToPaymentJournal,
-                  color: theme.colorScheme.secondary,
-                  iconSize: 16,
-                  icon: const Icon(
-                    Icons.arrow_forward_rounded,
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 24),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Payment History",
+                    style: theme.textTheme.titleLarge!
+                        .copyWith(fontWeight: FontWeight.w500, color: theme.colorScheme.darkGrayText,
+                    ).apply(fontSizeDelta: -4),
                   ),
-                ),
-              ],
+                  IconButton(
+                    onPressed: Navigator.of(context).pushToPaymentJournal,
+                    color: theme.colorScheme.secondary,
+                    iconSize: 16,
+                    icon: const Icon(
+                      Icons.arrow_forward_rounded,
+                    ),
+                  ),
+                ],
+              ),
             ),
-            const SizedBox(height: 16),
             Expanded(
               child: FutureBuilder<List<Transaction>>(
                 future: ProdApi().getPaymentHistory(),
@@ -76,10 +78,13 @@ class PaymentHistoryOverview extends StatelessWidget {
                   return ListView(
                     scrollDirection: Axis.vertical,
                     shrinkWrap: true,
-                    children: transactions.data!
-                        .sublist(0, min(transactions.data!.length, 5))
-                        .map((tx) => TransactionTile(tx))
-                        .toList(),
+                    children: [
+                      ...transactions.data!
+                          .sublist(0, min(transactions.data!.length, 5))
+                          .map((tx) => TransactionTile(tx))
+                          .toList(),
+                      const SizedBox(height: 36),
+                    ],
                   );
                 },
               ),
