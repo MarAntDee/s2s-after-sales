@@ -558,6 +558,12 @@ class _ResendButtonState extends State<_ResendButton> {
                     ),
                   if (!resending)
                     TextButton(
+                      style: TextButton.styleFrom(
+                        foregroundColor: _theme.primaryColor,
+                        textStyle: const TextStyle(
+                          decoration: TextDecoration.none,
+                        ),
+                      ),
                       onPressed: () async {
                         try {
                           setState(() {

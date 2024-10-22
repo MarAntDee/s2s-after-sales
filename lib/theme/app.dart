@@ -73,6 +73,7 @@ class AppTheme {
       );
 
   static final DialogTheme _dialogTheme = DialogTheme(
+    surfaceTintColor: Colors.transparent,
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(8),
     ),

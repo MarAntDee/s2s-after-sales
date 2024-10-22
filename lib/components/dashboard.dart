@@ -111,7 +111,7 @@ class _DashboardState extends State<Dashboard> {
           body: Stack(
             children: [
               _pages[_selectedIndex],
-              if (isOutageShown ?? true) Positioned(
+              if (isOutageShown ?? false) Positioned(
                 left: 0,
                 right: 0,
                 bottom: -16,
