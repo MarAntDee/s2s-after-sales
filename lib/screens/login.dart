@@ -39,7 +39,11 @@ class _LoginPageState extends State<LoginPage> {
 
   int selectedIndex = 0;
   int get _flex1 => 1;
-  int get _flex2 => hasFocus ? 4 : 1;
+  int get _flex2 {
+    if (_size.height < 720) return hasFocus ? 7 : 2;
+    return hasFocus ? 4 : 1;
+  }
+
   List<Widget> get _pages => [
         AccountForm(
           node: _accountNode,
@@ -90,39 +94,42 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Background(
       dotsPadding: _size.height / 6,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
-          Expanded(
-            flex: _flex1,
-            child: Center(
-              child: AppLogo(
-                size: min(_size.width / 2, _size.height / 4),
-              ),
-            ),
-          ),
-          Expanded(
-            flex: _flex2,
-            child: Container(
-              padding: const EdgeInsets.all(45).copyWith(bottom: 0),
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.vertical(
-                  top: Radius.circular(30),
-                ),
-              ),
-              child: ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 400),
-                child: Column(
-                  children: [
-                    Expanded(flex: 3, child: Center(child: _pages[selectedIndex])),
-                    if (hasFocus) const Spacer(flex: 2),
-                  ],
+      child: Center(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            Expanded(
+              flex: _flex1,
+              child: Center(
+                child: AppLogo(
+                  size: min(_size.width / 2, _size.height / 4),
                 ),
               ),
             ),
-          ),
-        ],
+            Expanded(
+              flex: _flex2,
+              child: Container(
+                padding: const EdgeInsets.all(45).copyWith(bottom: 0),
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.vertical(
+                    top: Radius.circular(30),
+                  ),
+                ),
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(maxWidth: 400),
+                  child: Column(
+                    children: [
+                      Expanded(
+                          flex: 4, child: Center(child: _pages[selectedIndex])),
+                      if (hasFocus) const Spacer(flex: 3),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
       // child: Center(
       //   child: SingleChildScrollView(
