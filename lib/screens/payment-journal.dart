@@ -100,46 +100,59 @@ class PaymentJournal extends StatelessWidget {
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
-                          if (auth.currentAccount!.currentProduct != null) Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                Text(
-                                  auth.currentAccount!.currentProduct!.toString(),
-                                  style: theme.textTheme.titleLarge!.copyWith(
-                                    color: theme.colorScheme.darkGrayText,
-                                    fontWeight: FontWeight.w700,
-                                  ).apply(fontSizeDelta: -4),
-                                ),
-                                Text(
-                                  auth.currentAccount!.expirationText!,
-                                  style: theme.textTheme.labelSmall!.copyWith(
-                                    color: (auth.currentAccount!.isExpired ?? true)
-                                        ? theme.colorScheme.error
-                                        : theme.colorScheme.lightGrayText,
-                                ),
-                                )
-                              ],
-                            ),
-                          ),
-                          if (auth.currentAccount!.currentProduct == null) Expanded(
-                            child: Text(
-                              "No Load Left?\nLet’s get you back online!",
-                              textAlign: TextAlign.start,
-                              style: theme.textTheme.bodySmall!.copyWith(
-                                color: theme.colorScheme.darkGrayText,
-                                fontWeight: FontWeight.w600,
+                          if (auth.currentAccount!.currentProduct != null)
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisSize: MainAxisSize.min,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  Text(
+                                    auth.currentAccount!.currentProduct!
+                                        .toString(),
+                                    style: theme.textTheme.titleLarge!
+                                        .copyWith(
+                                          color: theme.colorScheme.darkGrayText,
+                                          fontWeight: FontWeight.w700,
+                                        )
+                                        .apply(fontSizeDelta: -4),
+                                  ),
+                                  Text(
+                                    auth.currentAccount!.expirationText!,
+                                    style: theme.textTheme.labelSmall!.copyWith(
+                                      color: (auth.currentAccount!.isExpired ??
+                                              true)
+                                          ? theme.colorScheme.error
+                                          : theme.colorScheme.lightGrayText,
+                                    ),
+                                  )
+                                ],
                               ),
                             ),
-                          ),
-                          ElevatedButton(
-                            onPressed: auth.pushToShop,
-                            child: const SizedBox(
-                              width: 80,
-                              child: Center(
-                                child: Text("Buy Load"),
+                          if (auth.currentAccount!.currentProduct == null)
+                            Expanded(
+                              child: Text(
+                                "No Load Left?\nLet’s get you back online!",
+                                textAlign: TextAlign.start,
+                                style: theme.textTheme.bodySmall!.copyWith(
+                                  color: theme.colorScheme.darkGrayText,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ),
+                          Center(
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                textStyle: const TextStyle(fontSize: 12),
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 8),
+                              ),
+                              onPressed: auth.pushToShop,
+                              child: const SizedBox(
+                                width: 80,
+                                child: Center(
+                                  child: Text("Buy Load"),
+                                ),
                               ),
                             ),
                           ),
