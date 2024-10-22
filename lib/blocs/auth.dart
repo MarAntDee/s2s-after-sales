@@ -21,6 +21,13 @@ class AuthBloc implements BlocBase {
   bool? autolink;
   String? userId, username;
 
+  //PAGE
+  final BehaviorSubject<int> _pageController = BehaviorSubject<int>();
+  set selectedIndex(int newValue) => _pageController.add(newValue);
+  Stream<int> get pageStream => _pageController.stream;
+  pushToShop() => selectedIndex = 1;
+  pushToJournal() => selectedIndex = 3;
+
   void _parseBaseParameter() {
     try {
       if (kDebugMode) {

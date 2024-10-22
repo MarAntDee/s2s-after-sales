@@ -95,7 +95,7 @@ class HomePanel extends StatelessWidget {
                           SizedBox(
                             width: 80,
                             child: ElevatedButton(
-                              onPressed: Navigator.of(context).pushToShop,
+                              onPressed: auth.pushToShop,
                               child: const Text("Buy Load"),
                             ),
                           ),

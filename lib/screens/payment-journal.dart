@@ -27,9 +27,7 @@ class PaymentJournal extends StatelessWidget {
         dotsPadding: 16,
         child: Scaffold(
           appBar: AppBar(
-            leading: IconButton(
-                icon: const Icon(Icons.chevron_left_rounded),
-                onPressed: Navigator.of(context).maybePop),
+            automaticallyImplyLeading: false,
             title: const Text("Payment History"),
           ),
           backgroundColor: Colors.transparent,

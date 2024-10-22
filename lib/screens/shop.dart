@@ -23,37 +23,19 @@ class Shop extends StatefulWidget {
 }
 
 class _ShopState extends State<Shop> {
-  late List<Widget> _pages;
-  int _index = 0;
   ShopKeeper get _shopkeeper => ShopKeeper.instance(context)!;
   Size get _screen => MediaQuery.sizeOf(context);
   ThemeData get _theme => Theme.of(context);
 
   @override
   void initState() {
-    _pages = [
-      ProductShelf(
-        initialProduct: _shopkeeper.selectedProduct,
-        validator: (product) {
-          if (product == null) {
-            return "Please pick a SuperFiber prepaid plan";
-          }
-          return null;
-        },
-        onSaved: (product) {
-          _shopkeeper.selectedProduct = product;
-          setState(() => _index = 1);
-        },
-      ),
-      CheckoutCounter(_shopkeeper),
-    ];
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return PopScope(
-      canPop: (false),
+      canPop: false,
       onPopInvoked: (canPop) {
         Navigator.of(context).popUntilRoot();
       },
@@ -65,20 +47,7 @@ class _ShopState extends State<Shop> {
         child: Scaffold(
           backgroundColor: Colors.transparent,
           appBar: AppBar(
-            leading: IconButton(
-              icon: const Icon(Icons.chevron_left_rounded),
-              onPressed: () {
-                switch (_index) {
-                  case 1:
-                    setState(() => _index = 0);
-                    _shopkeeper.selectedPaymentMethod = null;
-                    break;
-                  default:
-                    Navigator.of(context).maybePop();
-                    break;
-                }
-              },
-            ),
+            automaticallyImplyLeading: false,
             title: const Text("Buy Load"),
           ),
           body: Column(
@@ -91,7 +60,18 @@ class _ShopState extends State<Shop> {
                     child: ConstrainedBox(
                       constraints: BoxConstraints(
                           maxWidth: 600, minHeight: max(_screen.height, 800)),
-                      child: _pages[_index],
+                      child: ProductShelf(
+                        initialProduct: _shopkeeper.selectedProduct,
+                        validator: (product) {
+                          if (product == null) {
+                            return "Please pick a SuperFiber prepaid plan";
+                          }
+                          return null;
+                        },
+                        onSaved: (product) {
+                          _shopkeeper.selectedProduct = product;
+                        },
+                      ),
                     ),
                   ),
                 ),

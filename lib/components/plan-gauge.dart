@@ -38,7 +38,7 @@ class PLanGauge extends StatelessWidget {
                       ),
                     ),
                     ElevatedButton(
-                      onPressed: Navigator.of(context).pushToShop,
+                      onPressed: auth.pushToShop,
                       child: const Padding(
                         padding: EdgeInsets.symmetric(horizontal: 16),
                         child: Row(

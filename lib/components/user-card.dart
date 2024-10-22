@@ -114,7 +114,7 @@ class UserCard extends StatelessWidget {
                             borderRadius: const BorderRadius.horizontal(
                               right: Radius.circular(300),
                             ),
-                            onTap: Navigator.of(context).pushToShop,
+                            onTap: auth.pushToShop,
                             child: Padding(
                               padding:
                                   const EdgeInsets.all(6).copyWith(right: 14),

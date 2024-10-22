@@ -36,7 +36,7 @@ class PaymentHistoryOverview extends StatelessWidget {
                     ).apply(fontSizeDelta: -4),
                   ),
                   IconButton(
-                    onPressed: Navigator.of(context).pushToPaymentJournal,
+                    onPressed: auth.pushToJournal,
                     color: theme.colorScheme.secondary,
                     iconSize: 16,
                     icon: const Icon(
