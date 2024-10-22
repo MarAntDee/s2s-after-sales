@@ -117,8 +117,7 @@ class ProductShelf extends StatelessWidget {
 class ProductCard extends StatelessWidget {
   final Product product;
 
-  const ProductCard(this.product,
-      {super.key});
+  const ProductCard(this.product, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -183,13 +182,19 @@ class ProductCard extends StatelessWidget {
                 const Spacer(),
                 SizedBox(
                   width: 60,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      ShopKeeper _shopkeeper = ShopKeeper.instance(context)!;
-                      _shopkeeper.selectedProduct = product;
-                      Popup.showCheckoutCounter(_shopkeeper);
-                    },
-                    child: const Text("Buy"),
+                  child: Center(
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        textStyle: const TextStyle(fontSize: 12),
+                        padding: const EdgeInsets.symmetric(vertical: 8),
+                      ),
+                      onPressed: () {
+                        ShopKeeper _shopkeeper = ShopKeeper.instance(context)!;
+                        _shopkeeper.selectedProduct = product;
+                        Popup.showCheckoutCounter(_shopkeeper);
+                      },
+                      child: const Text("Buy"),
+                    ),
                   ),
                 ),
               ],
