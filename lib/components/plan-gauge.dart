@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:surf2sawa/blocs/auth.dart';
 import 'package:surf2sawa/theme/app.dart';
+import 'package:surf2sawa/utils/navigator.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 class PLanGauge extends StatelessWidget {
@@ -8,6 +10,7 @@ class PLanGauge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
+    AuthBloc auth = AuthBloc.instance(context)!;
     return Padding(
       padding: const EdgeInsets.all(24).copyWith(bottom: 0),
       child: Column(
@@ -22,7 +25,36 @@ class PLanGauge extends StatelessWidget {
               color: theme.colorScheme.darkGrayText)
                 .apply(fontSizeDelta: -4),
           ),
-          Expanded(
+          if (auth.currentAccount!.currentProduct == null)
+            Expanded(
+              child: Center(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Text(
+                      "No Active Plans yet!",
+                      style: theme.textTheme.bodyLarge!.copyWith(
+                        color: theme.colorScheme.lightGrayText,
+                      ),
+                    ),
+                    ElevatedButton(
+                      onPressed: Navigator.of(context).pushToShop,
+                      child: const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 16),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            Icon(Icons.search_rounded),
+                            Text("Check Available Plans"),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            if (auth.currentAccount!.currentProduct != null) Expanded(
             child: Row(
               children: [
                 Expanded(
