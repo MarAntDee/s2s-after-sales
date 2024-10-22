@@ -53,7 +53,7 @@ class HomePanel extends StatelessWidget {
                     filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
                     child: Container(
                       height: 80,
-                      padding: const EdgeInsets.all(20),
+                      padding: const EdgeInsets.all(12),
                       decoration: const BoxDecoration(
                         color: Colors.white38,
                       ),

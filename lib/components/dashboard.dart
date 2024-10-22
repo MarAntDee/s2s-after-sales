@@ -228,18 +228,23 @@ class _DashboardState extends State<Dashboard> {
                       (entry) {
                         if (entry.$2 == null) return const Spacer();
                         if (entry.$2!.isEmpty) {
-                          return InkWell(
-                            onTap: () => setState(() => isOutageShown = true),
-                            child: Container(
-                              width: 38,
-                              height: 38,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: _theme.colorScheme.primaryColorLight,
-                              ),
-                              child: const Icon(
-                                Icons.person_2_outlined,
-                                color: Colors.black,
+                          return Expanded(
+                            child: Center(
+                              child: InkWell(
+                                onTap: () =>
+                                    setState(() => isOutageShown = true),
+                                child: Container(
+                                  width: 38,
+                                  height: 38,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: _theme.colorScheme.primaryColorLight,
+                                  ),
+                                  child: const Icon(
+                                    Icons.person_2_outlined,
+                                    color: Colors.black,
+                                  ),
+                                ),
                               ),
                             ),
                           );
@@ -298,6 +303,7 @@ class _DashboardState extends State<Dashboard> {
               shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(20)),
               ),
+              onPressed: widget.onFABPressed,
               child: Container(
                 width: 60,
                 height: 60,
@@ -317,7 +323,6 @@ class _DashboardState extends State<Dashboard> {
                   child: AppLogo.s2s,
                 ),
               ),
-              onPressed: widget.onFABPressed,
             ),
           );
         });
