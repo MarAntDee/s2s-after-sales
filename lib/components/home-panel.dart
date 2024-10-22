@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:surf2sawa/blocs/auth.dart';
 import 'package:surf2sawa/theme/app.dart';
+import 'package:surf2sawa/utils/extensions.dart';
 import 'package:surf2sawa/utils/navigator.dart';
 
 import 'app-logo.dart';
@@ -30,7 +31,7 @@ class HomePanel extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      "Good Morning, ${auth.username ?? auth.currentAccount!.name}",
+                      "${DateTime.now().greeting}, ${auth.username ?? auth.currentAccount!.name}",
                       style: theme.primaryTextTheme.labelMedium,
                     ),
                     Text(
