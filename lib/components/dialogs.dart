@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:surf2sawa/blocs/auth.dart';
 import 'package:surf2sawa/blocs/shopkeeper.dart';
-import 'package:surf2sawa/components/shop-counter.dart';
+import 'package:surf2sawa/components/checkout-counter.dart';
 import 'package:surf2sawa/models/products.dart';
 import 'package:surf2sawa/models/transaction.dart';
 

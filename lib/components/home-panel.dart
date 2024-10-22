@@ -22,8 +22,8 @@ class HomePanel extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 30),
         child: Column(
           children: <Widget>[
-            const SizedBox(height: 24),
-            const AppLogo(size: 60),
+            const SizedBox(height: 12),
+            const AppLogo(size: 72),
             Row(
               children: [
                 Column(

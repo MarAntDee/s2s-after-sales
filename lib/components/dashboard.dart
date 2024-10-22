@@ -96,52 +96,52 @@ class Dashboard extends StatelessWidget {
                 borderRadius: BorderRadius.all(Radius.circular(22)),
               ),
             ),
-            child: SizedBox(
-              width: double.infinity,
-              height: 60,
-              child: Row(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Expanded(
-                  child: IconButton(
-                    icon: Icon(
-                      Icons.menu,
-                      color: Colors.black,
-                    ),
-                    onPressed: () {},
-                  ),
-                ),
-                Expanded(
-                  child: IconButton(
-                    icon: Icon(
-                      Icons.search,
-                      color: Colors.black,
-                    ),
-                    onPressed: () {},
-                  ),
-                ),
-                Expanded(
-                  child: IconButton(
-                    icon: Icon(
-                      Icons.print,
-                      color: Colors.black,
-                    ),
-                    onPressed: () {},
-                  ),
-                ),
-                Expanded(
-                  child: IconButton(
-                    icon: Icon(
-                      Icons.people,
-                      color: Colors.black,
-                    ),
-                    onPressed: () {},
-                  ),
-                ),
-              ],
-            ),
-            ),
+            // child: SizedBox(
+            //   width: double.infinity,
+            //   height: 60,
+            //   child: Row(
+            //   mainAxisSize: MainAxisSize.max,
+            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //   children: <Widget>[
+            //     Expanded(
+            //       child: IconButton(
+            //         icon: Icon(
+            //           Icons.menu,
+            //           color: Colors.black,
+            //         ),
+            //         onPressed: () {},
+            //       ),
+            //     ),
+            //     Expanded(
+            //       child: IconButton(
+            //         icon: Icon(
+            //           Icons.search,
+            //           color: Colors.black,
+            //         ),
+            //         onPressed: () {},
+            //       ),
+            //     ),
+            //     Expanded(
+            //       child: IconButton(
+            //         icon: Icon(
+            //           Icons.print,
+            //           color: Colors.black,
+            //         ),
+            //         onPressed: () {},
+            //       ),
+            //     ),
+            //     Expanded(
+            //       child: IconButton(
+            //         icon: Icon(
+            //           Icons.people,
+            //           color: Colors.black,
+            //         ),
+            //         onPressed: () {},
+            //       ),
+            //     ),
+            //   ],
+            // ),
+            // ),
           ),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,

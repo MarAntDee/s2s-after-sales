@@ -25,20 +25,20 @@ class _CheckoutCounterState extends State<CheckoutCounter> {
 
   String get priceText => shopKeeper.selectedProduct?.price == null
       ? "--"
-      : NumberFormat('#,##0.00').format(shopKeeper.selectedProduct!.price);
+      : NumberFormat('₱#,##0.00').format(shopKeeper.selectedProduct!.price);
   String get convenienceFeeText => (shopKeeper.selectedPaymentMethod
                   ?.convenienceFee(shopKeeper.selectedProduct?.price ?? 0) ??
               0) ==
           0
       ? "--"
-      : NumberFormat('#,##0.00').format(
+      : NumberFormat('₱#,##0.00').format(
           shopKeeper.selectedPaymentMethod!
               .convenienceFee(shopKeeper.selectedProduct!.price),
         );
   String get totalPriceText {
-    double basePrice = double.tryParse(priceText.replaceAll(",", "")) ?? 0,
-        convenienceFee = double.tryParse(convenienceFeeText) ?? 0;
-    return NumberFormat('#,##0.00').format(basePrice + convenienceFee);
+    double basePrice = double.tryParse(priceText.substring(1).replaceAll(",", "")) ?? 0,
+        convenienceFee = double.tryParse(convenienceFeeText.substring(1)) ?? 0;
+    return NumberFormat('₱#,##0.00').format(basePrice + convenienceFee);
   }
 
   @override
@@ -93,39 +93,41 @@ class _CheckoutCounterState extends State<CheckoutCounter> {
                               children: paymentMethods.data!
                                   .map<Widget>(
                                     (paymentMethod) =>
-                                        RadioListTile<PaymentMethod>(
-                                      title: Row(
-                                        children: [
-                                          Container(
-                                            width: 60,
-                                            height: 40,
-                                            decoration: BoxDecoration(
-                                              border: Border.all(
-                                                  color: Colors.black54,
-                                                  width: 1),
-                                              borderRadius:
-                                                  BorderRadius.circular(4),
-                                            ),
-                                            child: ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(4),
-                                              child: Image(
-                                                image: paymentMethod.image,
-                                                fit: BoxFit.fitWidth,
-                                              ),
+                                        AnimatedContainer(
+                                          duration: const Duration(milliseconds: 400),
+                                          margin: const EdgeInsets.symmetric(vertical: 8),
+                                          decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            borderRadius: BorderRadius.circular(6),
+                                            border: Border.all(
+                                              color: shopKeeper.selectedPaymentMethod ==
+                                                  paymentMethod ? theme.colorScheme.darkGrayText : Colors.white,
+                                              width: shopKeeper.selectedPaymentMethod ==
+                                                  paymentMethod ? 1 : 0,
                                             ),
                                           ),
-                                          const SizedBox(width: 8),
-                                          Text(paymentMethod.name),
-                                        ],
-                                      ),
-                                      onChanged: (paymentMethod) => setState(() =>
-                                          shopKeeper.selectedPaymentMethod =
-                                              paymentMethod),
-                                      value: paymentMethod,
-                                      groupValue:
-                                          shopKeeper.selectedPaymentMethod,
-                                    ),
+                                          child: ListTile(
+                                            title: Row(
+                                          children: [
+                                            SizedBox(
+                                              width: 60,
+                                              height: 40,
+                                              child: ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(4),
+                                                child: Image(
+                                                  image: paymentMethod.image,
+                                                  fit: BoxFit.fitWidth,
+                                                ),
+                                              ),
+                                            ),
+                                            const SizedBox(width: 8),
+                                            Text(paymentMethod.name, style: theme.textTheme.titleMedium!.copyWith(color: theme.colorScheme.lightGrayText),),
+                                          ],
+                                                                                ),
+                                            onTap: () => setState(() => shopKeeper.selectedPaymentMethod = paymentMethod),
+                                          ),
+                                        ),
                                   )
                                   .toList(),
                             );
