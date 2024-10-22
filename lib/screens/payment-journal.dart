@@ -100,7 +100,7 @@ class PaymentJournal extends StatelessWidget {
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
-                          Expanded(
+                          if (auth.currentAccount!.currentProduct != null) Expanded(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisSize: MainAxisSize.min,
@@ -122,6 +122,16 @@ class PaymentJournal extends StatelessWidget {
                                 ),
                                 )
                               ],
+                            ),
+                          ),
+                          if (auth.currentAccount!.currentProduct == null) Expanded(
+                            child: Text(
+                              "No Load Left?\nLet’s get you back online!",
+                              textAlign: TextAlign.start,
+                              style: theme.textTheme.bodySmall!.copyWith(
+                                color: theme.colorScheme.darkGrayText,
+                                fontWeight: FontWeight.w600,
+                              ),
                             ),
                           ),
                           ElevatedButton(
