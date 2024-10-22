@@ -31,7 +31,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final FocusNode _accountNode = FocusNode();
+  final FocusNode _accountNode = FocusNode(), _otpNode = FocusNode();
   final PageController controller = PageController();
   AuthBloc get _auth => AuthBloc.instance(context)!;
   Size get _size => MediaQuery.sizeOf(context);
@@ -52,6 +52,7 @@ class _LoginPageState extends State<LoginPage> {
           },
         ),
         OTPForm(
+          node: _otpNode,
           initialData: _auth.pincode,
           onResend: _auth.checkAccount,
           onSubmit: (code) async {
@@ -69,6 +70,7 @@ class _LoginPageState extends State<LoginPage> {
     SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
       if (widget.error != null) Popup.showError(widget.error);
       _accountNode.addListener(() => _nodeListener(_accountNode));
+      _otpNode.addListener(() => _nodeListener(_otpNode));
     });
     super.initState();
   }
@@ -76,6 +78,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void dispose() {
     _accountNode.removeListener(() => _nodeListener(_accountNode));
+    _otpNode.removeListener(() => _nodeListener(_otpNode));
     super.dispose();
   }
 

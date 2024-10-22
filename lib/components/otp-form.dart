@@ -18,12 +18,14 @@ class OTPForm extends StatefulWidget {
   final VoidCallback? onCancel;
   final String? initialData, mobile;
   final bool enableResend;
+  final FocusNode? node;
 
   final int digits = 6;
 
   const OTPForm({
     super.key,
     required this.onSubmit,
+    this.node,
     this.onCancel,
     this.initialData,
     this.mobile,
@@ -132,7 +134,7 @@ class _OTPFormState extends State<OTPForm> with TickerProviderStateMixin {
                             enabled: _enabled,
                             codeLength: widget.digits,
                             controller: pinController,
-                            focusNode: _node,
+                            focusNode: widget.node ?? _node,
                             autoFocus: false,
                             cursor: Cursor(
                               color: _theme.colorScheme.secondaryColorDark,
