@@ -223,10 +223,27 @@ class _DashboardState extends State<Dashboard> {
                         "name": "History",
                         "icon": Icons.receipt_long,
                       },
-                      null,
+                      {},
                     ].indexed.map(
                       (entry) {
                         if (entry.$2 == null) return const Spacer();
+                        if (entry.$2!.isEmpty) {
+                          return InkWell(
+                            onTap: () => setState(() => isOutageShown = true),
+                            child: Container(
+                              width: 38,
+                              height: 38,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: _theme.colorScheme.primaryColorLight,
+                              ),
+                              child: const Icon(
+                                Icons.person_2_outlined,
+                                color: Colors.black,
+                              ),
+                            ),
+                          );
+                        }
                         return Expanded(
                           child: IconButton(
                             hoverColor: _theme.colorScheme.primaryColorLight,

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:surf2sawa/blocs/auth.dart';
 import 'package:surf2sawa/theme/app.dart';
-import 'package:surf2sawa/utils/navigator.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 class PLanGauge extends StatelessWidget {
@@ -11,6 +10,7 @@ class PLanGauge extends StatelessWidget {
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
     AuthBloc auth = AuthBloc.instance(context)!;
+    bool isScreenShort = MediaQuery.sizeOf(context).height < 720;
     return Padding(
       padding: const EdgeInsets.all(24).copyWith(bottom: 0),
       child: Column(
@@ -21,8 +21,8 @@ class PLanGauge extends StatelessWidget {
             textAlign: TextAlign.start,
             style: theme.textTheme.titleLarge!
                 .copyWith(
-              fontWeight: FontWeight.w500,
-              color: theme.colorScheme.darkGrayText)
+                    fontWeight: FontWeight.w500,
+                    color: theme.colorScheme.darkGrayText)
                 .apply(fontSizeDelta: -4),
           ),
           if (auth.currentAccount!.currentProduct == null)
@@ -54,154 +54,171 @@ class PLanGauge extends StatelessWidget {
                 ),
               ),
             ),
-            if (auth.currentAccount!.currentProduct != null) Expanded(
-            child: Row(
-              children: [
-                Expanded(
-                  child: Center(
-                    child: SfRadialGauge(
-                      axes: <RadialAxis>[
-                        RadialAxis(
-                          minimum: 0,
-                          maximum: 6,
-                          axisLineStyle: AxisLineStyle(
-                            color: theme.highlightColor,
-                            cornerStyle: CornerStyle.bothCurve,
-                            thickness: 16,
-                          ),
-                          showLabels: false,
-                          showTicks: false,
-                          pointers: <GaugePointer>[
-                            RangePointer(
-                              value: 2,
+          if (auth.currentAccount!.currentProduct != null)
+            Expanded(
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Center(
+                      child: SfRadialGauge(
+                        axes: <RadialAxis>[
+                          RadialAxis(
+                            minimum: 0,
+                            maximum: 6,
+                            axisLineStyle: AxisLineStyle(
+                              color: theme.highlightColor,
                               cornerStyle: CornerStyle.bothCurve,
-                              width: 16,
-                              enableAnimation: true,
-                              gradient: SweepGradient(
-                                colors: [
-                                  theme.colorScheme.primarySwatch[700]!,
-                                  theme.colorScheme.primary,
-                                  theme.colorScheme.secondaryColorDark,
-                                  theme.colorScheme.secondary,
-                                ],
-                              ),
+                              thickness: isScreenShort ? 8 : 16,
                             ),
-                          ],
-                          annotations: <GaugeAnnotation>[
-                            GaugeAnnotation(
-                              angle: 270,
-                              positionFactor: 0.2,
-                              widget: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Text(
-                                    '2',
-                                    style: theme.textTheme.headlineSmall!.copyWith(
-                                      color: theme.colorScheme.darkGrayText,
-                                      fontWeight: FontWeight.w700,
+                            showLabels: false,
+                            showTicks: false,
+                            pointers: <GaugePointer>[
+                              RangePointer(
+                                value: 2,
+                                cornerStyle: CornerStyle.bothCurve,
+                                width: isScreenShort ? 8 : 16,
+                                enableAnimation: true,
+                                gradient: SweepGradient(
+                                  colors: [
+                                    theme.colorScheme.primarySwatch[700]!,
+                                    theme.colorScheme.primary,
+                                    theme.colorScheme.secondaryColorDark,
+                                    theme.colorScheme.secondary,
+                                  ],
+                                ),
+                              ),
+                            ],
+                            annotations: <GaugeAnnotation>[
+                              GaugeAnnotation(
+                                angle: 270,
+                                positionFactor: 0.2,
+                                widget: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Text(
+                                      '2',
+                                      style: theme.textTheme.headlineSmall!
+                                          .copyWith(
+                                        color: theme.colorScheme.darkGrayText,
+                                        fontWeight: FontWeight.w700,
+                                      ),
                                     ),
-                                  ),
-                                  Text(
-                                    'Devices',
-                                    style: theme.textTheme.titleSmall!.copyWith(
-                                      color: theme.disabledColor,
+                                    Text(
+                                      'Devices',
+                                      style:
+                                          theme.textTheme.titleSmall!.copyWith(
+                                        color: theme.disabledColor,
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
-                            ),
-                            GaugeAnnotation(
-                              angle: 90,
-                              positionFactor: 0.85,
-                              widget: Text(
-                                '6\nDevices',
-                                textAlign: TextAlign.center,
-                                style: theme.textTheme.titleLarge!.copyWith(
-                                  color: theme.colorScheme.darkGrayText,
-                                  fontWeight: FontWeight.w500,
-                                ).apply(fontSizeDelta: -4),
+                              GaugeAnnotation(
+                                angle: 90,
+                                positionFactor: 0.85,
+                                widget: Text(
+                                  '6\nDevices',
+                                  textAlign: TextAlign.center,
+                                  style: (isScreenShort
+                                          ? theme.textTheme.titleMedium!
+                                          : theme.textTheme.titleLarge!)
+                                      .copyWith(
+                                        color: theme.colorScheme.darkGrayText,
+                                        fontWeight: FontWeight.w500,
+                                      )
+                                      .apply(
+                                          fontSizeDelta:
+                                              isScreenShort ? 0 : -4),
+                                ),
                               ),
-                            ),
-                          ],
-                        ),
-                      ],
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-                Expanded(
-                  child: Center(
-                    child: SfRadialGauge(
-                      axes: <RadialAxis>[
-                        RadialAxis(
-                          minimum: 0,
-                          maximum: 30,
-                          axisLineStyle: AxisLineStyle(
-                            color: theme.highlightColor,
-                            cornerStyle: CornerStyle.bothCurve,
-                            thickness: 16,
-                          ),
-                          showLabels: false,
-                          showTicks: false,
-                          pointers: <GaugePointer>[
-                            RangePointer(
-                              value: 25,
+                  Expanded(
+                    child: Center(
+                      child: SfRadialGauge(
+                        axes: <RadialAxis>[
+                          RadialAxis(
+                            minimum: 0,
+                            maximum: 30,
+                            axisLineStyle: AxisLineStyle(
+                              color: theme.highlightColor,
                               cornerStyle: CornerStyle.bothCurve,
-                              width: 16,
-                              enableAnimation: true,
-                              gradient: SweepGradient(
-                                colors: [
-                                  theme.colorScheme.primarySwatch[700]!,
-                                  theme.colorScheme.primary,
-                                  theme.colorScheme.secondaryColorDark,
-                                  theme.colorScheme.secondary,
-                                ],
-                              ),
+                              thickness: isScreenShort ? 8 : 16,
                             ),
-                          ],
-                          annotations: <GaugeAnnotation>[
-                            GaugeAnnotation(
-                              angle: 270,
-                              positionFactor: 0.2,
-                              widget: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Text(
-                                    '5',
-                                    style: theme.textTheme.headlineSmall!.copyWith(
-                                      color: theme.colorScheme.darkGrayText,
-                                      fontWeight: FontWeight.w700,
+                            showLabels: false,
+                            showTicks: false,
+                            pointers: <GaugePointer>[
+                              RangePointer(
+                                value: 25,
+                                cornerStyle: CornerStyle.bothCurve,
+                                width: isScreenShort ? 8 : 16,
+                                enableAnimation: true,
+                                gradient: SweepGradient(
+                                  colors: [
+                                    theme.colorScheme.primarySwatch[700]!,
+                                    theme.colorScheme.primary,
+                                    theme.colorScheme.secondaryColorDark,
+                                    theme.colorScheme.secondary,
+                                  ],
+                                ),
+                              ),
+                            ],
+                            annotations: <GaugeAnnotation>[
+                              GaugeAnnotation(
+                                angle: 270,
+                                positionFactor: 0.2,
+                                widget: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Text(
+                                      '5',
+                                      style: theme.textTheme.headlineSmall!
+                                          .copyWith(
+                                        color: theme.colorScheme.darkGrayText,
+                                        fontWeight: FontWeight.w700,
+                                      ),
                                     ),
-                                  ),
-                                  Text(
-                                    'Days Left',
-                                    style: theme.textTheme.titleSmall!.copyWith(
-                                      color: theme.disabledColor,
+                                    Text(
+                                      'Days Left',
+                                      style:
+                                          theme.textTheme.titleSmall!.copyWith(
+                                        color: theme.disabledColor,
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
-                            ),
-                            GaugeAnnotation(
-                              angle: 90,
-                              positionFactor: 0.85,
-                              widget: Text(
-                                '30\nDays',
-                                textAlign: TextAlign.center,
-                                style: theme.textTheme.titleLarge!.copyWith(
-                                  color: theme.colorScheme.darkGrayText,
-                                  fontWeight: FontWeight.w500,
-                                ).apply(fontSizeDelta: -4),
+                              GaugeAnnotation(
+                                angle: 90,
+                                positionFactor: 0.85,
+                                widget: Text(
+                                  '30\nDays',
+                                  textAlign: TextAlign.center,
+                                  style: (isScreenShort
+                                          ? theme.textTheme.titleMedium!
+                                          : theme.textTheme.titleLarge!)
+                                      .copyWith(
+                                        color: theme.colorScheme.darkGrayText,
+                                        fontWeight: FontWeight.w500,
+                                      )
+                                      .apply(
+                                          fontSizeDelta:
+                                              isScreenShort ? 0 : -4),
+                                ),
                               ),
-                            ),
-                          ],
-                        ),
-                      ],
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
         ],
       ),
     );
