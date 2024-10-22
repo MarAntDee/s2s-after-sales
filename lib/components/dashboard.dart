@@ -13,9 +13,15 @@ import 'package:surf2sawa/utils/navigator.dart';
 import 'home-panel.dart';
 import 'payment-history-overview.dart';
 
-class Dashboard extends StatelessWidget {
+class Dashboard extends StatefulWidget {
   const Dashboard({super.key});
 
+  @override
+  State<Dashboard> createState() => _DashboardState();
+}
+
+class _DashboardState extends State<Dashboard> {
+  int _selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
     ThemeData _theme = Theme.of(context);
@@ -96,52 +102,69 @@ class Dashboard extends StatelessWidget {
                 borderRadius: BorderRadius.all(Radius.circular(22)),
               ),
             ),
-            // child: SizedBox(
-            //   width: double.infinity,
-            //   height: 60,
-            //   child: Row(
-            //   mainAxisSize: MainAxisSize.max,
-            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //   children: <Widget>[
-            //     Expanded(
-            //       child: IconButton(
-            //         icon: Icon(
-            //           Icons.menu,
-            //           color: Colors.black,
-            //         ),
-            //         onPressed: () {},
-            //       ),
-            //     ),
-            //     Expanded(
-            //       child: IconButton(
-            //         icon: Icon(
-            //           Icons.search,
-            //           color: Colors.black,
-            //         ),
-            //         onPressed: () {},
-            //       ),
-            //     ),
-            //     Expanded(
-            //       child: IconButton(
-            //         icon: Icon(
-            //           Icons.print,
-            //           color: Colors.black,
-            //         ),
-            //         onPressed: () {},
-            //       ),
-            //     ),
-            //     Expanded(
-            //       child: IconButton(
-            //         icon: Icon(
-            //           Icons.people,
-            //           color: Colors.black,
-            //         ),
-            //         onPressed: () {},
-            //       ),
-            //     ),
-            //   ],
-            // ),
-            // ),
+            child: SizedBox(
+              width: double.infinity,
+              height: 60,
+              child: Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                {
+                  "name": "Home",
+                  "icon": Icons.home,
+                },
+                {
+                  "name": "Plans",
+                  "icon": Icons.podcasts_rounded,
+                },
+                null,
+                {
+                  "name": "History",
+                  "icon": Icons.receipt_long,
+                },
+                null,
+              ].indexed.map(
+                    (entry) {
+                      if (entry.$2 == null) return const Spacer();
+                      return Expanded(
+                        child: IconButton(
+                          hoverColor: _theme.colorScheme.primaryColorLight,
+                          splashColor: _theme.colorScheme.primaryColorLight,
+                          icon: Column(
+                            children: [
+                              _selectedIndex == entry.$1 ? ShaderMask(
+                                blendMode: BlendMode.srcIn,
+                                shaderCallback: (Rect bounds) => LinearGradient(
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                  colors: [
+                                    _theme.colorScheme.primary,
+                                    _theme.colorScheme.secondary,
+                                  ],
+                                ).createShader(bounds),
+                                child: Icon(
+                                  entry.$2!['icon'] as IconData,
+                                  color: Colors.black,
+                                ),
+                              ) : Icon(
+                                entry.$2!['icon'] as IconData,
+                                color: _theme.colorScheme.darkGrayText,
+                              ),
+                              Text(
+                                entry.$2!['name'].toString(),
+                                style: _theme.textTheme.labelSmall!.copyWith(
+                                  color: _selectedIndex == entry.$1 ? _theme.colorScheme.secondary : _theme.colorScheme.darkGrayText,
+                                ),
+                              ),
+                            ],
+                          ),
+                          onPressed: () => setState(() => _selectedIndex = entry.$1),
+                        ),
+                      );
+                    },
+              ).toList(),
+            ),
+            ),
           ),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
