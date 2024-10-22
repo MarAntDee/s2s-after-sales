@@ -27,6 +27,7 @@ class Dashboard extends StatefulWidget {
 class _DashboardState extends State<Dashboard> {
   ThemeData get _theme => Theme.of(context);
   AuthBloc get auth => AuthBloc.instance(context)!;
+  late bool? isOutageShown;
 
   List<Widget> get _pages => [
     Background(
@@ -93,6 +94,12 @@ class _DashboardState extends State<Dashboard> {
     const PaymentJournal(),
     Container(),
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    isOutageShown = auth.currentAccount?.hasOutage;
+  }
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<int>(
@@ -101,7 +108,72 @@ class _DashboardState extends State<Dashboard> {
         int _selectedIndex = page.data ?? 0;
         return Scaffold(
           backgroundColor: Colors.transparent,
-          body: _pages[_selectedIndex],
+          body: Stack(
+            children: [
+              _pages[_selectedIndex],
+              if (isOutageShown ?? true) Positioned(
+                left: 0,
+                right: 0,
+                bottom: -16,
+                height: 120,
+                child: Container(
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                      color: const Color(0xFFFFD3C5),
+                      borderRadius: const BorderRadius.vertical(top: Radius.circular(16),),
+                      border: Border.all(
+                        width: 1,
+                        color: _theme.primaryColor,
+                      )
+                  ),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text(
+                              "Are you experiencing network issues?",
+                              style: _theme.textTheme.labelSmall!.copyWith(
+                                color: _theme.colorScheme.lightGrayText,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            Text("Yes, we are working on it.", style: _theme.textTheme.titleMedium!.copyWith(
+                              color: _theme.colorScheme.darkGrayText,
+                              fontWeight: FontWeight.w500,
+                            ),),
+                            Text("Thank you for your patience!", style: _theme.textTheme.labelSmall!.copyWith(
+                              color: _theme.colorScheme.lightGrayText,
+                              fontWeight: FontWeight.w500,
+                            ),),
+                          ],
+                        ),
+                      ),
+                      TextButton(
+                        style: TextButton.styleFrom(
+                          foregroundColor: _theme.primaryColor,
+                          textStyle: const TextStyle(
+                            decoration: TextDecoration.none,
+                          ),
+                        ),
+                        onPressed: () => setState(() => isOutageShown = false),
+                        child: const Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text("Close"),
+                            SizedBox(width: 4),
+                            Icon(Icons.close_rounded, size: 14,),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
           bottomNavigationBar: Container(
             color: _theme.scaffoldBackgroundColor,
             child: BottomAppBar(
