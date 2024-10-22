@@ -17,6 +17,8 @@ class AccountForm extends StatefulWidget {
 }
 
 class _AccountFormState extends State<AccountForm> {
+  final TextEditingController _controller = TextEditingController();
+
   ThemeData get _theme => Theme.of(context);
   AuthBloc get _auth => AuthBloc.instance(context)!;
 
@@ -94,6 +96,7 @@ class _AccountFormState extends State<AccountForm> {
                       widget.hasFocus ? const SizedBox(height: 36) : const Spacer(),
                       Center(
                         child: _LoginFormfield(
+                          controller: _controller,
                           hintText: "877 xxxx xxx",
                           icon: Icons.person_2_rounded,
                           inputFormatters: [
@@ -152,6 +155,7 @@ class _AccountFormState extends State<AccountForm> {
 
 class _LoginFormfield extends FormField<String> {
   _LoginFormfield({
+    TextEditingController? controller,
     String? label,
     IconData? icon,
     bool isObscure = false,
@@ -165,6 +169,7 @@ class _LoginFormfield extends FormField<String> {
           return SizedBox(
             width: 180,
             child: TextField(
+              controller: controller,
               textAlignVertical: TextAlignVertical.center,
               focusNode: node,
               style: theme.inputDecorationTheme.labelStyle,
