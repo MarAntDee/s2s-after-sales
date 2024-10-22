@@ -31,7 +31,6 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  // final ScrollController scrollController = ScrollController();
   final FocusNode _accountNode = FocusNode();
   final PageController controller = PageController();
   AuthBloc get _auth => AuthBloc.instance(context)!;
@@ -41,13 +40,9 @@ class _LoginPageState extends State<LoginPage> {
   int selectedIndex = 0;
   int get _flex1 => 1;
   int get _flex2 => hasFocus ? 4 : 1;
-  double get _height1 => _size.height*(_flex1/(_flex1 + _flex2));
-  double get _height2 => _size.height*(_flex2/(_flex1 + _flex2));
-  final Duration _duration = const Duration(milliseconds: 200);
   List<Widget> get _pages => [
         AccountForm(
           node: _accountNode,
-          hasFocus: hasFocus,
           onSuccess: () async {
             if (_auth.autolink ?? false) {
               await _auth.getAccountInfo();
@@ -95,18 +90,16 @@ class _LoginPageState extends State<LoginPage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          AnimatedContainer(
-            duration: _duration,
-            height: _height1,
+          Expanded(
+            flex: _flex1,
             child: Center(
               child: AppLogo(
                 size: min(_size.width / 2, _size.height / 4),
               ),
             ),
           ),
-          AnimatedContainer(
-            duration: _duration,
-            height: _height2,
+          Expanded(
+            flex: _flex2,
             child: Container(
               padding: const EdgeInsets.all(45).copyWith(bottom: 0),
               decoration: const BoxDecoration(
@@ -117,7 +110,12 @@ class _LoginPageState extends State<LoginPage> {
               ),
               child: ConstrainedBox(
                 constraints: const BoxConstraints(maxWidth: 400),
-                child: Center(child: _pages[selectedIndex]),
+                child: Column(
+                  children: [
+                    Expanded(flex: 3, child: Center(child: _pages[selectedIndex])),
+                    if (hasFocus) const Spacer(flex: 2),
+                  ],
+                ),
               ),
             ),
           ),

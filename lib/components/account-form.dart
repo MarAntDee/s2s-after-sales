@@ -8,9 +8,8 @@ import '../utils/formatters.dart';
 class AccountForm extends StatefulWidget {
   final VoidCallback? onSuccess;
   final FocusNode? node;
-  final bool hasFocus;
   const AccountForm(
-      {super.key, this.onSuccess, this.node, this.hasFocus = false});
+      {super.key, this.onSuccess, this.node});
 
   @override
   State<AccountForm> createState() => _AccountFormState();
@@ -80,7 +79,7 @@ class _AccountFormState extends State<AccountForm> {
                 ),
                 const Spacer(),
                 Expanded(
-                  flex: widget.hasFocus ? 8:2,
+                  flex: 2,
                   child: Column(
                     children: <Widget>[
                       Text(
@@ -93,7 +92,7 @@ class _AccountFormState extends State<AccountForm> {
                             .apply(fontSizeDelta: -2),
                         textAlign: TextAlign.center,
                       ),
-                      widget.hasFocus ? const SizedBox(height: 36) : const Spacer(),
+                      const Spacer(),
                       Center(
                         child: _LoginFormfield(
                           controller: _controller,
@@ -120,10 +119,10 @@ class _AccountFormState extends State<AccountForm> {
                         color: _theme.primaryColor,
                         indent: 12,
                         endIndent: 12,
-                        thickness: widget.hasFocus ? 2 : 1.2,
+                        thickness: 1.2,
                         height: 16,
                       ),
-                      widget.hasFocus ? const SizedBox(height: 36) : const Spacer(),
+                      const Spacer(),
                       ElevatedButton(
                         onPressed: _onFieldSubmit,
                         child: const SizedBox(
