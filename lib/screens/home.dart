@@ -92,7 +92,9 @@ class _HomePageState extends State<HomePage> {
               account.data!,
               onProceed: () => setState(() => _hasProceed = true),
             ),
-            secondChild: const Dashboard(),
+            secondChild: Dashboard(
+              onFABPressed: () => setState(() => _hasProceed = false),
+            ),
             crossFadeState: !_hasProceed
                 ? CrossFadeState.showFirst
                 : CrossFadeState.showSecond,
