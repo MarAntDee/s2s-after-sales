@@ -32,16 +32,21 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   // final ScrollController scrollController = ScrollController();
-  final FocusNode _node = FocusNode();
+  final FocusNode _accountNode = FocusNode();
   final PageController controller = PageController();
   AuthBloc get _auth => AuthBloc.instance(context)!;
   Size get _size => MediaQuery.sizeOf(context);
   bool hasFocus = false;
 
   int selectedIndex = 0;
+  int get _flex1 => 1;
+  int get _flex2 => hasFocus ? 4 : 1;
+  double get _height1 => _size.height*(_flex1/(_flex1 + _flex2));
+  double get _height2 => _size.height*(_flex2/(_flex1 + _flex2));
+  final Duration _duration = const Duration(milliseconds: 200);
   List<Widget> get _pages => [
         AccountForm(
-          node: _node,
+          node: _accountNode,
           hasFocus: hasFocus,
           onSuccess: () async {
             if (_auth.autolink ?? false) {
@@ -66,22 +71,21 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void initState() {
     if (_auth.isLoggedIn) _auth.logout();
-    if (widget.error != null) {
-      SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
-        Popup.showError(widget.error);
-      });
-    }
-    _node.addListener(() {
-      if (_node.hasFocus) {
-        // scrollController.animateTo(
-        //   scrollController.position.maxScrollExtent,
-        //   curve: Curves.easeOut,
-        //   duration: const Duration(milliseconds: 300),
-        // );
-      }
-      setState(() => hasFocus = _node.hasFocus);
+    SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
+      if (widget.error != null) Popup.showError(widget.error);
+      _accountNode.addListener(() => _nodeListener(_accountNode));
     });
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _accountNode.removeListener(() => _nodeListener(_accountNode));
+    super.dispose();
+  }
+
+  void _nodeListener(FocusNode node) {
+    setState(() => hasFocus = node.hasFocus);
   }
 
   @override
@@ -91,14 +95,18 @@ class _LoginPageState extends State<LoginPage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          Expanded(
+          AnimatedContainer(
+            duration: _duration,
+            height: _height1,
             child: Center(
               child: AppLogo(
                 size: min(_size.width / 2, _size.height / 4),
               ),
             ),
           ),
-          Expanded(
+          AnimatedContainer(
+            duration: _duration,
+            height: _height2,
             child: Container(
               padding: const EdgeInsets.all(45).copyWith(bottom: 0),
               decoration: const BoxDecoration(

@@ -76,67 +76,74 @@ class _AccountFormState extends State<AccountForm> {
                     color: _theme.colorScheme.darkGrayText,
                   ),
                 ),
-                const Spacer(flex: 2),
-                Text(
-                  "Enter Account number",
-                  style: _theme.textTheme.titleLarge!
-                      .copyWith(
-                        color: _theme.colorScheme.darkGrayText,
-                        fontWeight: FontWeight.w400,
-                      )
-                      .apply(fontSizeDelta: -2),
-                  textAlign: TextAlign.center,
-                ),
                 const Spacer(),
-                Center(
-                  child: _LoginFormfield(
-                    hintText: "877 xxxx xxx",
-                    icon: Icons.person_2_rounded,
-                    inputFormatters: [
-                      LengthLimitingTextInputFormatter(12),
-                      FilteringTextInputFormatter.digitsOnly,
-                      AccountFormatter(),
-                    ],
-                    node: widget.node,
-                    onChanged: (an) {
-                      setState(
-                        () => _auth.pendingAccountNumber =
-                            "63${an.replaceAll(" ", "")}",
-                      );
-                    },
-                    onSubmit: (_) {
-                      if (_onFieldSubmit != null) _onFieldSubmit!();
-                    },
-                  ),
-                ),
-                Divider(
-                  color: _theme.primaryColor,
-                  indent: 12,
-                  endIndent: 12,
-                  thickness: widget.hasFocus ? 2 : 1.2,
-                  height: 16,
-                ),
-                const Spacer(),
-                ElevatedButton(
-                  onPressed: _onFieldSubmit,
-                  child: const SizedBox(
-                    child: Center(
-                      child: Text(
-                        "Link Account",
+                Expanded(
+                  flex: widget.hasFocus ? 8:2,
+                  child: Column(
+                    children: <Widget>[
+                      Text(
+                        "Enter Account number",
+                        style: _theme.textTheme.titleLarge!
+                            .copyWith(
+                          color: _theme.colorScheme.darkGrayText,
+                          fontWeight: FontWeight.w400,
+                        )
+                            .apply(fontSizeDelta: -2),
+                        textAlign: TextAlign.center,
                       ),
-                    ),
+                      widget.hasFocus ? const SizedBox(height: 36) : const Spacer(),
+                      Center(
+                        child: _LoginFormfield(
+                          hintText: "877 xxxx xxx",
+                          icon: Icons.person_2_rounded,
+                          inputFormatters: [
+                            LengthLimitingTextInputFormatter(12),
+                            FilteringTextInputFormatter.digitsOnly,
+                            AccountFormatter(),
+                          ],
+                          node: widget.node,
+                          onChanged: (an) {
+                            setState(
+                                  () => _auth.pendingAccountNumber =
+                              "63${an.replaceAll(" ", "")}",
+                            );
+                          },
+                          onSubmit: (_) {
+                            if (_onFieldSubmit != null) _onFieldSubmit!();
+                          },
+                        ),
+                      ),
+                      Divider(
+                        color: _theme.primaryColor,
+                        indent: 12,
+                        endIndent: 12,
+                        thickness: widget.hasFocus ? 2 : 1.2,
+                        height: 16,
+                      ),
+                      widget.hasFocus ? const SizedBox(height: 36) : const Spacer(),
+                      ElevatedButton(
+                        onPressed: _onFieldSubmit,
+                        child: const SizedBox(
+                          child: Center(
+                            child: Text(
+                              "Link Account",
+                            ),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8),
+                        child: Text(
+                          errorText,
+                          style: _theme.textTheme.labelMedium!.copyWith(
+                            color: _theme.colorScheme.error,
+                          ),
+                        ),
+                      ),
+                      const Spacer(),
+                    ],
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(8),
-                  child: Text(
-                    errorText,
-                    style: _theme.textTheme.labelMedium!.copyWith(
-                      color: _theme.colorScheme.error,
-                    ),
-                  ),
-                ),
-                const Spacer(),
               ],
             ),
           );
