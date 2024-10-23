@@ -3,7 +3,7 @@ description: "Website for users to pay their S2S bills"
 
 publish_to: 'none'
 
-version: 1.0.1+26
+version: 1.0.1+28
 
 environment:
   sdk: '>=3.2.0 <4.0.0'
@@ -31,6 +31,8 @@ flutter:
     - assets/images/
     - assets/icons/
     - assets/ui/
+    - assets/fonts/
+    - assets/files/
   fonts:
     - family: Poppins
       fonts:
@@ -168,4 +170,7 @@ flutter:
         - asset: fonts/WorkSans/WorkSans-900-Italic.ttf
           weight: 900
           style: italic
+    - family: Surf2Sawa
+      fonts:
+        - asset: assets/fonts/Surf2Sawa.ttf
   uses-material-design: true
