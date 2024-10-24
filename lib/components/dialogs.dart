@@ -86,18 +86,4 @@ class Popup {
           );
         },
       );
-
-  static Future showCheckoutCounter(ShopKeeper shopKeeper) => showModalBottomSheet(
-      context: _context()!,
-      builder: (context) {
-        ThemeData theme = Theme.of(context);
-        return Container(
-        decoration: BoxDecoration(
-          color: theme.scaffoldBackgroundColor,
-          borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
-        ),
-          child: CheckoutCounter(shopKeeper),
-      );
-      },
-  );
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:surf2sawa/blocs/auth.dart';
+import 'package:surf2sawa/components/checkout-counter.dart';
 import 'package:surf2sawa/components/dialogs.dart';
 import 'package:surf2sawa/components/empty.dart';
 import 'package:surf2sawa/components/error.dart';
@@ -191,7 +192,7 @@ class ProductCard extends StatelessWidget {
                       onPressed: () {
                         ShopKeeper _shopkeeper = ShopKeeper.instance(context)!;
                         _shopkeeper.selectedProduct = product;
-                        Popup.showCheckoutCounter(_shopkeeper);
+                        CheckoutCounter.show(_shopkeeper);
                       },
                       child: const Text("Buy"),
                     ),

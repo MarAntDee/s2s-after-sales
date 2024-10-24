@@ -4,16 +4,34 @@ import 'package:surf2sawa/blocs/auth.dart';
 import 'package:surf2sawa/blocs/shopkeeper.dart';
 import 'package:surf2sawa/components/dialogs.dart';
 import 'package:surf2sawa/components/product-shelf.dart';
+import 'package:surf2sawa/main.dart';
 import 'package:surf2sawa/models/payment-method.dart';
 import 'package:surf2sawa/theme/app.dart';
 import 'package:surf2sawa/utils/api.dart';
 
 class CheckoutCounter extends StatefulWidget {
   final ShopKeeper shopKeeper;
-  const CheckoutCounter(this.shopKeeper, {super.key});
+  const CheckoutCounter._(this.shopKeeper, {super.key});
 
   @override
   State<CheckoutCounter> createState() => _CheckoutCounterState();
+
+  static Future show(ShopKeeper shopKeeper) => showModalBottomSheet(
+    context: navigatorKey.currentContext!,
+    isScrollControlled: true,
+    builder: (context) {
+      ThemeData theme = Theme.of(context);
+      Size _screen = MediaQuery.sizeOf(context);
+      return Container(
+        height: _screen.height*0.75,
+        decoration: BoxDecoration(
+          color: theme.scaffoldBackgroundColor,
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
+        ),
+        child: CheckoutCounter._(shopKeeper),
+      );
+    },
+  );
 }
 
 class _CheckoutCounterState extends State<CheckoutCounter> {
@@ -67,75 +85,68 @@ class _CheckoutCounterState extends State<CheckoutCounter> {
                 ],
               ),
               Expanded(
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: <Widget>[
-                      SizedBox(
-                        height: 360,
-                        child: FutureBuilder<List<PaymentMethod>>(
-                          future: shopKeeper.getPaymentMethodList,
-                          builder: (context, paymentMethods) {
-                            if (paymentMethods.error?.toString() ==
-                                "You are not allowed in this resource") {
-                              auth.logout(autologout: true);
-                            }
-                            if (!paymentMethods.hasData) {
-                              return const Center(
-                                child: SizedBox.square(
-                                  dimension: 60,
-                                  child: CircularProgressIndicator(),
+                child: FutureBuilder<List<PaymentMethod>>(
+                  future: shopKeeper.getPaymentMethodList,
+                  builder: (context, paymentMethods) {
+                    if (paymentMethods.error?.toString() ==
+                        "You are not allowed in this resource") {
+                      auth.logout(autologout: true);
+                    }
+                    if (!paymentMethods.hasData) {
+                      return const Center(
+                        child: SizedBox.square(
+                          dimension: 60,
+                          child: CircularProgressIndicator(),
+                        ),
+                      );
+                    }
+                    return ScrollConfiguration(
+                      behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
+                      child: ListView(
+                        physics: const ClampingScrollPhysics(),
+                        children: paymentMethods.data!
+                            .map<Widget>(
+                              (paymentMethod) =>
+                              AnimatedContainer(
+                                duration: const Duration(milliseconds: 400),
+                                margin: const EdgeInsets.symmetric(vertical: 8),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(6),
+                                  border: Border.all(
+                                    color: shopKeeper.selectedPaymentMethod ==
+                                        paymentMethod ? theme.colorScheme.darkGrayText : Colors.white,
+                                    width: shopKeeper.selectedPaymentMethod ==
+                                        paymentMethod ? 1 : 0,
+                                  ),
                                 ),
-                              );
-                            }
-                            return ListView(
-                              physics: const ClampingScrollPhysics(),
-                              children: paymentMethods.data!
-                                  .map<Widget>(
-                                    (paymentMethod) =>
-                                        AnimatedContainer(
-                                          duration: const Duration(milliseconds: 400),
-                                          margin: const EdgeInsets.symmetric(vertical: 8),
-                                          decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            borderRadius: BorderRadius.circular(6),
-                                            border: Border.all(
-                                              color: shopKeeper.selectedPaymentMethod ==
-                                                  paymentMethod ? theme.colorScheme.darkGrayText : Colors.white,
-                                              width: shopKeeper.selectedPaymentMethod ==
-                                                  paymentMethod ? 1 : 0,
-                                            ),
-                                          ),
-                                          child: ListTile(
-                                            title: Row(
-                                          children: [
-                                            SizedBox(
-                                              width: 60,
-                                              height: 40,
-                                              child: ClipRRect(
-                                                borderRadius:
-                                                    BorderRadius.circular(4),
-                                                child: Image(
-                                                  image: paymentMethod.image,
-                                                  fit: BoxFit.fitWidth,
-                                                ),
-                                              ),
-                                            ),
-                                            const SizedBox(width: 8),
-                                            Text(paymentMethod.name, style: theme.textTheme.titleMedium!.copyWith(color: theme.colorScheme.lightGrayText),),
-                                          ],
-                                                                                ),
-                                            onTap: () => setState(() => shopKeeper.selectedPaymentMethod = paymentMethod),
+                                child: ListTile(
+                                  title: Row(
+                                    children: [
+                                      SizedBox(
+                                        width: 60,
+                                        height: 40,
+                                        child: ClipRRect(
+                                          borderRadius:
+                                          BorderRadius.circular(4),
+                                          child: Image(
+                                            image: paymentMethod.image,
+                                            fit: BoxFit.fitWidth,
                                           ),
                                         ),
-                                  )
-                                  .toList(),
-                            );
-                          },
-                        ),
+                                      ),
+                                      const SizedBox(width: 8),
+                                      Text(paymentMethod.name, style: theme.textTheme.titleMedium!.copyWith(color: theme.colorScheme.lightGrayText),),
+                                    ],
+                                  ),
+                                  onTap: () => setState(() => shopKeeper.selectedPaymentMethod = paymentMethod),
+                                ),
+                              ),
+                        )
+                            .toList(),
                       ),
-                    ],
-                  ),
+                    );
+                  },
                 ),
               ),
               const Divider(indent: 8, endIndent: 8),
