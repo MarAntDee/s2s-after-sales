@@ -28,7 +28,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   ThemeData get _theme => Theme.of(context);
   AuthBloc get _auth => AuthBloc.instance(context)!;
-  bool _isOutageShown = false, _hasProceed = false;
+  bool _isOutageShown = false;
 
   @override
   void initState() {
@@ -90,12 +90,12 @@ class _HomePageState extends State<HomePage> {
             duration: const Duration(milliseconds: 400),
             firstChild: WelcomeSign(
               account.data!,
-              onProceed: () => setState(() => _hasProceed = true),
+              onProceed: () => setState(() => _auth.showWelcomeKey = false),
             ),
             secondChild: Dashboard(
-              onFABPressed: () => setState(() => _hasProceed = false),
+              onFABPressed: () => setState(() => _auth.showWelcomeKey = true),
             ),
-            crossFadeState: !_hasProceed
+            crossFadeState: _auth.showWelcomeKey
                 ? CrossFadeState.showFirst
                 : CrossFadeState.showSecond,
           );

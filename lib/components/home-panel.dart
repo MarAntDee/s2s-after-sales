@@ -74,6 +74,10 @@ class HomePanel extends StatelessWidget {
                                       .copyWith(fontWeight: FontWeight.w700)
                                       .apply(fontSizeDelta: -4),
                                 ),
+                                if (auth.currentAccount!.expirationText != null) Text(
+                                  auth.currentAccount!.expirationText!,
+                                  style: theme.primaryTextTheme.labelSmall,
+                                ),
                               ],
                             ),
                           if (auth.currentAccount!.currentProduct == null)

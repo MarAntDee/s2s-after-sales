@@ -122,6 +122,13 @@ class AuthBloc implements BlocBase {
     }
   }
 
+  //WELCOME PAGE
+  static const String _showWelcomeKey = "showWelcomeKey";
+  bool get showWelcomeKey => cache.getBool(_showWelcomeKey) ?? true;
+  set showWelcomeKey(bool newValue) {
+    cache.setBool(_showWelcomeKey, newValue);
+  }
+
   final BehaviorSubject<Account?> _currentAccountController =
       BehaviorSubject<Account?>();
   Stream<Account?> get accountStream => _currentAccountController.stream;
