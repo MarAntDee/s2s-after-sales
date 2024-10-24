@@ -41,7 +41,7 @@ class _HomePageState extends State<HomePage> {
         _auth.getAccountInfo().then((_) {
           AuthBloc _auth = AuthBloc.instance(context)!;
           if ((_auth.currentAccount!.hasOutage ?? false) && !_isOutageShown) {
-            Popup.showOutageAnnouncement();
+            // Popup.showOutageAnnouncement();
             _isOutageShown = true;
           }
         }).catchError((e) {
@@ -51,7 +51,7 @@ class _HomePageState extends State<HomePage> {
         });
       } else if ((_auth.currentAccount!.hasOutage ?? false) &&
           !_isOutageShown) {
-        Popup.showOutageAnnouncement();
+        // Popup.showOutageAnnouncement();
         _isOutageShown = true;
       }
     });

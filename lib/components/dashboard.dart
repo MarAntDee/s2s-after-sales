@@ -142,14 +142,14 @@ class _DashboardState extends State<Dashboard> {
                                   ),
                                 ),
                                 Text(
-                                  "Yes, we are working on it.",
+                                  auth.currentAccount!.outageTitle ?? "Yes, we are working on it.",
                                   style: _theme.textTheme.titleMedium!.copyWith(
                                     color: _theme.colorScheme.darkGrayText,
                                     fontWeight: FontWeight.w500,
                                   ),
                                 ),
                                 Text(
-                                  "Thank you for your patience!",
+                                  auth.currentAccount!.outageDescription ?? "Thank you for your patience!",
                                   style: _theme.textTheme.labelSmall!.copyWith(
                                     color: _theme.colorScheme.lightGrayText,
                                     fontWeight: FontWeight.w500,
@@ -166,7 +166,73 @@ class _DashboardState extends State<Dashboard> {
                               ),
                             ),
                             onPressed: () =>
-                                setState(() => isOutageShown = false),
+                                setState(() => isOutageShown = null),
+                            child: const Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text("Close"),
+                                SizedBox(width: 4),
+                                Icon(
+                                  Icons.close_rounded,
+                                  size: 14,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                if (!(isOutageShown ?? true))
+                  Positioned(
+                    left: 0,
+                    right: 0,
+                    bottom: -16,
+                    height: 120,
+                    child: Container(
+                      padding: const EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                          color: Colors.green[50],
+                          borderRadius: const BorderRadius.vertical(
+                            top: Radius.circular(16),
+                          ),
+                          border: Border.all(
+                            width: 1,
+                            color: Colors.green,
+                          )),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text(
+                                  auth.currentAccount!.outageTitle ?? "Internet connection restored",
+                                  style: _theme.textTheme.titleMedium!.copyWith(
+                                    color: _theme.colorScheme.darkGrayText,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                                Text(
+                                  auth.currentAccount!.outageDescription ?? "Outage has been restored on Date,\nYour surftime has been extended for 2 hours",
+                                  style: _theme.textTheme.labelSmall!.copyWith(
+                                    color: _theme.colorScheme.lightGrayText,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          TextButton(
+                            style: TextButton.styleFrom(
+                              foregroundColor: Colors.green,
+                              textStyle: const TextStyle(
+                                decoration: TextDecoration.none,
+                              ),
+                            ),
+                            onPressed: () =>
+                                setState(() => isOutageShown = null),
                             child: const Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
@@ -231,8 +297,11 @@ class _DashboardState extends State<Dashboard> {
                           return Expanded(
                             child: Center(
                               child: InkWell(
-                                onTap: () =>
-                                    setState(() => isOutageShown = true),
+                                onTap: () {
+                                  if (isOutageShown == null) setState(() => isOutageShown = true);
+                                  else if (isOutageShown!) setState(() => isOutageShown = false);
+                                  else setState(() => isOutageShown = null);
+                                },
                                 child: Container(
                                   width: 38,
                                   height: 38,
