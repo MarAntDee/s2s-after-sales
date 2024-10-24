@@ -3,6 +3,7 @@ import 'package:surf2sawa/components/dialogs.dart';
 import 'package:surf2sawa/models/transaction.dart';
 import 'package:surf2sawa/theme/app.dart';
 import 'package:surf2sawa/theme/boxes.dart';
+import 'package:surf2sawa/theme/icons.dart';
 
 class TransactionTile extends StatelessWidget {
   final Transaction _transaction;
@@ -31,10 +32,13 @@ class TransactionTile extends StatelessWidget {
             color: _theme.colorScheme.secondarySwatch[100],
           ),
           child: Center(
-            child: Icon(
-              Icons.shopping_cart_checkout_rounded,
-              color: _theme.colorScheme.secondary,
-              size: 20,
+            child: Padding(
+              padding: const EdgeInsets.only(top: 2, right: 2),
+              child: Icon(
+                IconLibrary.payment_entry,
+                color: _theme.colorScheme.secondary,
+                size: 16,
+              ),
             ),
           ),
         ),

@@ -9,6 +9,7 @@ import 'package:surf2sawa/components/background.dart';
 import 'package:surf2sawa/components/plan-gauge.dart';
 import 'package:surf2sawa/screens/shop.dart';
 import 'package:surf2sawa/theme/app.dart';
+import 'package:surf2sawa/theme/icons.dart';
 
 import '../screens/payment-journal.dart';
 import 'home-panel.dart';
@@ -278,16 +279,16 @@ class _DashboardState extends State<Dashboard> {
                     children: [
                       {
                         "name": "Home",
-                        "icon": Icons.home,
+                        "icon": IconLibrary.dashboard_home,
                       },
                       {
                         "name": "Plans",
-                        "icon": Icons.podcasts_rounded,
+                        "icon": IconLibrary.wifi_tower,
                       },
                       null,
                       {
                         "name": "History",
-                        "icon": Icons.receipt_long,
+                        "icon": IconLibrary.receipt,
                       },
                       {},
                     ].indexed.map(
@@ -303,16 +304,19 @@ class _DashboardState extends State<Dashboard> {
                                   else setState(() => isOutageShown = null);
                                 },
                                 child: Container(
-                                  width: 38,
-                                  height: 38,
+                                  width: 32,
+                                  height: 32,
                                   decoration: BoxDecoration(
                                     shape: BoxShape.circle,
                                     color: _theme.colorScheme.primaryColorLight,
+                                    image: const DecorationImage(
+                                      image: AssetImage("assets/images/sample-avatar.png"),
+                                    ),
                                   ),
-                                  child: const Icon(
-                                    Icons.person_2_outlined,
-                                    color: Colors.black,
-                                  ),
+                                  // child: const Icon(
+                                  //   Icons.person_2_outlined,
+                                  //   color: Colors.black,
+                                  // ),
                                 ),
                               ),
                             ),

@@ -6,6 +6,7 @@ import 'package:surf2sawa/components/dialogs.dart';
 import 'package:surf2sawa/components/empty.dart';
 import 'package:surf2sawa/components/error.dart';
 import 'package:surf2sawa/theme/app.dart';
+import 'package:surf2sawa/theme/icons.dart';
 
 import '../blocs/shopkeeper.dart';
 import '../models/products.dart';
@@ -153,7 +154,7 @@ class ProductCard extends StatelessWidget {
             Row(
               children: [
                 Icon(
-                  Icons.check,
+                  IconLibrary.check_sharp,
                   size: 16,
                   color: theme.colorScheme.secondary,
                 ),
