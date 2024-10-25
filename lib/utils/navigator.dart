@@ -21,10 +21,6 @@ extension NavHandler on NavigatorState {
       pushReplacementNamed(Routers.loginScreen, arguments: {
         if (error != null) 'error': error,
       });
-
-  Future pushToShop() async => pushNamed(Routers.shop);
-
-  Future pushToPaymentJournal() async => pushNamed(Routers.journal);
 }
 
 class Routers {
@@ -33,10 +29,8 @@ class Routers {
   static const String splash = "/",
       homeScreen = "/home",
       loginScreen = "/login",
-      journal = "/payment-history",
       paymentFailedScreen = "/payment-failed",
-      paymentSuccessScreen = "/payment-success",
-      shop = "/shop";
+      paymentSuccessScreen = "/payment-success";
 
   static String currentRoute = splash;
   static String previousCustomerRoute = splash;
@@ -52,14 +46,10 @@ class Routers {
         return LoginPage.route(routeSettings);
       case homeScreen:
         return HomePage.route(routeSettings);
-      case journal:
-        return PaymentJournal.route(routeSettings);
       case paymentFailedScreen:
         return PaymentFailedPage.route(routeSettings);
       case paymentSuccessScreen:
         return PaymentSuccessPage.route(routeSettings);
-      case shop:
-        return Shop.route(routeSettings);
       default:
         return Page404.route(routeSettings);
     }

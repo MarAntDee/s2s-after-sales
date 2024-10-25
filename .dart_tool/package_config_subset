@@ -162,6 +162,14 @@ string_scanner
 2.18
 file:///Users/dee/.pub-cache/hosted/pub.dev/string_scanner-1.2.0/
 file:///Users/dee/.pub-cache/hosted/pub.dev/string_scanner-1.2.0/lib/
+syncfusion_flutter_core
+2.17
+file:///Users/dee/.pub-cache/hosted/pub.dev/syncfusion_flutter_core-25.2.7/
+file:///Users/dee/.pub-cache/hosted/pub.dev/syncfusion_flutter_core-25.2.7/lib/
+syncfusion_flutter_gauges
+2.17
+file:///Users/dee/.pub-cache/hosted/pub.dev/syncfusion_flutter_gauges-25.1.35/
+file:///Users/dee/.pub-cache/hosted/pub.dev/syncfusion_flutter_gauges-25.1.35/lib/
 term_glyph
 2.12
 file:///Users/dee/.pub-cache/hosted/pub.dev/term_glyph-1.2.1/
@@ -208,8 +216,8 @@ file:///Users/dee/.pub-cache/hosted/pub.dev/xml-6.5.0/
 file:///Users/dee/.pub-cache/hosted/pub.dev/xml-6.5.0/lib/
 surf2sawa
 3.2
-file:///Users/dee/Developer/Websites/S2S%20After%20Sales/
-file:///Users/dee/Developer/Websites/S2S%20After%20Sales/lib/
+file:///Users/dee/Developer/Websites/Surf2Sawa/
+file:///Users/dee/Developer/Websites/Surf2Sawa/lib/
 sky_engine
 3.2
 file:///Users/dee/Developer/flutter/bin/cache/pkg/sky_engine/

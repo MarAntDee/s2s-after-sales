@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:surf2sawa/components/dialogs.dart';
 import 'package:surf2sawa/models/transaction.dart';
+import 'package:surf2sawa/theme/app.dart';
 import 'package:surf2sawa/theme/boxes.dart';
+import 'package:surf2sawa/theme/icons.dart';
 
 class TransactionTile extends StatelessWidget {
   final Transaction _transaction;
@@ -11,42 +13,51 @@ class TransactionTile extends StatelessWidget {
   Widget build(BuildContext context) {
     ThemeData _theme = Theme.of(context);
     return Container(
-      margin: const EdgeInsets.only(bottom: 8.0),
-      decoration: AppBoxes().txTile,
+      margin: const EdgeInsets.symmetric(vertical: 4),
+      decoration: BoxDecoration(
+        border: Border(
+          bottom: BorderSide(
+            color: _theme.highlightColor,
+            width: 1,
+          ),
+        ),
+      ),
       child: ListTile(
+        contentPadding: const EdgeInsets.symmetric(horizontal: 24),
+        leading: Container(
+          width: 36,
+          height: 36,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: _theme.colorScheme.secondarySwatch[100],
+          ),
+          child: Center(
+            child: Padding(
+              padding: const EdgeInsets.only(top: 2, right: 2),
+              child: Icon(
+                IconLibrary.payment_entry,
+                color: _theme.colorScheme.secondary,
+                size: 16,
+              ),
+            ),
+          ),
+        ),
         title: Padding(
           padding: const EdgeInsets.only(bottom: 4),
-          child: Wrap(
-            direction: Axis.horizontal,
-            children: [
-              Text(
-                _transaction.title,
-                style: _theme.textTheme.titleSmall,
-              ),
-              if (_transaction.status == "PENDING")
-                Container(
-                  color: Colors.amber[200],
-                  padding: const EdgeInsets.symmetric(horizontal: 4),
-                  margin: const EdgeInsets.only(left: 8),
-                  child: Text(
-                    "Pending",
-                    style: _theme.textTheme.labelLarge,
-                  ),
-                ),
-            ],
+          child: Text(
+            _transaction.product ?? _transaction.title,
+            style: _theme.textTheme.titleMedium!.copyWith(color: _theme.colorScheme.darkGrayText,),
           ),
         ),
         subtitle: Text(
-          _transaction.dateCreatedText,
-          style: _theme.textTheme.labelSmall!.copyWith(
-            color: _theme.colorScheme.onBackground.withOpacity(0.75),
+          "${_transaction.dateCreatedText} - ${_transaction.status}",
+          style: _theme.textTheme.labelMedium!.copyWith(
+            color: _theme.colorScheme.onBackground.withOpacity(0.5),
           ),
         ),
         trailing: Text(
           _transaction.priceText,
-          style: _theme.textTheme.titleSmall!.copyWith(
-            color: _theme.colorScheme.secondary,
-          ),
+          style: _theme.textTheme.titleMedium!.copyWith(color: _theme.colorScheme.darkGrayText,),
         ),
         tileColor: Colors.transparent,
         onTap: () => Popup.showPaymentDetails(_transaction),

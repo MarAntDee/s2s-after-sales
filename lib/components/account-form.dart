@@ -4,20 +4,20 @@ import 'package:surf2sawa/theme/app.dart';
 
 import '../blocs/auth.dart';
 import '../utils/formatters.dart';
-import 'app-logo.dart';
 
 class AccountForm extends StatefulWidget {
   final VoidCallback? onSuccess;
   final FocusNode? node;
-  final bool hasFocus;
   const AccountForm(
-      {super.key, this.onSuccess, this.node, this.hasFocus = false});
+      {super.key, this.onSuccess, this.node});
 
   @override
   State<AccountForm> createState() => _AccountFormState();
 }
 
 class _AccountFormState extends State<AccountForm> {
+  final TextEditingController _controller = TextEditingController();
+
   ThemeData get _theme => Theme.of(context);
   AuthBloc get _auth => AuthBloc.instance(context)!;
 
@@ -56,69 +56,105 @@ class _AccountFormState extends State<AccountForm> {
               ),
             ),
           )
-        : Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Spacer(flex: widget.hasFocus ? 1 : 2),
-              const Expanded(flex: 3, child: AppLogo()),
-              Spacer(flex: widget.hasFocus ? 2 : 3),
-              const Text(
-                "Enter S2S Account Number",
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 4),
-              _LoginFormfield(
-                hintText: "877 xxxx xxx",
-                icon: Icons.person_2_rounded,
-                inputFormatters: [
-                  LengthLimitingTextInputFormatter(12),
-                  FilteringTextInputFormatter.digitsOnly,
-                  AccountFormatter(),
-                ],
-                node: widget.node,
-                onChanged: (an) {
-                  setState(
-                    () => _auth.pendingAccountNumber =
-                        "63${an.replaceAll(" ", "")}",
-                  );
-                },
-                onSubmit: (_) {
-                  if (_onFieldSubmit != null) _onFieldSubmit!();
-                },
-              ),
-              Spacer(flex: widget.hasFocus ? 2 : 1),
-              ElevatedButton(
-                onPressed: _onFieldSubmit,
-                child: const SizedBox(
-                  height: 40,
-                  child: Center(
-                    child: Text(
-                      "Link Account",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 12,
-                      ),
-                    ),
+        : ConstrainedBox(
+            constraints: BoxConstraints(maxWidth: 480),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Text(
+                  "Welcome!",
+                  style: _theme.textTheme.headlineSmall!.copyWith(
+                    color: _theme.colorScheme.darkGrayText,
+                    fontWeight: FontWeight.w500,
                   ),
+                  textAlign: TextAlign.center,
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8),
-                child: Text(
-                  errorText,
+                Text(
+                  "We will send you one-time password to\nyour mobile number",
+                  textAlign: TextAlign.center,
+                  maxLines: 2,
                   style: _theme.textTheme.labelMedium!.copyWith(
-                    color: _theme.colorScheme.error,
+                    color: _theme.colorScheme.darkGrayText,
                   ),
                 ),
-              ),
-              Spacer(flex: widget.hasFocus ? 3 : 2),
-            ],
+                const Spacer(),
+                Expanded(
+                  flex: 2,
+                  child: Column(
+                    children: <Widget>[
+                      Text(
+                        "Enter Account number",
+                        style: _theme.textTheme.titleLarge!
+                            .copyWith(
+                          color: _theme.colorScheme.darkGrayText,
+                          fontWeight: FontWeight.w400,
+                        )
+                            .apply(fontSizeDelta: -2),
+                        textAlign: TextAlign.center,
+                      ),
+                      const Spacer(),
+                      Center(
+                        child: _LoginFormfield(
+                          controller: _controller,
+                          hintText: "877 xxxx xxx",
+                          icon: Icons.person_2_rounded,
+                          inputFormatters: [
+                            LengthLimitingTextInputFormatter(12),
+                            FilteringTextInputFormatter.digitsOnly,
+                            AccountFormatter(),
+                          ],
+                          node: widget.node,
+                          onChanged: (an) {
+                            setState(
+                                  () => _auth.pendingAccountNumber =
+                              "63${an.replaceAll(" ", "")}",
+                            );
+                          },
+                          onSubmit: (_) {
+                            if (_onFieldSubmit != null) _onFieldSubmit!();
+                          },
+                        ),
+                      ),
+                      Divider(
+                        color: _theme.primaryColor,
+                        indent: 12,
+                        endIndent: 12,
+                        thickness: 1.2,
+                        height: 16,
+                      ),
+                      const Spacer(),
+                      ElevatedButton(
+                        onPressed: _onFieldSubmit,
+                        child: const SizedBox(
+                          child: Center(
+                            child: Text(
+                              "Link Account",
+                            ),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8),
+                        child: Text(
+                          errorText,
+                          style: _theme.textTheme.labelMedium!.copyWith(
+                            color: _theme.colorScheme.error,
+                          ),
+                        ),
+                      ),
+                      const Spacer(),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           );
   }
 }
 
 class _LoginFormfield extends FormField<String> {
   _LoginFormfield({
+    TextEditingController? controller,
     String? label,
     IconData? icon,
     bool isObscure = false,
@@ -129,58 +165,28 @@ class _LoginFormfield extends FormField<String> {
     Function(String)? onSubmit,
   }) : super(builder: (state) {
           ThemeData theme = Theme.of(state.context);
-          return Padding(
-            padding: const EdgeInsets.only(bottom: 16),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(4),
-              child: SizedBox(
-                height: 50,
-                child: TextField(
-                  textAlignVertical: TextAlignVertical.center,
-                  focusNode: node,
-                  style: TextStyle(color: theme.colorScheme.secondaryColorDark),
-                  cursorColor: theme.colorScheme.secondaryColorDark,
-                  inputFormatters: inputFormatters,
-                  onChanged: onChanged,
-                  onSubmitted: onSubmit,
-                  obscureText: isObscure,
-                  decoration: InputDecoration(
-                    fillColor: Colors.white,
-                    enabledBorder: OutlineInputBorder(
-                      borderSide:
-                          const BorderSide(color: Colors.grey, width: 2),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                          color: theme.colorScheme.secondary, width: 2),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    hintText: hintText,
-                    hintStyle: theme.textTheme.titleMedium!.copyWith(
-                      color: Colors.black.withOpacity(0.6),
-                    ),
-                    prefixIcon: Container(
-                      width: 48,
-                      margin: const EdgeInsets.only(right: 8),
-                      padding: EdgeInsets.symmetric(horizontal: 4),
-                      decoration: BoxDecoration(
-                        color: theme.colorScheme.secondary,
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(6.0),
-                          bottomLeft: Radius.circular(6.0),
-                        ),
-                        border: Border.all(color: Colors.transparent, width: 2),
-                      ),
-                      child: Center(
-                        child: Text(
-                          "63",
-                          style: theme.primaryTextTheme.titleLarge!.copyWith(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ),
+          return SizedBox(
+            width: 180,
+            child: TextField(
+              controller: controller,
+              textAlignVertical: TextAlignVertical.center,
+              focusNode: node,
+              style: theme.inputDecorationTheme.labelStyle,
+              cursorColor: theme.colorScheme.primary,
+              inputFormatters: inputFormatters,
+              onChanged: onChanged,
+              onSubmitted: onSubmit,
+              obscureText: isObscure,
+              decoration: InputDecoration(
+                fillColor: Colors.white,
+                border: InputBorder.none,
+                hintText: hintText,
+                prefixIcon: SizedBox(
+                  width: 44,
+                  child: Center(
+                    child: Text(
+                      "+63\t",
+                      style: theme.inputDecorationTheme.labelStyle!,
                     ),
                   ),
                 ),

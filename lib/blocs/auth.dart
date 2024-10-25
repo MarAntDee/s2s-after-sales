@@ -1,6 +1,7 @@
 import 'dart:html' as html;
 import 'dart:math';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:rxdart/rxdart.dart';
@@ -20,8 +21,20 @@ class AuthBloc implements BlocBase {
   bool? autolink;
   String? userId, username;
 
+  //PAGE
+  final BehaviorSubject<int> _pageController = BehaviorSubject<int>();
+  set selectedIndex(int newValue) => _pageController.add(newValue);
+  Stream<int> get pageStream => _pageController.stream;
+  pushToShop() => selectedIndex = 1;
+  pushToJournal() => selectedIndex = 3;
+
   void _parseBaseParameter() {
     try {
+      if (kDebugMode) {
+        userId = "639285018871";
+        username = "nap";
+        return;
+      }
       String url = html.window.location.href;
       if (!url.contains("?")) return;
       List<String> chunk = url.split("?");
@@ -107,6 +120,13 @@ class AuthBloc implements BlocBase {
       print("SETTING REFERENCE NUMBER TO $newValue");
       cache.setString(_refCacheKey, newValue);
     }
+  }
+
+  //WELCOME PAGE
+  static const String _showWelcomeKey = "showWelcomeKey";
+  bool get showWelcomeKey => cache.getBool(_showWelcomeKey) ?? true;
+  set showWelcomeKey(bool newValue) {
+    cache.setBool(_showWelcomeKey, newValue);
   }
 
   final BehaviorSubject<Account?> _currentAccountController =

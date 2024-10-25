@@ -13,4 +13,9 @@ class AppLogo extends StatelessWidget {
       height: size,
     );
   }
+
+  static final Widget s2s = Image.asset(
+    "assets/images/s2s.png",
+    fit: BoxFit.contain,
+  );
 }

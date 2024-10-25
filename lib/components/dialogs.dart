@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:surf2sawa/blocs/auth.dart';
+import 'package:surf2sawa/blocs/shopkeeper.dart';
+import 'package:surf2sawa/components/checkout-counter.dart';
+import 'package:surf2sawa/models/products.dart';
 import 'package:surf2sawa/models/transaction.dart';
 
 import '../main.dart';
@@ -64,23 +67,23 @@ class Popup {
         },
       );
 
-  static Future showOutageAnnouncement() => showDialog(
-        context: _context()!,
-        builder: (context) {
-          AuthBloc auth = AuthBloc.instance(context)!;
-          return AlertDialog(
-            content: Text(
-              auth.currentAccount!.outageDescription ??
-                  "📢 Internet Outage Announcement 📢\n\nWe would like to inform you that there is currently a temporary internet outage affecting your area. Our team is actively working to resolve the issue as quickly as possible.\n\nDuring this outage, you may experience difficulties accessing the internet and related services. We apologize for any inconvenience this may cause and appreciate your understanding and patience.",
-              textAlign: TextAlign.center,
-            ),
-            actions: [
-              TextButton(
-                onPressed: Navigator.of(context).pop,
-                child: const Text("Close"),
-              ),
-            ],
-          );
-        },
-      );
+  // static Future showOutageAnnouncement() => showDialog(
+  //       context: _context()!,
+  //       builder: (context) {
+  //         AuthBloc auth = AuthBloc.instance(context)!;
+  //         return AlertDialog(
+  //           content: Text(
+  //             auth.currentAccount!.outageDescription ??
+  //                 "📢 Internet Outage Announcement 📢\n\nWe would like to inform you that there is currently a temporary internet outage affecting your area. Our team is actively working to resolve the issue as quickly as possible.\n\nDuring this outage, you may experience difficulties accessing the internet and related services. We apologize for any inconvenience this may cause and appreciate your understanding and patience.",
+  //             textAlign: TextAlign.center,
+  //           ),
+  //           actions: [
+  //             TextButton(
+  //               onPressed: Navigator.of(context).pop,
+  //               child: const Text("Close"),
+  //             ),
+  //           ],
+  //         );
+  //       },
+  //     );
 }
