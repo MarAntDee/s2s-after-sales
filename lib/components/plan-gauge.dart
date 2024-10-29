@@ -17,7 +17,7 @@ class PLanGauge extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
-            "Plan Usage\n",
+            "Plan Usage",
             textAlign: TextAlign.start,
             style: theme.textTheme.titleLarge!
                 .copyWith(
@@ -64,85 +64,6 @@ class PLanGauge extends StatelessWidget {
                         axes: <RadialAxis>[
                           RadialAxis(
                             minimum: 0,
-                            maximum: 6,
-                            axisLineStyle: AxisLineStyle(
-                              color: theme.highlightColor,
-                              cornerStyle: CornerStyle.bothCurve,
-                              thickness: isScreenShort ? 8 : 16,
-                            ),
-                            showLabels: false,
-                            showTicks: false,
-                            pointers: <GaugePointer>[
-                              RangePointer(
-                                value: 2,
-                                cornerStyle: CornerStyle.bothCurve,
-                                width: isScreenShort ? 8 : 16,
-                                enableAnimation: true,
-                                gradient: SweepGradient(
-                                  colors: [
-                                    theme.colorScheme.primarySwatch[700]!,
-                                    theme.colorScheme.primary,
-                                    theme.colorScheme.secondaryColorDark,
-                                    theme.colorScheme.secondary,
-                                  ],
-                                ),
-                              ),
-                            ],
-                            annotations: <GaugeAnnotation>[
-                              GaugeAnnotation(
-                                angle: 270,
-                                positionFactor: 0.2,
-                                widget: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Text(
-                                      '2',
-                                      style: theme.textTheme.headlineSmall!
-                                          .copyWith(
-                                        color: theme.colorScheme.darkGrayText,
-                                        fontWeight: FontWeight.w700,
-                                      ),
-                                    ),
-                                    Text(
-                                      'Devices',
-                                      style:
-                                          theme.textTheme.titleSmall!.copyWith(
-                                        color: theme.disabledColor,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              GaugeAnnotation(
-                                angle: 90,
-                                positionFactor: 0.85,
-                                widget: Text(
-                                  '6\nDevices',
-                                  textAlign: TextAlign.center,
-                                  style: (isScreenShort
-                                          ? theme.textTheme.titleMedium!
-                                          : theme.textTheme.titleLarge!)
-                                      .copyWith(
-                                        color: theme.colorScheme.darkGrayText,
-                                        fontWeight: FontWeight.w500,
-                                      )
-                                      .apply(
-                                          fontSizeDelta:
-                                              isScreenShort ? 0 : -4),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: Center(
-                      child: SfRadialGauge(
-                        axes: <RadialAxis>[
-                          RadialAxis(
-                            minimum: 0,
                             maximum: 30,
                             axisLineStyle: AxisLineStyle(
                               color: theme.highlightColor,
@@ -153,7 +74,7 @@ class PLanGauge extends StatelessWidget {
                             showTicks: false,
                             pointers: <GaugePointer>[
                               RangePointer(
-                                value: 25,
+                                value: 21,
                                 cornerStyle: CornerStyle.bothCurve,
                                 width: isScreenShort ? 8 : 16,
                                 enableAnimation: true,
@@ -175,7 +96,7 @@ class PLanGauge extends StatelessWidget {
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
                                     Text(
-                                      '5',
+                                      '21',
                                       style: theme.textTheme.headlineSmall!
                                           .copyWith(
                                         color: theme.colorScheme.darkGrayText,
