@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:surf2sawa/models/announcement.dart';
 import 'package:surf2sawa/utils/api.dart';
 
 import '../models/payment-method.dart';
@@ -23,6 +24,12 @@ class ShopKeeper implements BlocBase {
   Future<List<PaymentMethod>> get getPaymentMethodList =>
       _paymentMethodListCompleter.future;
 
+  //ANNOUNCEMENT
+  final Completer<List<Announcement>> _announcementBoardCompleter =
+  Completer<List<Announcement>>();
+  Future<List<Announcement>> get getAnnouncementBoard =>
+      _announcementBoardCompleter.future;
+
   ShopKeeper._() {
     ProdApi()
         .getProducts()
@@ -32,6 +39,10 @@ class ShopKeeper implements BlocBase {
         .getPaymentMethods()
         .then(_paymentMethodListCompleter.complete)
         .catchError(_paymentMethodListCompleter.completeError);
+    ProdApi()
+        .getAnnouncementBoard()
+        .then(_announcementBoardCompleter.complete)
+        .catchError(_announcementBoardCompleter.completeError);
   }
 
   @override

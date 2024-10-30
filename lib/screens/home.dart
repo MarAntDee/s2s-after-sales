@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:surf2sawa/blocs/auth.dart';
+import 'package:surf2sawa/blocs/shopkeeper.dart';
 import 'package:surf2sawa/components/background.dart';
 import 'package:surf2sawa/components/dashboard.dart';
 import 'package:surf2sawa/components/welcome-sign.dart';
@@ -92,8 +93,10 @@ class _HomePageState extends State<HomePage> {
               account.data!,
               onProceed: () => setState(() => _auth.showWelcomeKey = false),
             ),
-            secondChild: Dashboard(
-              onFABPressed: () => setState(() => _auth.showWelcomeKey = true),
+            secondChild: ShopKeeper.build(
+              child: Dashboard(
+                onFABPressed: () => setState(() => _auth.showWelcomeKey = true),
+              ),
             ),
             crossFadeState: _auth.showWelcomeKey
                 ? CrossFadeState.showFirst

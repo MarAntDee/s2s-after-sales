@@ -2,6 +2,8 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:surf2sawa/blocs/auth.dart';
+import 'package:surf2sawa/theme/app.dart';
+import 'package:surf2sawa/theme/icons.dart';
 import 'package:surf2sawa/utils/extensions.dart';
 
 import 'app-logo.dart';

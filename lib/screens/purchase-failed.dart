@@ -13,7 +13,6 @@ class PaymentFailedPage extends StatelessWidget {
   const PaymentFailedPage({super.key});
 
   String? _parseTransactionNumber() {
-    return "";
     String url = html.window.location.href;
     if (!url.contains("?")) return null;
     List<String> chunk = url.split("?");

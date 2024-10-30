@@ -304,7 +304,19 @@ class ProdApi implements PCApi {
         headers: header(),
       )
           .then((res) => jsonDecode(res.body));
-      return List.generate(5, (index) => Announcement());
+
+      if (!(res['status'] ?? false) || (res['code'] ?? 200) != 200) {
+        throw res.putIfAbsent('message', () => 'Unknown error');
+      }
+      if (res['data'] is! Map<String, dynamic>?) {
+        throw "Invalid response body structure";
+      }
+      if (res['data']?['notifications'] == null) throw "Missing response body";
+      return List.generate(20, (index) => {"title": "Announcement $index", "message": "This is an announcement for an outage number $index"})//.from(res['data']!['notifications'])
+          .map<Announcement>((payload) => Announcement.fromMap(payload))
+          .toList()
+          .reversed
+          .toList();
     } catch (e) {
       PCApi._logError("GETTING ANNOUNCEMENT BOARD", e);
       if (e is TimeoutException) throw ("Request timeout");
