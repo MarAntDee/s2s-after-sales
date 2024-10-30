@@ -312,7 +312,7 @@ class ProdApi implements PCApi {
         throw "Invalid response body structure";
       }
       if (res['data']?['notifications'] == null) throw "Missing response body";
-      return List.generate(20, (index) => {"title": "Announcement $index", "message": "This is an announcement for an outage number $index"})//.from(res['data']!['notifications'])
+      return List.from(res['data']!['notifications'])
           .map<Announcement>((payload) => Announcement.fromMap(payload))
           .toList()
           .reversed

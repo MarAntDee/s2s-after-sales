@@ -14,11 +14,14 @@ class AnnouncementBoard extends StatelessWidget {
     return FutureBuilder<List<Announcement>>(
         future: _shopkeeper.getAnnouncementBoard,
         builder: (context, announcements) {
-          if (!announcements.hasData) return Center(
+          if (!announcements.hasData) return const Center(
             child: SizedBox.square(
               dimension: 60,
               child: CircularProgressIndicator(),
             ),
+          );
+          if (announcements.data!.isEmpty) return const Center(
+            child: Text("No notifications"),
           );
           return ListView(
             children: [
