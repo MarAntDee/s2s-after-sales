@@ -313,6 +313,11 @@ class ProdApi implements PCApi {
       }
       if (res['data']?['notifications'] == null) throw "Missing response body";
       return List.from(res['data']!['notifications'])
+      // return List
+      //     .generate(20, (index) => {
+      //   "title": "Announcement #$index",
+      //   "message": "This is the message for announcement #$index",
+      // },)
           .map<Announcement>((payload) => Announcement.fromMap(payload))
           .toList()
           .reversed
