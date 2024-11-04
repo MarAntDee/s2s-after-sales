@@ -17,17 +17,8 @@ class PaymentFailedPage extends StatelessWidget {
     if (!url.contains("?")) return null;
     List<String> chunk = url.split("?");
     if (chunk.length != 2) return null;
-    String rawParam = url.split("?")[1];
-    if (rawParam.isEmpty) return null;
-    List<String> queryChunks = rawParam.split("&");
-    Map<String, String> queryParameter = {};
-    for (String query in queryChunks) {
-      if (!query.contains("=")) return null;
-      List<String> entry = query.split("=");
-      if (entry.length != 2) return null;
-      queryParameter[entry[0].toString()] = entry[1].toString();
-    }
-    return queryParameter["transactionNumber"].toString();
+
+    return url.split("?")[1];
   }
 
   @override
@@ -121,7 +112,7 @@ class PaymentFailedPage extends StatelessWidget {
                                 Padding(
                                   padding: const EdgeInsets.only(top: 16),
                                   child: Text(
-                                    payload.hasError ? "" : "There was an error on your attempt\nto purchase SuperFiber30-6G",
+                                    payload.hasError ? "" : "There was an error on your attempt${payload.data!['skuName'] != null ? "\nto purchase ${payload.data!['skuName']}" : ""}",
                                     textAlign: TextAlign.center,
                                     style: _theme.textTheme.bodySmall!.copyWith(
                                       color: _theme.colorScheme.lightGrayText,
@@ -136,7 +127,8 @@ class PaymentFailedPage extends StatelessWidget {
                                   ),
                                   ...payload.data!
                                     .entries
-                                    .map<Widget>(
+                                      .where((element) => element.key != "skuName")
+                                      .map<Widget>(
                                       (entry) => Padding(
                                     padding: const EdgeInsets.symmetric(
                                       horizontal: 32,
