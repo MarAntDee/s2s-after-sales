@@ -64,7 +64,7 @@ class PLanGauge extends StatelessWidget {
                         axes: <RadialAxis>[
                           RadialAxis(
                             minimum: 0,
-                            maximum: 30,
+                            maximum: (auth.currentAccount!.productDays ?? 7).toDouble(),
                             axisLineStyle: AxisLineStyle(
                               color: theme.highlightColor,
                               cornerStyle: CornerStyle.bothCurve,
@@ -74,7 +74,7 @@ class PLanGauge extends StatelessWidget {
                             showTicks: false,
                             pointers: <GaugePointer>[
                               RangePointer(
-                                value: 21,
+                                value: (auth.currentAccount!.daysLeft ?? 0).toDouble(),
                                 cornerStyle: CornerStyle.bothCurve,
                                 width: isScreenShort ? 8 : 16,
                                 enableAnimation: true,
@@ -96,7 +96,7 @@ class PLanGauge extends StatelessWidget {
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
                                     Text(
-                                      '21',
+                                      (auth.currentAccount!.daysLeft ?? 0).toString(),
                                       style: theme.textTheme.headlineSmall!
                                           .copyWith(
                                         color: theme.colorScheme.darkGrayText,
@@ -117,7 +117,7 @@ class PLanGauge extends StatelessWidget {
                                 angle: 90,
                                 positionFactor: 0.85,
                                 widget: Text(
-                                  '30\nDays',
+                                  '${(auth.currentAccount!.productDays ?? 7)}\nDays',
                                   textAlign: TextAlign.center,
                                   style: (isScreenShort
                                           ? theme.textTheme.titleMedium!

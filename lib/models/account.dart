@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import '../utils/dev-tools.dart';
 
 class Account with MappedModel {
@@ -7,6 +9,13 @@ class Account with MappedModel {
       outageTitle,
       outageDescription;
   final bool? hasOutage;
+  final int? productDays;
+
+  int? get daysLeft {
+    if (productDays == null || _productExpirationDate == null) return null;
+    int _daysLeft = productExpirationDate!.difference(DateTime.now()).inDays;
+    return max(0, _daysLeft);
+  }
 
   String get accountNumberLabel => [
         accountNumber.substring(0, 5),
@@ -38,6 +47,7 @@ class Account with MappedModel {
     this.serialNumber,
     this.currentProduct,
     this._productExpirationDate,
+    this.productDays,
     this.hasOutage,
     this.outageTitle,
     this.outageDescription,
@@ -50,6 +60,7 @@ class Account with MappedModel {
         map['serialNumber'],
         map['package']?['name'],
         map['package']?['expirationDateLabel'],
+        map['Package']?['noOfDays'] ?? 7,
         map['outage']?['status'],
         map['outage']?['title'],
         map['outage']?['description'],
