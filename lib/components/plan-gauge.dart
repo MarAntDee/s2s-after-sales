@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:surf2sawa/blocs/auth.dart';
 import 'package:surf2sawa/theme/app.dart';
@@ -64,7 +66,7 @@ class PLanGauge extends StatelessWidget {
                         axes: <RadialAxis>[
                           RadialAxis(
                             minimum: 0,
-                            maximum: 30,
+                            maximum: (max(auth.currentAccount!.productDays ?? 100, auth.currentAccount!.daysLeft ?? 0)).toDouble(),
                             axisLineStyle: AxisLineStyle(
                               color: theme.highlightColor,
                               cornerStyle: CornerStyle.bothCurve,
@@ -74,7 +76,7 @@ class PLanGauge extends StatelessWidget {
                             showTicks: false,
                             pointers: <GaugePointer>[
                               RangePointer(
-                                value: 21,
+                                value: (auth.currentAccount!.daysLeft ?? 0).toDouble(),
                                 cornerStyle: CornerStyle.bothCurve,
                                 width: isScreenShort ? 8 : 16,
                                 enableAnimation: true,
@@ -96,7 +98,7 @@ class PLanGauge extends StatelessWidget {
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
                                     Text(
-                                      '21',
+                                      (auth.currentAccount!.daysLeft ?? 0).toString(),
                                       style: theme.textTheme.headlineSmall!
                                           .copyWith(
                                         color: theme.colorScheme.darkGrayText,
@@ -117,7 +119,7 @@ class PLanGauge extends StatelessWidget {
                                 angle: 90,
                                 positionFactor: 0.85,
                                 widget: Text(
-                                  '30\nDays',
+                                  '${(max(auth.currentAccount!.productDays ?? 0, auth.currentAccount!.daysLeft ?? 0))}\nDays',
                                   textAlign: TextAlign.center,
                                   style: (isScreenShort
                                           ? theme.textTheme.titleMedium!

@@ -10,6 +10,7 @@ import 'package:surf2sawa/main.dart';
 import 'package:surf2sawa/models/transaction.dart';
 
 import '../models/account.dart';
+import '../models/announcement.dart';
 import '../models/payment-method.dart';
 import '../models/products.dart';
 
@@ -29,9 +30,13 @@ abstract class PCApi {
   Future<List<Product>> getProducts();
   Future<List<PaymentMethod>> getPaymentMethods();
   Future purchase(Product product, PaymentMethod method);
+  Future<Map<String, dynamic>> getPaymentDetails(String transactionNumber);
 
   //PAYMENT HISTORY
   Future<List<Transaction>> getPaymentHistory();
+
+  //NOTIFICATION
+  Future<List<Announcement>> getAnnouncementBoard();
 
   static HttpWithMiddleware http(String method) => HttpWithMiddleware.build(
         requestTimeout: const Duration(seconds: 30),
@@ -282,6 +287,73 @@ class ProdApi implements PCApi {
           .toList();
     } catch (e) {
       PCApi._logError("GETTING PAYMENT HISTORY", e);
+      if (e is TimeoutException) throw ("Request timeout");
+      if (e is String) rethrow;
+      if (e is SocketException) throw ("No internet");
+      if (e is Map) rethrow;
+      throw ("Unknown error");
+    }
+  }
+
+  @override
+  Future<List<Announcement>> getAnnouncementBoard() async {
+    try {
+      Map res = await _http("GETTING ANNOUNCEMENT BOARD")
+          .get(
+        url(path: "/notification-list"),
+        headers: header(),
+      )
+          .then((res) => jsonDecode(res.body));
+
+      if (!(res['status'] ?? false) || (res['code'] ?? 200) != 200) {
+        throw res.putIfAbsent('message', () => 'Unknown error');
+      }
+      if (res['data'] is! Map<String, dynamic>?) {
+        throw "Invalid response body structure";
+      }
+      if (res['data']?['notifications'] == null) throw "Missing response body";
+      return List.from(res['data']!['notifications'])
+      // return List
+      //     .generate(20, (index) => {
+      //   "title": "Announcement #$index",
+      //   "message": "This is the message for announcement #$index",
+      // },)
+          .map<Announcement>((payload) => Announcement.fromMap(payload))
+          .toList()
+          .reversed
+          .toList();
+    } catch (e) {
+      PCApi._logError("GETTING ANNOUNCEMENT BOARD", e);
+      if (e is TimeoutException) throw ("Request timeout");
+      if (e is String) rethrow;
+      if (e is SocketException) throw ("No internet");
+      if (e is Map) rethrow;
+      throw ("Unknown error");
+    }
+  }
+
+  @override
+  Future<Map<String, dynamic>> getPaymentDetails(String transactionNumber) async {
+    try {
+      Map res = await _http("GETTING PAYMENT DETAILS")
+          .get(
+        url(path: "/payment-details",
+          query: {
+          "transactionNumber": transactionNumber,
+          },
+        ),
+        headers: header(),
+      )
+          .then((res) => jsonDecode(res.body));
+      if (!(res['status'] ?? false) || (res['code'] ?? 200) != 200) {
+        throw res.putIfAbsent('message', () => 'Unknown error');
+      }
+      if (res['data'] is! Map<String, dynamic>?) {
+        throw "Invalid response body structure";
+      }
+      return Map<String, dynamic>.from(res['data']);
+    } catch (e) {
+      PCApi._logError("GETTING ANNOUNCEMENT BOARD", e);
       if (e is TimeoutException) throw ("Request timeout");
       if (e is String) rethrow;
       if (e is SocketException) throw ("No internet");

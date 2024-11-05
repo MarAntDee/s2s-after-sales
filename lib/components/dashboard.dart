@@ -4,9 +4,11 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:surf2sawa/blocs/auth.dart';
 import 'package:surf2sawa/blocs/shopkeeper.dart';
+import 'package:surf2sawa/components/announcement-board.dart';
 import 'package:surf2sawa/components/app-logo.dart';
 import 'package:surf2sawa/components/background.dart';
 import 'package:surf2sawa/components/plan-gauge.dart';
+import 'package:surf2sawa/models/announcement.dart';
 import 'package:surf2sawa/screens/shop.dart';
 import 'package:surf2sawa/theme/app.dart';
 import 'package:surf2sawa/theme/icons.dart';
@@ -24,6 +26,8 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
+
   ThemeData get _theme => Theme.of(context);
   AuthBloc get auth => AuthBloc.instance(context)!;
   late bool? isOutageShown;
@@ -88,7 +92,7 @@ class _DashboardState extends State<Dashboard> {
             ),
           ),
         ),
-        ShopKeeper.build(child: const Shop()),
+        Shop(),
         Container(),
         const PaymentJournal(),
         Container(),
@@ -107,7 +111,15 @@ class _DashboardState extends State<Dashboard> {
         builder: (context, page) {
           int _selectedIndex = page.data ?? 0;
           return Scaffold(
+            key: _scaffoldKey,
             backgroundColor: Colors.transparent,
+            endDrawer: Drawer(
+              surfaceTintColor: Colors.white,
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.zero,
+              ),
+              child: AnnouncementBoard(ShopKeeper.instance(context)!),
+            ),
             body: Stack(
               children: [
                 _pages[_selectedIndex],
@@ -290,38 +302,13 @@ class _DashboardState extends State<Dashboard> {
                         "name": "History",
                         "icon": IconLibrary.receipt,
                       },
-                      {},
+                      {
+                        "name": "Notification",
+                        "icon": IconLibrary.notification_bell,
+                      },
                     ].indexed.map(
                       (entry) {
                         if (entry.$2 == null) return const Spacer();
-                        if (entry.$2!.isEmpty) {
-                          return Expanded(
-                            child: Center(
-                              child: InkWell(
-                                onTap: () {
-                                  if (isOutageShown == null) setState(() => isOutageShown = true);
-                                  else if (isOutageShown!) setState(() => isOutageShown = false);
-                                  else setState(() => isOutageShown = null);
-                                },
-                                child: Container(
-                                  width: 32,
-                                  height: 32,
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: _theme.colorScheme.primaryColorLight,
-                                    image: const DecorationImage(
-                                      image: AssetImage("assets/images/sample-avatar.png"),
-                                    ),
-                                  ),
-                                  // child: const Icon(
-                                  //   Icons.person_2_outlined,
-                                  //   color: Colors.black,
-                                  // ),
-                                ),
-                              ),
-                            ),
-                          );
-                        }
                         return Expanded(
                           child: IconButton(
                             hoverColor: _theme.colorScheme.primaryColorLight,
@@ -360,7 +347,8 @@ class _DashboardState extends State<Dashboard> {
                               ],
                             ),
                             onPressed: () {
-                              auth.selectedIndex = entry.$1;
+                              if (entry.$1 == 4) _scaffoldKey.currentState?.openEndDrawer();
+                              else auth.selectedIndex = entry.$1;
                             },
                           ),
                         );
@@ -372,28 +360,35 @@ class _DashboardState extends State<Dashboard> {
             ),
             floatingActionButtonLocation:
                 FloatingActionButtonLocation.centerDocked,
-            floatingActionButton: FloatingActionButton(
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(20)),
-              ),
-              onPressed: widget.onFABPressed,
-              child: Container(
-                width: 60,
-                height: 60,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  gradient: LinearGradient(
-                    colors: <Color>[
-                      _theme.colorScheme.primary,
-                      _theme.colorScheme.secondary,
-                    ],
-                    begin: const Alignment(-1, -1),
-                    end: const Alignment(1, 1),
-                  ),
+            floatingActionButton: GestureDetector(
+              onLongPress: () {
+                if (isOutageShown == null) setState(() => isOutageShown = true);
+                else if (isOutageShown!) setState(() => isOutageShown = false);
+                else setState(() => isOutageShown = null);
+              },
+              child: FloatingActionButton(
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(20)),
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.all(12),
-                  child: AppLogo.s2s,
+                onPressed: widget.onFABPressed,
+                child: Container(
+                  width: 60,
+                  height: 60,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    gradient: LinearGradient(
+                      colors: <Color>[
+                        _theme.colorScheme.primary,
+                        _theme.colorScheme.secondary,
+                      ],
+                      begin: const Alignment(-1, -1),
+                      end: const Alignment(1, 1),
+                    ),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(12),
+                    child: AppLogo.s2s,
+                  ),
                 ),
               ),
             ),
