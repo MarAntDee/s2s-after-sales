@@ -66,7 +66,7 @@ class PLanGauge extends StatelessWidget {
                         axes: <RadialAxis>[
                           RadialAxis(
                             minimum: 0,
-                            maximum: (max(auth.currentAccount!.productDays ?? 7, auth.currentAccount!.daysLeft ?? 0)).toDouble(),
+                            maximum: (max(auth.currentAccount!.productDays ?? 100, auth.currentAccount!.daysLeft ?? 0)).toDouble(),
                             axisLineStyle: AxisLineStyle(
                               color: theme.highlightColor,
                               cornerStyle: CornerStyle.bothCurve,
@@ -119,7 +119,7 @@ class PLanGauge extends StatelessWidget {
                                 angle: 90,
                                 positionFactor: 0.85,
                                 widget: Text(
-                                  '${(max(auth.currentAccount!.productDays ?? 7, auth.currentAccount!.daysLeft ?? 0))}\nDays',
+                                  '${(max(auth.currentAccount!.productDays ?? 0, auth.currentAccount!.daysLeft ?? 0))}\nDays',
                                   textAlign: TextAlign.center,
                                   style: (isScreenShort
                                           ? theme.textTheme.titleMedium!

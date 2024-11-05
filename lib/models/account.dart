@@ -9,13 +9,7 @@ class Account with MappedModel {
       outageTitle,
       outageDescription;
   final bool? hasOutage;
-  final int? productDays;
-
-  int? get daysLeft {
-    if (productDays == null || _productExpirationDate == null) return null;
-    int _daysLeft = productExpirationDate!.difference(DateTime.now()).inDays;
-    return max(0, _daysLeft);
-  }
+  final int? productDays, daysLeft;
 
   String get accountNumberLabel => [
         accountNumber.substring(0, 5),
@@ -48,6 +42,7 @@ class Account with MappedModel {
     this.currentProduct,
     this._productExpirationDate,
     this.productDays,
+    this.daysLeft,
     this.hasOutage,
     this.outageTitle,
     this.outageDescription,
@@ -60,7 +55,8 @@ class Account with MappedModel {
         map['serialNumber'],
         map['package']?['name'],
         map['package']?['expirationDateLabel'],
-        map['Package']?['noOfDays'] ?? 7,
+        map['package']?['noOfDays'],
+        map['package']?['daysLeft'],
         map['outage']?['status'],
         map['outage']?['title'],
         map['outage']?['description'],
