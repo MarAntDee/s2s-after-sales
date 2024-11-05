@@ -37,6 +37,7 @@ class WelcomeSign extends StatelessWidget {
                   child: Text(
                     "Welcome, ${account.name}!",
                     style: _theme.primaryTextTheme.headlineSmall,
+                    textAlign: TextAlign.center,
                   ),
                 ),
                 Center(

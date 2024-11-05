@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:surf2sawa/blocs/auth.dart';
 import 'package:surf2sawa/theme/app.dart';
@@ -64,7 +66,7 @@ class PLanGauge extends StatelessWidget {
                         axes: <RadialAxis>[
                           RadialAxis(
                             minimum: 0,
-                            maximum: (auth.currentAccount!.productDays ?? 7).toDouble(),
+                            maximum: (max(auth.currentAccount!.productDays ?? 7, auth.currentAccount!.daysLeft ?? 0)).toDouble(),
                             axisLineStyle: AxisLineStyle(
                               color: theme.highlightColor,
                               cornerStyle: CornerStyle.bothCurve,
@@ -117,7 +119,7 @@ class PLanGauge extends StatelessWidget {
                                 angle: 90,
                                 positionFactor: 0.85,
                                 widget: Text(
-                                  '${(auth.currentAccount!.productDays ?? 7)}\nDays',
+                                  '${(max(auth.currentAccount!.productDays ?? 7, auth.currentAccount!.daysLeft ?? 0))}\nDays',
                                   textAlign: TextAlign.center,
                                   style: (isScreenShort
                                           ? theme.textTheme.titleMedium!
