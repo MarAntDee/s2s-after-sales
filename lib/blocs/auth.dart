@@ -21,7 +21,18 @@ class AuthBloc implements BlocBase {
   String? pendingReferenceNumber, maskedMobileNumber, pincode;
   String pendingAccountNumber = "";
   bool? autolink;
-  String? userId, username;
+
+  //USER ID / NAME
+  String? get userId => cache.getString("userId");
+  set userId(String? newValue) {
+    if (newValue == null) cache.remove("userId");
+    else cache.setString("userId", newValue);
+  }
+  String? get username => cache.getString("username");
+  set username(String? newValue) {
+    if (newValue == null) cache.remove("username");
+    else cache.setString("username", newValue);
+  }
 
   //PAGE
   final BehaviorSubject<int> _pageController = BehaviorSubject<int>();
@@ -31,6 +42,7 @@ class AuthBloc implements BlocBase {
   pushToJournal() => selectedIndex = 3;
 
   void _parseBaseParameter() {
+    print("PARSING BASE PARAMETER...");
     try {
       if (kDebugMode) {
         userId = "639285018871";
@@ -51,8 +63,8 @@ class AuthBloc implements BlocBase {
         if (entry.length != 2) throw "Improper format";
         queryParameter[entry[0].toString()] = entry[1].toString();
       }
-      userId = queryParameter["userId"];
-      username = queryParameter["username"];
+      if (queryParameter.containsKey("userId")) userId = queryParameter["userId"];
+      if (queryParameter.containsKey("username")) username = queryParameter["username"];
     } catch (e) {
       return;
     }
