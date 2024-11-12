@@ -98,7 +98,7 @@ class PLanGauge extends StatelessWidget {
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
                                     Text(
-                                      (auth.currentAccount!.daysLeft ?? 0).toString(),
+                                      (max(auth.currentAccount!.daysLeft ?? 0, 0)).toString(),
                                       style: theme.textTheme.headlineSmall!
                                           .copyWith(
                                         color: theme.colorScheme.darkGrayText,

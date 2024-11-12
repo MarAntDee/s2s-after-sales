@@ -343,6 +343,7 @@ class _DashboardState extends State<Dashboard> {
                                         ? _theme.colorScheme.secondary
                                         : _theme.colorScheme.darkGrayText,
                                   ),
+                                  overflow: TextOverflow.ellipsis,
                                 ),
                               ],
                             ),

@@ -177,6 +177,7 @@ class _LoginFormfield extends FormField<String> {
               onChanged: onChanged,
               onSubmitted: onSubmit,
               obscureText: isObscure,
+              keyboardType: TextInputType.number,
               decoration: InputDecoration(
                 fillColor: Colors.white,
                 border: InputBorder.none,
