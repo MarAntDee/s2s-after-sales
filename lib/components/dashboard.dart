@@ -101,7 +101,7 @@ class _DashboardState extends State<Dashboard> {
   @override
   void initState() {
     super.initState();
-    isOutageShown = auth.currentAccount?.hasOutage;
+    isOutageShown = auth.outage?.hasOutage;
   }
 
   @override
@@ -155,14 +155,14 @@ class _DashboardState extends State<Dashboard> {
                                   ),
                                 ),
                                 Text(
-                                  auth.currentAccount!.outageTitle ?? "Yes, we are working on it.",
+                                  auth.outage?.title ?? "Yes, we are working on it.",
                                   style: _theme.textTheme.titleMedium!.copyWith(
                                     color: _theme.colorScheme.darkGrayText,
                                     fontWeight: FontWeight.w500,
                                   ),
                                 ),
                                 Text(
-                                  auth.currentAccount!.outageDescription ?? "Thank you for your patience!",
+                                  auth.outage?.description ?? "Thank you for your patience!",
                                   style: _theme.textTheme.labelSmall!.copyWith(
                                     color: _theme.colorScheme.lightGrayText,
                                     fontWeight: FontWeight.w500,
@@ -221,14 +221,14 @@ class _DashboardState extends State<Dashboard> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
                                 Text(
-                                  auth.currentAccount!.outageTitle ?? "Internet connection restored",
+                                  auth.outage?.title ?? "Internet connection restored",
                                   style: _theme.textTheme.titleMedium!.copyWith(
                                     color: _theme.colorScheme.darkGrayText,
                                     fontWeight: FontWeight.w500,
                                   ),
                                 ),
                                 Text(
-                                  auth.currentAccount!.outageDescription ?? "Outage has been restored on Date,\nYour surftime has been extended for 2 hours",
+                                  auth.outage?.description ?? "Outage has been restored on Date,\nYour surftime has been extended for 2 hours",
                                   style: _theme.textTheme.labelSmall!.copyWith(
                                     color: _theme.colorScheme.lightGrayText,
                                     fontWeight: FontWeight.w500,

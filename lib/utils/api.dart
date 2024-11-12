@@ -11,6 +11,7 @@ import 'package:surf2sawa/models/transaction.dart';
 
 import '../models/account.dart';
 import '../models/announcement.dart';
+import '../models/outage.dart';
 import '../models/payment-method.dart';
 import '../models/products.dart';
 
@@ -25,6 +26,7 @@ abstract class PCApi {
       {String? username, String? userId});
   Future<bool> verifyAccount(String pincode);
   Future<Account> getAccount();
+  Future<Outage?> getOutage();
 
   //SHOP
   Future<List<Product>> getProducts();
@@ -160,6 +162,36 @@ class ProdApi implements PCApi {
       return Account.fromMap(res['data']);
     } catch (e) {
       PCApi._logError("GETTING ACCOUNT INFO", e);
+      if (e is TimeoutException) throw ("Request timeout");
+      if (e is String) rethrow;
+      if (e is SocketException) throw ("No internet");
+      if (e is Map) rethrow;
+      throw ("Unknown error");
+    }
+  }
+
+  @override
+  Future<Outage?> getOutage() async {
+    try {
+      Map res = await _http("GETTING OUTAGE INFO")
+          .get(
+        url(path: "/outage-data"),
+        headers: header(
+          add: {
+            "testmode": "true",
+          },
+        ),
+      )
+          .then((res) => jsonDecode(res.body));
+
+      if (!(res['status'] ?? false) || (res['code'] ?? 200) != 200) {
+        throw res.putIfAbsent('message', () => 'Unknown error');
+      }
+      if (res['data'] == null) throw "Missing response body";
+      if (res['data']['outage'] == null) return null;
+      return Outage.fromMap(res['data']['outage']);
+    } catch (e) {
+      PCApi._logError("GETTING OUTAGE INFO", e);
       if (e is TimeoutException) throw ("Request timeout");
       if (e is String) rethrow;
       if (e is SocketException) throw ("No internet");

@@ -13,6 +13,8 @@ import 'package:surf2sawa/utils/api.dart';
 import 'package:surf2sawa/utils/dev-tools.dart';
 import 'package:surf2sawa/utils/navigator.dart';
 
+import '../models/outage.dart';
+
 class AuthBloc implements BlocBase {
   final SharedPreferences cache;
   //CHECK ACCOUNT VALUES
@@ -176,6 +178,12 @@ class AuthBloc implements BlocBase {
       rethrow;
     }
   }
+
+  //OUTAGE
+  Future getOutage() async {
+    outage = await ProdApi().getOutage();
+  }
+  Outage? outage;
 
   //OTP
   List<String> expiredOtps = [];

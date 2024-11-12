@@ -8,6 +8,7 @@ import 'package:surf2sawa/components/welcome-sign.dart';
 
 import '../components/dialogs.dart';
 import '../models/account.dart';
+import '../models/outage.dart';
 import '../utils/navigator.dart';
 
 class HomePage extends StatefulWidget {
@@ -39,9 +40,21 @@ class _HomePageState extends State<HomePage> {
         Navigator.of(context).popUntilLogin();
       } else if (_auth.currentAccount == null) {
         print("FROM HOME NULL ACCOUNT");
+        _auth.getOutage().then((_) {
+          setState(() {
+            _isOutageShown = true;
+          });
+          AuthBloc _auth = AuthBloc.instance(context)!;
+          if ((_auth.outage?.hasOutage ?? false) && !_isOutageShown) {
+            // Popup.showOutageAnnouncement();
+            setState(() {
+              _isOutageShown = true;
+            });
+          }
+        });
         _auth.getAccountInfo().then((_) {
           AuthBloc _auth = AuthBloc.instance(context)!;
-          if ((_auth.currentAccount!.hasOutage ?? false) && !_isOutageShown) {
+          if ((_auth.outage?.hasOutage ?? false) && !_isOutageShown) {
             // Popup.showOutageAnnouncement();
             _isOutageShown = true;
           }
@@ -50,7 +63,7 @@ class _HomePageState extends State<HomePage> {
           Navigator.of(context).popUntilLogin();
           return;
         });
-      } else if ((_auth.currentAccount!.hasOutage ?? false) &&
+      } else if ((_auth.outage?.hasOutage ?? false) &&
           !_isOutageShown) {
         // Popup.showOutageAnnouncement();
         _isOutageShown = true;

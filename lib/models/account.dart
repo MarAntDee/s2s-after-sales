@@ -5,10 +5,7 @@ import '../utils/dev-tools.dart';
 class Account with MappedModel {
   final String name, accountNumber, maskedMobileNumber, serialNumber;
   final String? currentProduct,
-      _productExpirationDate,
-      outageTitle,
-      outageDescription;
-  final bool? hasOutage;
+      _productExpirationDate;
   final int? productDays, daysLeft;
 
   String get accountNumberLabel => [
@@ -43,9 +40,6 @@ class Account with MappedModel {
     this._productExpirationDate,
     this.productDays,
     this.daysLeft,
-    this.hasOutage,
-    this.outageTitle,
-    this.outageDescription,
   );
 
   factory Account.fromMap(Map map) => Account._(
@@ -57,9 +51,6 @@ class Account with MappedModel {
         map['package']?['expirationDateLabel'],
         map['package']?['noOfDays'],
         map['package']?['daysLeft'],
-        map['outage']?['status'],
-        map['outage']?['title'],
-        map['outage']?['description'],
       );
 
   @override
@@ -71,8 +62,5 @@ class Account with MappedModel {
         if (currentProduct != null) "Current Product": currentProduct,
         if (_productExpirationDate != null)
           "Expiration Date": _productExpirationDate,
-        "Has Outage": hasOutage,
-        if (outageTitle != null) "Outage Title": outageTitle,
-        if (outageDescription != null) "Outage Description": outageDescription,
       };
 }
