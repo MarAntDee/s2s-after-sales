@@ -339,6 +339,7 @@ class _DashboardState extends State<Dashboard> {
                                 Text(
                                   entry.$2!['name'].toString(),
                                   style: _theme.textTheme.labelSmall!.copyWith(
+                                    fontSize: 8,
                                     color: _selectedIndex == entry.$1
                                         ? _theme.colorScheme.secondary
                                         : _theme.colorScheme.darkGrayText,
