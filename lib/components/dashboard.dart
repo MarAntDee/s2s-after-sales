@@ -2,6 +2,7 @@ import 'dart:html' as html;
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:rxdart/rxdart.dart';
 import 'package:surf2sawa/blocs/auth.dart';
 import 'package:surf2sawa/blocs/shopkeeper.dart';
 import 'package:surf2sawa/components/announcement-board.dart';
@@ -9,6 +10,7 @@ import 'package:surf2sawa/components/app-logo.dart';
 import 'package:surf2sawa/components/background.dart';
 import 'package:surf2sawa/components/plan-gauge.dart';
 import 'package:surf2sawa/models/announcement.dart';
+import 'package:surf2sawa/models/outage.dart';
 import 'package:surf2sawa/screens/shop.dart';
 import 'package:surf2sawa/theme/app.dart';
 import 'package:surf2sawa/theme/icons.dart';
@@ -30,7 +32,10 @@ class _DashboardState extends State<Dashboard> {
 
   ThemeData get _theme => Theme.of(context);
   AuthBloc get auth => AuthBloc.instance(context)!;
-  late bool? isOutageShown;
+
+  BehaviorSubject<Outage?> _outageMessageController = BehaviorSubject<Outage?>();
+
+
 
   List<Widget> get _pages => [
         Background(
@@ -101,7 +106,13 @@ class _DashboardState extends State<Dashboard> {
   @override
   void initState() {
     super.initState();
-    isOutageShown = auth.outage?.hasOutage;
+    auth.getOutage().then(_outageMessageController.add);
+  }
+
+  @override
+  void dispose() {
+    _outageMessageController.close();
+    super.dispose();
   }
 
   @override
@@ -120,149 +131,152 @@ class _DashboardState extends State<Dashboard> {
               ),
               child: AnnouncementBoard(ShopKeeper.instance(context)!),
             ),
-            body: Stack(
-              children: [
-                _pages[_selectedIndex],
-                if (isOutageShown ?? false)
-                  Positioned(
-                    left: 0,
-                    right: 0,
-                    bottom: -16,
-                    height: 120,
-                    child: Container(
-                      padding: const EdgeInsets.all(16),
-                      decoration: BoxDecoration(
-                          color: const Color(0xFFFFD3C5),
-                          borderRadius: const BorderRadius.vertical(
-                            top: Radius.circular(16),
-                          ),
-                          border: Border.all(
-                            width: 1,
-                            color: _theme.primaryColor,
-                          )),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Text(
-                                  "Are you experiencing network issues?",
-                                  style: _theme.textTheme.labelSmall!.copyWith(
-                                    color: _theme.colorScheme.lightGrayText,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                                Text(
-                                  auth.outage?.title ?? "Yes, we are working on it.",
-                                  style: _theme.textTheme.titleMedium!.copyWith(
-                                    color: _theme.colorScheme.darkGrayText,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                                Text(
-                                  auth.outage?.description ?? "Thank you for your patience!",
-                                  style: _theme.textTheme.labelSmall!.copyWith(
-                                    color: _theme.colorScheme.lightGrayText,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          TextButton(
-                            style: TextButton.styleFrom(
-                              foregroundColor: _theme.primaryColor,
-                              textStyle: const TextStyle(
-                                decoration: TextDecoration.none,
+            body: StreamBuilder<Outage?>(
+              stream: _outageMessageController.stream,
+              builder: (context, outage) {
+                return Stack(
+                  children: [
+                    _pages[_selectedIndex],
+                    if (outage.data?.hasOutage ?? false)
+                      Positioned(
+                        left: 0,
+                        right: 0,
+                        bottom: -16,
+                        height: 120,
+                        child: Container(
+                          padding: const EdgeInsets.all(16),
+                          decoration: BoxDecoration(
+                              color: const Color(0xFFFFD3C5),
+                              borderRadius: const BorderRadius.vertical(
+                                top: Radius.circular(16),
                               ),
-                            ),
-                            onPressed: () =>
-                                setState(() => isOutageShown = null),
-                            child: const Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Text("Close"),
-                                SizedBox(width: 4),
-                                Icon(
-                                  Icons.close_rounded,
-                                  size: 14,
+                              border: Border.all(
+                                width: 1,
+                                color: _theme.primaryColor,
+                              )),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Text(
+                                      "Are you experiencing network issues?",
+                                      style: _theme.textTheme.labelSmall!.copyWith(
+                                        color: _theme.colorScheme.lightGrayText,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                    Text(
+                                      outage.data?.title ?? "Yes, we are working on it.",
+                                      style: _theme.textTheme.titleMedium!.copyWith(
+                                        color: _theme.colorScheme.darkGrayText,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                    Text(
+                                      outage.data?.description ?? "Thank you for your patience!",
+                                      style: _theme.textTheme.labelSmall!.copyWith(
+                                        color: _theme.colorScheme.lightGrayText,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                if (!(isOutageShown ?? true))
-                  Positioned(
-                    left: 0,
-                    right: 0,
-                    bottom: -16,
-                    height: 120,
-                    child: Container(
-                      padding: const EdgeInsets.all(16),
-                      decoration: BoxDecoration(
-                          color: Colors.green[50],
-                          borderRadius: const BorderRadius.vertical(
-                            top: Radius.circular(16),
-                          ),
-                          border: Border.all(
-                            width: 1,
-                            color: Colors.green,
-                          )),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Text(
-                                  auth.outage?.title ?? "Internet connection restored",
-                                  style: _theme.textTheme.titleMedium!.copyWith(
-                                    color: _theme.colorScheme.darkGrayText,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                                Text(
-                                  auth.outage?.description ?? "Outage has been restored on Date,\nYour surftime has been extended for 2 hours",
-                                  style: _theme.textTheme.labelSmall!.copyWith(
-                                    color: _theme.colorScheme.lightGrayText,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          TextButton(
-                            style: TextButton.styleFrom(
-                              foregroundColor: Colors.green,
-                              textStyle: const TextStyle(
-                                decoration: TextDecoration.none,
                               ),
-                            ),
-                            onPressed: () =>
-                                setState(() => isOutageShown = null),
-                            child: const Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Text("Close"),
-                                SizedBox(width: 4),
-                                Icon(
-                                  Icons.close_rounded,
-                                  size: 14,
+                              TextButton(
+                                style: TextButton.styleFrom(
+                                  foregroundColor: _theme.primaryColor,
+                                  textStyle: const TextStyle(
+                                    decoration: TextDecoration.none,
+                                  ),
                                 ),
-                              ],
-                            ),
+                                onPressed: () => _outageMessageController.add(null),
+                                child: const Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Text("Close"),
+                                    SizedBox(width: 4),
+                                    Icon(
+                                      Icons.close_rounded,
+                                      size: 14,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
                           ),
-                        ],
+                        ),
                       ),
-                    ),
-                  ),
-              ],
+                    if (!(outage.data?.hasOutage ?? true))
+                      Positioned(
+                        left: 0,
+                        right: 0,
+                        bottom: -16,
+                        height: 120,
+                        child: Container(
+                          padding: const EdgeInsets.all(16),
+                          decoration: BoxDecoration(
+                              color: Colors.green[50],
+                              borderRadius: const BorderRadius.vertical(
+                                top: Radius.circular(16),
+                              ),
+                              border: Border.all(
+                                width: 1,
+                                color: Colors.green,
+                              )),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Text(
+                                      outage.data?.title ?? "Internet connection restored",
+                                      style: _theme.textTheme.titleMedium!.copyWith(
+                                        color: _theme.colorScheme.darkGrayText,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                    Text(
+                                      outage.data?.description ?? "Outage has been restored on Date,\nYour surftime has been extended for 2 hours",
+                                      style: _theme.textTheme.labelSmall!.copyWith(
+                                        color: _theme.colorScheme.lightGrayText,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              TextButton(
+                                style: TextButton.styleFrom(
+                                  foregroundColor: Colors.green,
+                                  textStyle: const TextStyle(
+                                    decoration: TextDecoration.none,
+                                  ),
+                                ),
+                                onPressed: () => _outageMessageController.add(null),
+                                child: const Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Text("Close"),
+                                    SizedBox(width: 4),
+                                    Icon(
+                                      Icons.close_rounded,
+                                      size: 14,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                  ],
+                );
+              }
             ),
             bottomNavigationBar: Container(
               color: _theme.scaffoldBackgroundColor,
@@ -364,9 +378,21 @@ class _DashboardState extends State<Dashboard> {
                 FloatingActionButtonLocation.centerDocked,
             floatingActionButton: GestureDetector(
               onLongPress: () {
-                if (isOutageShown == null) setState(() => isOutageShown = true);
-                else if (isOutageShown!) setState(() => isOutageShown = false);
-                else setState(() => isOutageShown = null);
+                if (_outageMessageController.valueOrNull == null) _outageMessageController.add(
+                  Outage.fromMap({
+                    'title': "Yes, we are working on it.",
+                    "description": "Thank you for your patience!",
+                    "status": true
+                  }),
+                );
+                else if (_outageMessageController.valueOrNull!.hasOutage) _outageMessageController.add(
+                  Outage.fromMap({
+                    'title': "Internet connection restored",
+                    "description": "Outage has been restored on Date,\nYour surftime has been extended for 2 hours",
+                    "status": false
+                  }),
+                );
+                else _outageMessageController.add(null);
               },
               child: FloatingActionButton(
                 shape: const RoundedRectangleBorder(

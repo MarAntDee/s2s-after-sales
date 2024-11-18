@@ -28,9 +28,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  ThemeData get _theme => Theme.of(context);
   AuthBloc get _auth => AuthBloc.instance(context)!;
-  bool _isOutageShown = false;
 
   @override
   void initState() {
@@ -39,34 +37,11 @@ class _HomePageState extends State<HomePage> {
         _auth.logout();
         Navigator.of(context).popUntilLogin();
       } else if (_auth.currentAccount == null) {
-        print("FROM HOME NULL ACCOUNT");
-        _auth.getOutage().then((_) {
-          setState(() {
-            _isOutageShown = true;
-          });
-          AuthBloc _auth = AuthBloc.instance(context)!;
-          if ((_auth.outage?.hasOutage ?? false) && !_isOutageShown) {
-            // Popup.showOutageAnnouncement();
-            setState(() {
-              _isOutageShown = true;
-            });
-          }
-        });
-        _auth.getAccountInfo().then((_) {
-          AuthBloc _auth = AuthBloc.instance(context)!;
-          if ((_auth.outage?.hasOutage ?? false) && !_isOutageShown) {
-            // Popup.showOutageAnnouncement();
-            _isOutageShown = true;
-          }
-        }).catchError((e) {
+        _auth.getAccountInfo().catchError((e) {
           _auth.logout();
           Navigator.of(context).popUntilLogin();
           return;
         });
-      } else if ((_auth.outage?.hasOutage ?? false) &&
-          !_isOutageShown) {
-        // Popup.showOutageAnnouncement();
-        _isOutageShown = true;
       }
     });
     super.initState();

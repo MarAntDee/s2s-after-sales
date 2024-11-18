@@ -11,4 +11,11 @@ class Outage with MappedModel {
     map['description'],
     map['status'],
   );
+
+  @override
+  Map toMap() => {
+    'title': title,
+    'description': description,
+    'status': hasOutage,
+  };
 }

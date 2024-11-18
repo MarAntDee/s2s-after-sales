@@ -192,10 +192,11 @@ class AuthBloc implements BlocBase {
   }
 
   //OUTAGE
-  Future getOutage() async {
-    outage = await ProdApi().getOutage();
+  Future<Outage?> getOutage() async {
+    Outage? _outage = await ProdApi().getOutage();
+    print("GET OUTAGE MAP: ${_outage?.toMap()}");
+    return _outage;
   }
-  Outage? outage;
 
   //OTP
   List<String> expiredOtps = [];
