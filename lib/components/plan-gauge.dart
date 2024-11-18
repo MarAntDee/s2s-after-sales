@@ -106,7 +106,7 @@ class PLanGauge extends StatelessWidget {
                                       ),
                                     ),
                                     Text(
-                                      'Days Left',
+                                      'Day${max(auth.currentAccount!.daysLeft ?? 0, 0) == 1 ? "" : "s"} Left',
                                       style:
                                           theme.textTheme.titleSmall!.copyWith(
                                         color: theme.disabledColor,
@@ -119,7 +119,7 @@ class PLanGauge extends StatelessWidget {
                                 angle: 90,
                                 positionFactor: 0.85,
                                 widget: Text(
-                                  '${(max(auth.currentAccount!.productDays ?? 0, auth.currentAccount!.daysLeft ?? 0))}\nDays',
+                                  '${(max(auth.currentAccount!.productDays ?? 0, auth.currentAccount!.daysLeft ?? 0))}\nDay${(max(auth.currentAccount!.productDays ?? 0, auth.currentAccount!.daysLeft ?? 0)) == 1 ? "": "s"}',
                                   textAlign: TextAlign.center,
                                   style: (isScreenShort
                                           ? theme.textTheme.titleMedium!
