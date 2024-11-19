@@ -56,11 +56,11 @@ class PLanGauge extends StatelessWidget {
                 ),
               ),
             ),
-          if (auth.currentAccount!.currentProduct != null)
+          if (auth.currentAccount!.currentProduct != null) 
             Expanded(
               child: Row(
                 children: [
-                  Expanded(
+                  if ((auth.currentAccount!.daysLeft ?? 0).toDouble() > 0) Expanded(
                     child: Center(
                       child: SfRadialGauge(
                         axes: <RadialAxis>[
@@ -134,6 +134,34 @@ class PLanGauge extends StatelessWidget {
                                 ),
                               ),
                             ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  if ((auth.currentAccount!.daysLeft ?? 0).toDouble() <= 0) Expanded(
+                    child: Center(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          Text(
+                            "No Active Plans yet!",
+                            style: theme.textTheme.bodyLarge!.copyWith(
+                              color: theme.colorScheme.lightGrayText,
+                            ),
+                          ),
+                          ElevatedButton(
+                            onPressed: auth.pushToShop,
+                            child: const Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 16),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: <Widget>[
+                                  Icon(Icons.search_rounded),
+                                  Text("Check Available Plans"),
+                                ],
+                              ),
+                            ),
                           ),
                         ],
                       ),
