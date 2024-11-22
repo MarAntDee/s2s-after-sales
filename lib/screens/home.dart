@@ -4,6 +4,7 @@ import 'package:surf2sawa/blocs/auth.dart';
 import 'package:surf2sawa/blocs/shopkeeper.dart';
 import 'package:surf2sawa/components/background.dart';
 import 'package:surf2sawa/components/dashboard.dart';
+import 'package:surf2sawa/components/error.dart';
 import 'package:surf2sawa/components/welcome-sign.dart';
 
 import '../components/dialogs.dart';
@@ -37,9 +38,12 @@ class _HomePageState extends State<HomePage> {
         _auth.logout();
         Navigator.of(context).popUntilLogin();
       } else if (_auth.currentAccount == null) {
-        _auth.getAccountInfo().catchError((e) {
+        _auth.getAccountInfo().catchError((e) async {
           _auth.logout();
-          Navigator.of(context).popUntilLogin();
+          await Navigator.of(context).popUntilLogin();
+          if (e == "You are not allowed in this resource") {
+            await ErrorDisplay.showLoggedOutDialog();
+          }
           return;
         });
       }

@@ -57,7 +57,6 @@ class _DashboardState extends State<Dashboard> {
               child: RefreshIndicator(
                 onRefresh: () async => html.window.location.reload(),
                 child: CustomScrollView(
-                  physics: ClampingScrollPhysics(),
                   scrollDirection: Axis.vertical,
                   shrinkWrap: true,
                   slivers: [

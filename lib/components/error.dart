@@ -1,6 +1,7 @@
 import 'dart:html' as html;
 
 import 'package:flutter/material.dart';
+import 'package:surf2sawa/main.dart';
 
 class ErrorDisplay {
   static Widget list(dynamic e) => Builder(
@@ -37,4 +38,13 @@ class ErrorDisplay {
           );
         },
       );
+
+  static Future showLoggedOutDialog() => showDialog(
+    context: navigatorKey.currentContext!,
+    builder: (context) => const AlertDialog(
+      content: Text(
+        "You logged in on another device. For your security, you have been automatically logged out of the app",
+      ),
+    ),
+  );
 }
