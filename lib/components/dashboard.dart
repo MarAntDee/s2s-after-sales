@@ -9,7 +9,6 @@ import 'package:surf2sawa/components/announcement-board.dart';
 import 'package:surf2sawa/components/app-logo.dart';
 import 'package:surf2sawa/components/background.dart';
 import 'package:surf2sawa/components/plan-gauge.dart';
-import 'package:surf2sawa/models/announcement.dart';
 import 'package:surf2sawa/models/outage.dart';
 import 'package:surf2sawa/screens/shop.dart';
 import 'package:surf2sawa/theme/app.dart';
@@ -33,7 +32,7 @@ class _DashboardState extends State<Dashboard> {
   ThemeData get _theme => Theme.of(context);
   AuthBloc get auth => AuthBloc.instance(context)!;
 
-  BehaviorSubject<Outage?> _outageMessageController = BehaviorSubject<Outage?>();
+  final BehaviorSubject<Outage?> _outageMessageController = BehaviorSubject<Outage?>();
 
 
 
@@ -97,7 +96,7 @@ class _DashboardState extends State<Dashboard> {
             ),
           ),
         ),
-        Shop(),
+        const Shop(),
         Container(),
         const PaymentJournal(),
         Container(),
@@ -120,7 +119,7 @@ class _DashboardState extends State<Dashboard> {
     return StreamBuilder<int>(
         stream: auth.pageStream,
         builder: (context, page) {
-          int _selectedIndex = page.data ?? 0;
+          int selectedIndex = page.data ?? 0;
           return Scaffold(
             key: _scaffoldKey,
             backgroundColor: Colors.transparent,
@@ -136,13 +135,12 @@ class _DashboardState extends State<Dashboard> {
               builder: (context, outage) {
                 return Stack(
                   children: [
-                    _pages[_selectedIndex],
+                    _pages[selectedIndex],
                     if (outage.data?.hasOutage ?? false)
                       Positioned(
                         left: 0,
                         right: 0,
                         bottom: -16,
-                        height: 120,
                         child: Container(
                           padding: const EdgeInsets.all(16),
                           decoration: BoxDecoration(
@@ -182,6 +180,7 @@ class _DashboardState extends State<Dashboard> {
                                         fontWeight: FontWeight.w500,
                                       ),
                                     ),
+                                    const SizedBox(height: 36),
                                   ],
                                 ),
                               ),
@@ -329,7 +328,7 @@ class _DashboardState extends State<Dashboard> {
                             splashColor: _theme.colorScheme.primaryColorLight,
                             icon: Column(
                               children: [
-                                _selectedIndex == entry.$1
+                                selectedIndex == entry.$1
                                     ? ShaderMask(
                                         blendMode: BlendMode.srcIn,
                                         shaderCallback: (Rect bounds) =>
@@ -354,7 +353,7 @@ class _DashboardState extends State<Dashboard> {
                                   entry.$2!['name'].toString(),
                                   style: _theme.textTheme.labelSmall!.copyWith(
                                     fontSize: 8,
-                                    color: _selectedIndex == entry.$1
+                                    color: selectedIndex == entry.$1
                                         ? _theme.colorScheme.secondary
                                         : _theme.colorScheme.darkGrayText,
                                   ),
@@ -363,8 +362,11 @@ class _DashboardState extends State<Dashboard> {
                               ],
                             ),
                             onPressed: () {
-                              if (entry.$1 == 4) _scaffoldKey.currentState?.openEndDrawer();
-                              else auth.selectedIndex = entry.$1;
+                              if (entry.$1 == 4) {
+                                _scaffoldKey.currentState?.openEndDrawer();
+                              } else {
+                                auth.selectedIndex = entry.$1;
+                              }
                             },
                           ),
                         );
@@ -378,14 +380,15 @@ class _DashboardState extends State<Dashboard> {
                 FloatingActionButtonLocation.centerDocked,
             floatingActionButton: GestureDetector(
               onLongPress: () {
-                if (_outageMessageController.valueOrNull == null) _outageMessageController.add(
+                if (_outageMessageController.valueOrNull == null) {
+                  _outageMessageController.add(
                   Outage.fromMap({
                     'title': "Yes, we are working on it.",
                     "description": "Thank you for your patience!",
                     "status": true
                   }),
                 );
-                else if (_outageMessageController.valueOrNull!.hasOutage) _outageMessageController.add(
+                } else if (_outageMessageController.valueOrNull!.hasOutage) _outageMessageController.add(
                   Outage.fromMap({
                     'title': "Internet connection restored",
                     "description": "Outage has been restored on Date,\nYour surftime has been extended for 2 hours",

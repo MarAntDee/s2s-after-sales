@@ -6,7 +6,6 @@ import 'package:surf2sawa/components/error.dart';
 import 'package:surf2sawa/components/transaction-tile.dart';
 import 'package:surf2sawa/theme/app.dart';
 import 'package:surf2sawa/utils/api.dart';
-import 'package:surf2sawa/utils/navigator.dart';
 
 import '../models/transaction.dart';
 import 'empty.dart';
@@ -23,7 +22,7 @@ class PaymentHistoryOverview extends StatelessWidget {
       child: Column(
         children: [
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 24),
+            padding: const EdgeInsets.symmetric(horizontal: 24),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [

@@ -11,13 +11,13 @@ class EmptyDisplay {
                 Icon(
                   icon,
                   size: 120,
-                  color: theme.colorScheme.onBackground.withOpacity(0.3),
+                  color: theme.colorScheme.onSurface.withOpacity(0.3),
                 ),
                 const SizedBox(height: 16),
                 Text(
                   label,
                   style: theme.textTheme.headlineSmall!.copyWith(
-                    color: theme.colorScheme.onBackground.withOpacity(0.3),
+                    color: theme.colorScheme.onSurface.withOpacity(0.3),
                   ),
                 ),
                 const Spacer(flex: 2),

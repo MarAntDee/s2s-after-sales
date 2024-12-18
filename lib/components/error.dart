@@ -14,14 +14,14 @@ class ErrorDisplay {
                 Icon(
                   Icons.warning_amber_rounded,
                   size: 180,
-                  color: theme.colorScheme.onBackground.withOpacity(0.3),
+                  color: theme.colorScheme.onSurface.withOpacity(0.3),
                 ),
                 const SizedBox(height: 16),
                 Center(
                   child: Text(
                     e.toString(),
                     style: theme.textTheme.headlineSmall!.copyWith(
-                      color: theme.colorScheme.onBackground.withOpacity(0.3),
+                      color: theme.colorScheme.onSurface.withOpacity(0.3),
                     ),
                   ),
                 ),

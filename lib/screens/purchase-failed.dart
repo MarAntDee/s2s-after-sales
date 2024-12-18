@@ -23,8 +23,8 @@ class PaymentFailedPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ThemeData _theme = Theme.of(context);
-    Size _screen = MediaQuery.sizeOf(context);
+    ThemeData theme = Theme.of(context);
+    Size screen = MediaQuery.sizeOf(context);
     return Scaffold(
       body: Stack(
         children: [
@@ -34,7 +34,7 @@ class PaymentFailedPage extends StatelessWidget {
                 flex: 4,
                 child: Background(
                   dotsPadding: 0,
-                  dotsHeight: _screen.height * 0.35,
+                  dotsHeight: screen.height * 0.35,
                 ),
               ),
               Expanded(
@@ -49,10 +49,12 @@ class PaymentFailedPage extends StatelessWidget {
             child: FutureBuilder<Map<String, dynamic>>(
               future: ProdApi().getPaymentDetails(_parseTransactionNumber() ?? ""),
               builder: (context, payload) {
-                if (payload.connectionState == ConnectionState.waiting) return SizedBox.square(
+                if (payload.connectionState == ConnectionState.waiting) {
+                  return const SizedBox.square(
                   dimension: 60,
                   child: CircularProgressIndicator(),
                 );
+                }
                 return ConstrainedBox(
                   constraints: const BoxConstraints(maxWidth: 400),
                   child: Padding(
@@ -63,7 +65,7 @@ class PaymentFailedPage extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.all(32),
                           child: AppLogo(
-                            size: min(_screen.width / 4, _screen.height / 8),
+                            size: min(screen.width / 4, screen.height / 8),
                           ),
                         ),
                         Card(
@@ -72,7 +74,7 @@ class PaymentFailedPage extends StatelessWidget {
                           shadowColor: Colors.black45,
                           elevation: 2,
                           child: SizedBox(
-                            height: payload.hasError ? (_screen.height /3) : (_screen.height / 2),
+                            height: payload.hasError ? (screen.height /3) : (screen.height / 2),
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
                               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -84,7 +86,7 @@ class PaymentFailedPage extends StatelessWidget {
                                   margin: const EdgeInsets.all(24),
                                   decoration: BoxDecoration(
                                     shape: BoxShape.circle,
-                                    color: _theme.colorScheme.secondary,
+                                    color: theme.colorScheme.secondary,
                                     boxShadow: const [
                                       BoxShadow(
                                         color: Colors.black26,
@@ -105,7 +107,7 @@ class PaymentFailedPage extends StatelessWidget {
                                 Center(
                                   child: Text(
                                     "Payment Unsuccessful",
-                                    style: _theme.textTheme.titleMedium,
+                                    style: theme.textTheme.titleMedium,
                                     textAlign: TextAlign.center,
                                   ),
                                 ),
@@ -114,8 +116,8 @@ class PaymentFailedPage extends StatelessWidget {
                                   child: Text(
                                     payload.hasError ? "" : "There was an error on your attempt${payload.data!['skuName'] != null ? "\nto purchase ${payload.data!['skuName']}" : ""}",
                                     textAlign: TextAlign.center,
-                                    style: _theme.textTheme.bodySmall!.copyWith(
-                                      color: _theme.colorScheme.lightGrayText,
+                                    style: theme.textTheme.bodySmall!.copyWith(
+                                      color: theme.colorScheme.lightGrayText,
                                     ),
                                   ),
                                 ),
@@ -140,21 +142,21 @@ class PaymentFailedPage extends StatelessWidget {
                                       children: <Widget>[
                                         Text(
                                           entry.key,
-                                          style: _theme.textTheme.bodyMedium!
+                                          style: theme.textTheme.bodyMedium!
                                               .copyWith(
                                             color:
-                                            _theme.colorScheme.lightGrayText,
+                                            theme.colorScheme.lightGrayText,
                                           ),
                                         ),
                                         const SizedBox(width: 16),
                                         Expanded(
                                           child: Text(
                                             entry.value.toString(),
-                                            style: _theme.textTheme.bodySmall!
+                                            style: theme.textTheme.bodySmall!
                                                 .copyWith(
                                               fontFamily: "Poppins",
                                               color:
-                                              _theme.colorScheme.darkGrayText,
+                                              theme.colorScheme.darkGrayText,
                                               fontWeight: FontWeight.w600,
                                             ),
                                             textAlign: TextAlign.end,
@@ -187,13 +189,12 @@ class PaymentFailedPage extends StatelessWidget {
         ],
       ),
     );
-    ;
   }
 
   static route(RouteSettings settings) {
     return BlurredRouter(
       builder: (context) {
-        return PaymentFailedPage();
+        return const PaymentFailedPage();
       },
       settings: settings,
     );

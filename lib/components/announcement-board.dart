@@ -9,20 +9,24 @@ class AnnouncementBoard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ThemeData _theme = Theme.of(context);
+    ThemeData theme = Theme.of(context);
 
     return FutureBuilder<List<Announcement>>(
         future: _shopkeeper.getAnnouncementBoard,
         builder: (context, announcements) {
-          if (!announcements.hasData) return const Center(
+          if (!announcements.hasData) {
+            return const Center(
             child: SizedBox.square(
               dimension: 60,
               child: CircularProgressIndicator(),
             ),
           );
-          if (announcements.data!.isEmpty) return const Center(
+          }
+          if (announcements.data!.isEmpty) {
+            return const Center(
             child: Text("No notifications"),
           );
+          }
           return ListView(
             children: [
               const SizedBox(height: 32),
@@ -39,12 +43,12 @@ class AnnouncementBoard extends StatelessWidget {
                 leading: const Icon(Icons.mail_outline_rounded),
                 title: Text(
                   announcement.title,
-                  style: _theme.textTheme.titleMedium!
+                  style: theme.textTheme.titleMedium!
                       .copyWith(fontWeight: FontWeight.w600),
                 ),
                 subtitle: Text(
                   announcement.message,
-                  style: _theme.textTheme.labelMedium,
+                  style: theme.textTheme.labelMedium,
                 ),
                 // trailing: Text(
                 //   activity.createdText,

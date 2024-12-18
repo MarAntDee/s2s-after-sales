@@ -51,8 +51,9 @@ class _LoginPageState extends State<LoginPage> {
             if (_auth.autolink ?? false) {
               await _auth.getAccountInfo();
               Navigator.of(context).popUntilHome();
-            } else
+            } else {
               setState(() => selectedIndex = 1);
+            }
           },
         ),
         OTPForm(

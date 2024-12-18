@@ -7,9 +7,7 @@ import 'package:surf2sawa/components/dashboard.dart';
 import 'package:surf2sawa/components/error.dart';
 import 'package:surf2sawa/components/welcome-sign.dart';
 
-import '../components/dialogs.dart';
 import '../models/account.dart';
-import '../models/outage.dart';
 import '../utils/navigator.dart';
 
 class HomePage extends StatefulWidget {

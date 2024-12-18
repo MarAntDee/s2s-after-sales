@@ -67,13 +67,13 @@ class ProdApi implements PCApi {
 
   @override
   Map<String, String> header({Map<String, String>? add}) {
-    final AuthBloc _auth = AuthBloc.instance(navigatorKey.currentContext!)!;
+    final AuthBloc auth = AuthBloc.instance(navigatorKey.currentContext!)!;
     return {
       "Authorization":
           "3600bf62a3f79fa53f9e811bb76eaddf1073f691abd445cce221430092b75bd0",
-      "x-device-key": _auth.uuid!,
-      if ((_auth.referenceNumber ?? _auth.pendingReferenceNumber) != null)
-        'x-auth': _auth.referenceNumber ?? _auth.pendingReferenceNumber!,
+      "x-device-key": auth.uuid!,
+      if ((auth.referenceNumber ?? auth.pendingReferenceNumber) != null)
+        'x-auth': auth.referenceNumber ?? auth.pendingReferenceNumber!,
       "wsc-timestamp": DateTime.now().millisecondsSinceEpoch.toString(),
       if (add != null) ...add,
     };
@@ -420,17 +420,21 @@ class CustomHttpLogger extends MiddlewareContract {
     print(_bordered("╠══╡ URL: ${data.url.toString().split('?')[0]}"));
     if (data.headers != null) print(_space);
     if (data.headers != null) print(_bordered("╠══╡ HEADERS:"));
-    if (data.headers != null)
+    if (data.headers != null) {
       data.headers?.forEach((key, value) => _printKV(key, value));
+    }
     if (data.url.queryParameters.isNotEmpty) print(_space);
-    if (data.url.queryParameters.isNotEmpty)
+    if (data.url.queryParameters.isNotEmpty) {
       print(_bordered("╠══╡ QUERY PARAMETERS:"));
-    if (data.url.queryParameters.isNotEmpty)
+    }
+    if (data.url.queryParameters.isNotEmpty) {
       data.url.queryParameters.forEach((key, value) => _printKV(key, value));
+    }
     if (data.body != null) print(_space);
     if (data.body != null) print(_bordered("╠══╡ BODY:"));
-    if (data.body != null)
+    if (data.body != null) {
       data.body?.forEach((key, value) => _printKV(key, value));
+    }
     print(_space);
     print(
         "╚══════════════════════════════════════════════════════════════════════════════════════════╝");
@@ -443,13 +447,15 @@ class CustomHttpLogger extends MiddlewareContract {
 
     print(_bordered("╣ $method DONE ║ ${res['code']} ║", title: true));
     if (res.containsKey("message")) print(_space);
-    if (res.containsKey("message"))
+    if (res.containsKey("message")) {
       print(_bordered("╠══╡ MESSAGE: ${res['message']}"));
+    }
     if (res.containsKey("data")) print(_space);
     if (res.containsKey("data")) print(_bordered("╠══╡ RESPONSE:"));
-    if (res["data"] is Map<String, dynamic>)
+    if (res["data"] is Map<String, dynamic>) {
       Map<String, dynamic>.from(res["data"])
           .forEach((key, value) => _printKV(key, value));
+    }
     print(_space);
     print(
         "╚══════════════════════════════════════════════════════════════════════════════════════════╝");
@@ -480,9 +486,9 @@ class CustomHttpLogger extends MiddlewareContract {
       logPrint(_bordered("╟────┤${"  " * layer} }"));
     } else if (v is List<dynamic>) {
       logPrint(_bordered("$pre["));
-      List<dynamic>.from(v).forEach((element) {
+      for (var element in List<dynamic>.from(v)) {
         _printKV(null, element, layer: layer + 1);
-      });
+      }
       logPrint(_bordered("╟────┤${"  " * layer} ]"));
     } else if (pre.length + msg.length > maxWidth) {
       logPrint(_bordered(pre));

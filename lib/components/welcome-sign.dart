@@ -15,9 +15,9 @@ class WelcomeSign extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size _size = MediaQuery.sizeOf(context);
-    ThemeData _theme = Theme.of(context);
-    AuthBloc _auth = AuthBloc.instance(context)!;
+    Size size = MediaQuery.sizeOf(context);
+    ThemeData theme = Theme.of(context);
+    AuthBloc auth = AuthBloc.instance(context)!;
 
     return Background(
       child: Column(
@@ -25,7 +25,7 @@ class WelcomeSign extends StatelessWidget {
           Expanded(
             child: Center(
               child: AppLogo(
-                size: min(_size.width / 2, _size.height / 4),
+                size: min(size.width / 2, size.height / 4),
               ),
             ),
           ),
@@ -36,20 +36,20 @@ class WelcomeSign extends StatelessWidget {
                 Center(
                   child: Text(
                     "Welcome, ${account.name}!",
-                    style: _theme.primaryTextTheme.headlineSmall,
+                    style: theme.primaryTextTheme.headlineSmall,
                     textAlign: TextAlign.center,
                   ),
                 ),
                 Center(
                   child: Text(
                     account.accountNumber,
-                    style: _theme.primaryTextTheme.titleMedium,
+                    style: theme.primaryTextTheme.titleMedium,
                   ),
                 ),
                 const Spacer(flex: 4),
                 TextButton(
                   onPressed: () {
-                    _auth.logout();
+                    auth.logout();
                     Navigator.of(context).popUntilLogin();
                   },
                   child: const Text("Use a different mobile number"),

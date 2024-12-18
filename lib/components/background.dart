@@ -11,7 +11,7 @@ class Background extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ThemeData _theme = Theme.of(context);
+    ThemeData theme = Theme.of(context);
     return Scaffold(
       backgroundColor: Colors.black,
       body: Stack(
@@ -22,8 +22,8 @@ class Background extends StatelessWidget {
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   colors: <Color>[
-                    _theme.colorScheme.primary,
-                    _theme.colorScheme.secondary,
+                    theme.colorScheme.primary,
+                    theme.colorScheme.secondary,
                   ],
                   begin: begin ?? const Alignment(-1.5, -0.4),
                   end: end ?? const Alignment(1.5, 0.4),

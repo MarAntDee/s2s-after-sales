@@ -31,8 +31,6 @@ class AppTheme {
     onSecondary: Colors.white,
     error: Colors.red[700]!,
     onError: Colors.white,
-    background: ColorLibrary.background,
-    onBackground: ColorLibrary.darkText,
     surface: ColorLibrary.surface,
     onSurface: ColorLibrary.darkText,
   );

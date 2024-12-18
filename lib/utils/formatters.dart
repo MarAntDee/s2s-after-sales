@@ -20,16 +20,19 @@ class AccountFormatter extends TextInputFormatter {
     final StringBuffer newText = StringBuffer();
 
     if (oldValue.selection.baseOffset == 0 &&
-        newValue.selection.baseOffset == 0) return TextEditingValue.empty;
+        newValue.selection.baseOffset == 0) {
+      return TextEditingValue.empty;
+    }
     if (newValue.text.length > oldValue.text.length &&
-        (newValue.text == "6" || newValue.text.characters.first == "6"))
+        (newValue.text == "6" || newValue.text.characters.first == "6")) {
       return oldValue;
+    }
     if (newTextLength >= 4) {
-      newText.write(newValue.text.substring(0, usedSubstringIndex = 3) + ' ');
+      newText.write('${newValue.text.substring(0, usedSubstringIndex = 3)} ');
       if (newValue.selection.end >= 3) selectionIndex += 1;
     }
     if (newTextLength >= 8) {
-      newText.write(newValue.text.substring(3, usedSubstringIndex = 7) + ' ');
+      newText.write('${newValue.text.substring(3, usedSubstringIndex = 7)} ');
       if (newValue.selection.end >= 7) selectionIndex += 1;
     }
     if (newTextLength >= usedSubstringIndex) {

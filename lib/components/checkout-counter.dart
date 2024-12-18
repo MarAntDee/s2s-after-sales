@@ -3,7 +3,6 @@ import 'package:intl/intl.dart';
 import 'package:surf2sawa/blocs/auth.dart';
 import 'package:surf2sawa/blocs/shopkeeper.dart';
 import 'package:surf2sawa/components/dialogs.dart';
-import 'package:surf2sawa/components/product-shelf.dart';
 import 'package:surf2sawa/main.dart';
 import 'package:surf2sawa/models/payment-method.dart';
 import 'package:surf2sawa/theme/app.dart';
@@ -11,7 +10,7 @@ import 'package:surf2sawa/utils/api.dart';
 
 class CheckoutCounter extends StatefulWidget {
   final ShopKeeper shopKeeper;
-  const CheckoutCounter._(this.shopKeeper, {super.key});
+  const CheckoutCounter._(this.shopKeeper);
 
   @override
   State<CheckoutCounter> createState() => _CheckoutCounterState();
@@ -21,9 +20,9 @@ class CheckoutCounter extends StatefulWidget {
     isScrollControlled: true,
     builder: (context) {
       ThemeData theme = Theme.of(context);
-      Size _screen = MediaQuery.sizeOf(context);
+      Size screen = MediaQuery.sizeOf(context);
       return Container(
-        height: _screen.height*0.75,
+        height: screen.height*0.75,
         decoration: BoxDecoration(
           color: theme.scaffoldBackgroundColor,
           borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
@@ -196,10 +195,12 @@ class _CheckoutCounterState extends State<CheckoutCounter> {
                   onPressed: () async {
                     try {
                       setState(() => _isLoading = true);
-                      if (shopKeeper.selectedProduct == null)
+                      if (shopKeeper.selectedProduct == null) {
                         throw "Please select a product to purchase";
-                      if (shopKeeper.selectedPaymentMethod == null)
+                      }
+                      if (shopKeeper.selectedPaymentMethod == null) {
                         throw "Please select your preferred payment method";
+                      }
                       await ProdApi().purchase(shopKeeper.selectedProduct!,
                           shopKeeper.selectedPaymentMethod!);
                       setState(() => _isLoading = false);

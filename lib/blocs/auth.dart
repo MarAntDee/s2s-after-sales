@@ -25,13 +25,19 @@ class AuthBloc implements BlocBase {
   //USER ID / NAME
   String? get userId => cache.getString("userId");
   set userId(String? newValue) {
-    if (newValue == null) cache.remove("userId");
-    else cache.setString("userId", newValue);
+    if (newValue == null) {
+      cache.remove("userId");
+    } else {
+      cache.setString("userId", newValue);
+    }
   }
   String? get username => cache.getString("username");
   set username(String? newValue) {
-    if (newValue == null) cache.remove("username");
-    else cache.setString("username", newValue);
+    if (newValue == null) {
+      cache.remove("username");
+    } else {
+      cache.setString("username", newValue);
+    }
   }
 
   //PAGE
@@ -162,7 +168,7 @@ class AuthBloc implements BlocBase {
   }
 
   void logout({bool? autologout}) {
-    String? _error = (autologout ?? false)
+    String? error = (autologout ?? false)
         ? "Your account is logged in on another device, please log in again."
         : null;
     currentAccount = null;
@@ -173,7 +179,7 @@ class AuthBloc implements BlocBase {
     pincode = null;
     SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
       Navigator.of(navigatorKey.currentContext!).popUntilLogin(
-        error: _error,
+        error: error,
       );
     });
   }
@@ -193,9 +199,9 @@ class AuthBloc implements BlocBase {
 
   //OUTAGE
   Future<Outage?> getOutage() async {
-    Outage? _outage = await ProdApi().getOutage();
-    print("GET OUTAGE MAP: ${_outage?.toMap()}");
-    return _outage;
+    Outage? outage = await ProdApi().getOutage();
+    print("GET OUTAGE MAP: ${outage?.toMap()}");
+    return outage;
   }
 
   //OTP
@@ -203,7 +209,7 @@ class AuthBloc implements BlocBase {
 
   AuthBloc._(this.cache) {
     _parseBaseParameter();
-    if (uuid == null) uuid = _generateUuid(64);
+    uuid ??= _generateUuid(64);
   }
 
   @override

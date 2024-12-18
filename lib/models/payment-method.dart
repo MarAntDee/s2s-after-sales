@@ -16,8 +16,9 @@ class PaymentMethod with MappedModel {
   double convenienceFee(double amount) {
     if (!enableFee) return 0;
     if (additionalFee != null) return additionalFee! + transferFeeRate * amount;
-    if (minTransferFee != null)
+    if (minTransferFee != null) {
       return max(minTransferFee!, transferFeeRate * amount);
+    }
     return 0;
   }
 

@@ -4,10 +4,8 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:surf2sawa/screens/home.dart';
 import 'package:surf2sawa/screens/login.dart';
-import 'package:surf2sawa/screens/payment-journal.dart';
 import 'package:surf2sawa/screens/purchase-failed.dart';
 import 'package:surf2sawa/screens/purchase-success.dart';
-import 'package:surf2sawa/screens/shop.dart';
 
 import '../screens/404.dart';
 import '../screens/splash.dart';

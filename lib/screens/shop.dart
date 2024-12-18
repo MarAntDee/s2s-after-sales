@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:surf2sawa/blocs/shopkeeper.dart';
 import 'package:surf2sawa/components/background.dart';
 import 'package:surf2sawa/components/product-shelf.dart';
-import 'package:surf2sawa/components/checkout-counter.dart';
 
 import '../utils/navigator.dart';
 

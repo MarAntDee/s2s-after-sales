@@ -57,7 +57,7 @@ class _AccountFormState extends State<AccountForm> {
             ),
           )
         : ConstrainedBox(
-            constraints: BoxConstraints(maxWidth: 480),
+            constraints: const BoxConstraints(maxWidth: 480),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -155,7 +155,6 @@ class _AccountFormState extends State<AccountForm> {
 class _LoginFormfield extends FormField<String> {
   _LoginFormfield({
     TextEditingController? controller,
-    String? label,
     IconData? icon,
     bool isObscure = false,
     List<TextInputFormatter>? inputFormatters,

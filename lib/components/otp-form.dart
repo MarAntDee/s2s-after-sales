@@ -207,8 +207,9 @@ class _OTPFormState extends State<OTPForm> with TickerProviderStateMixin {
                                 onPressed: _code.length == widget.digits
                                     ? () async {
                                         try {
-                                          if (_code.isEmpty)
+                                          if (_code.isEmpty) {
                                             throw "OTP is required";
+                                          }
                                           setState(() => _enabled = false);
                                           if (_auth.expiredOtps.contains(_code)) {
                                             throw "You have entered an expired OTP";

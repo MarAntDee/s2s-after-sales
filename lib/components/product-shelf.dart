@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:surf2sawa/blocs/auth.dart';
 import 'package:surf2sawa/components/checkout-counter.dart';
-import 'package:surf2sawa/components/dialogs.dart';
 import 'package:surf2sawa/components/empty.dart';
 import 'package:surf2sawa/components/error.dart';
 import 'package:surf2sawa/theme/app.dart';
@@ -72,10 +71,10 @@ class ProductShelf extends StatelessWidget {
                                   state.errorText ?? "",
                                   style: Theme.of(state.context)
                                       .textTheme
-                                      .caption!
+                                      .bodySmall!
                                       .apply(
                                         color:
-                                            Theme.of(state.context).errorColor,
+                                            Theme.of(state.context).colorScheme.error,
                                       ),
                                 ),
                               ),
@@ -95,10 +94,10 @@ class ProductShelf extends StatelessWidget {
                                   state.errorText ?? "",
                                   style: Theme.of(state.context)
                                       .textTheme
-                                      .caption!
+                                      .bodySmall!
                                       .apply(
                                         color:
-                                            Theme.of(state.context).errorColor,
+                                            Theme.of(state.context).colorScheme.error,
                                       ),
                                 ),
                               ),
@@ -164,7 +163,7 @@ class ProductCard extends StatelessWidget {
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: theme.textTheme.bodySmall!.copyWith(
-                      color: theme.colorScheme.onBackground.withOpacity(0.6),
+                      color: theme.colorScheme.onSurface.withOpacity(0.6),
                       fontWeight: FontWeight.w400,
                     ),
                   ),
@@ -191,9 +190,9 @@ class ProductCard extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(vertical: 8),
                       ),
                       onPressed: () {
-                        ShopKeeper _shopkeeper = ShopKeeper.instance(context)!;
-                        _shopkeeper.selectedProduct = product;
-                        CheckoutCounter.show(_shopkeeper);
+                        ShopKeeper shopkeeper = ShopKeeper.instance(context)!;
+                        shopkeeper.selectedProduct = product;
+                        CheckoutCounter.show(shopkeeper);
                       },
                       child: const Text("Buy"),
                     ),

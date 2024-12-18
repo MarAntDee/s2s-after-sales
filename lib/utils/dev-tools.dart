@@ -41,9 +41,9 @@ class DevTools {
       logPrint(_bordered("╟────┤${"  " * layer} }"));
     } else if (v is List<dynamic>) {
       logPrint(_bordered("$pre["));
-      List<dynamic>.from(v).forEach((element) {
+      for (var element in List<dynamic>.from(v)) {
         _printKV(null, element, layer: layer + 1);
-      });
+      }
       logPrint(_bordered("╟────┤${"  " * layer} ]"));
     } else if (pre.length + msg.length > maxWidth) {
       logPrint(_bordered(pre));

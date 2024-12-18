@@ -1,4 +1,3 @@
-import 'dart:math';
 
 import '../utils/dev-tools.dart';
 
@@ -23,9 +22,9 @@ class Account with MappedModel {
   }
 
   String? get expirationText {
-    if (isExpired == null)
+    if (isExpired == null) {
       return null;
-    else if (isExpired!)
+    } else if (isExpired!)
       return "expired last $_productExpirationDate";
     else
       return "will expire on $_productExpirationDate";
